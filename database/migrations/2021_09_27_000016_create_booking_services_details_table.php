@@ -33,6 +33,10 @@ class CreateBookingServicesDetailsTable extends Migration
      */
     public function down()
     {
+        Schema::table('booking_services_details', function (Blueprint $table) {
+            $table->dropForeign('booking_services_details_bookingroom_id_foreign');
+            $table->dropForeign('booking_services_details_service_id_foreign');
+        });
         Schema::dropIfExists('booking_services_details');
     }
 }

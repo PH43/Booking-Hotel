@@ -32,6 +32,10 @@ class CreateHotelRatesTable extends Migration
      */
     public function down()
     {
+        Schema::table('hotel_rates', function (Blueprint $table) {
+            $table->dropForeign('hotel_rates_hotel_id_foreign');
+            $table->dropForeign('hotel_rates_user_id_foreign');
+        });
         Schema::dropIfExists('hotel_rates');
     }
 }

@@ -34,6 +34,10 @@ class CreateBookingRoomsTable extends Migration
      */
     public function down()
     {
+        Schema::table('booking_rooms', function (Blueprint $table) {
+            $table->dropForeign('booking_rooms_booking_id_foreign');
+            $table->dropForeign('booking_rooms_room_id_foreign');
+        });
         Schema::dropIfExists('booking_rooms');
     }
 }

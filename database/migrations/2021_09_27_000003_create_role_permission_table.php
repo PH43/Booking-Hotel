@@ -32,6 +32,10 @@ class CreateRolePermissionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('role_permission');
+        Schema::table('role_permission', function (Blueprint $table) {
+            $table->dropForeign('role_permission_role_id_foreign'); 
+            $table->dropForeign('role_permission_permission_id_foreign');
+        });
+        Schema::dropIfExists('role_permission');     
     }
 }
