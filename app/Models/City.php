@@ -13,6 +13,7 @@ class City extends Model
 
     public $table = 'cities';
 
+
     public function Hotels()
     {
         return $this->hasMany('App\Models\Hotel', 'hotel_id', 'id');
