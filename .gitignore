@@ -14,7 +14,3 @@ yarn-error.log
 /.idea
 /.vscode
 
-app/Http/Controllers/Admin/
-resources/views/admin/
-resources/views/layouts/
-.gitignore
