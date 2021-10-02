@@ -20,6 +20,7 @@ class CreateBookingServicesDetailsTable extends Migration
             $table->unsignedBigInteger('bookingroom_id');
             $table->unsignedBigInteger('service_id');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('bookingroom_id')->references('id')->on('booking_rooms');
             $table->foreign('service_id')->references('id')->on('services');

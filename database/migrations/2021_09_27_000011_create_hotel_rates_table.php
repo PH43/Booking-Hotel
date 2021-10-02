@@ -19,6 +19,7 @@ class CreateHotelRatesTable extends Migration
             $table->integer('rate');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('hotel_id')->references('id')->on('hotels');
             $table->foreign('user_id')->references('id')->on('users');

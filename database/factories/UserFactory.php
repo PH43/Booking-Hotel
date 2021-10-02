@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class UserFactory extends Factory
 {
@@ -22,14 +23,17 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        return [
-            'fullname' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'phone'=>$this->faker->unique()->phoneNumber(),
-            'address' => $this->faker->unique()->address(),
-            'username'=>$this->faker->unique()->safeEmail(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        ];
+
+                return [
+                    'fullname'=>$this->faker->name(),
+                    'email'=>$this ->faker->email(),
+                    'address'=>$this ->faker->address(),
+                    'phone'=>$this->faker->phoneNumber(),
+                    'username'=>$this->faker->firstName(),
+                    'password'=>Bcrypt('hwehfuwehfuig'),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
     }
 
     /**

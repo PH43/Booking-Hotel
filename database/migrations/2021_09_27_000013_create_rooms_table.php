@@ -22,6 +22,7 @@ class CreateRoomsTable extends Migration
             $table->unsignedBigInteger('hotel_id');
             $table->unsignedBigInteger('roomtype_id');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('hotel_id')->references('id')->on('hotels');
             $table->foreign('roomtype_id')->references('id')->on('room_types');

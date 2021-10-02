@@ -17,3 +17,54 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/home', function () {
+    return redirect()->route('admin.home');
+});
+
+
+// Admin
+
+Route::redirect('/', '/login');
+Route::get('/home', function () {
+    if (session('status')) {
+        return redirect()->route('admin.home')->with('status', session('status'));
+    }
+
+    return redirect()->route('admin.home');
+});
+
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/', 'App\Http\Controllers\Admin\HomeController@index')->name('home');
+    // Permissions
+    Route::delete('permissions/destroy', 'App\Http\Controllers\Admin\PermissionsController@massDestroy')->name('permissions.massDestroy');
+    Route::resource('permissions', 'App\Http\Controllers\Admin\PermissionsController');
+
+    // Roles
+    Route::delete('roles/destroy', 'App\Http\Controllers\Admin\RolesController@massDestroy')->name('roles.massDestroy');
+    Route::resource('roles', 'App\Http\Controllers\Admin\RolesController');
+
+    // Users
+    Route::delete('users/destroy', 'App\Http\Controllers\Admin\UsersController@massDestroy')->name('users.massDestroy');
+    Route::resource('users', 'App\Http\Controllers\Admin\UsersController');
+
+    // Hotels
+    Route::delete('hotels/destroy', 'App\Http\Controllers\Admin\HotelsController@massDestroy')->name('hotels.massDestroy');
+    Route::resource('hotels', 'App\Http\Controllers\Admin\HotelsController');
+
+    // Room Types
+    Route::delete('room-types/destroy', 'App\Http\Controllers\Admin\RoomTypesController@massDestroy')->name('room-types.massDestroy');
+    Route::resource('room-types', 'App\Http\Controllers\Admin\RoomTypesController');
+
+    // Rooms
+    Route::delete('rooms/destroy', 'App\Http\Controllers\Admin\RoomsController@massDestroy')->name('rooms.massDestroy');
+    Route::resource('rooms', 'App\Http\Controllers\Admin\RoomsController');
+
+    // Bookings
+    Route::delete('bookings/destroy', 'App\Http\Controllers\Admin\BookingsController@massDestroy')->name('bookings.massDestroy');
+    Route::resource('bookings', 'App\Http\Controllers\Admin\BookingsController');
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

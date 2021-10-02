@@ -22,6 +22,7 @@ class CreateBookingRoomsTable extends Migration
             $table->integer('num_days');
             $table->string('note');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('booking_id')->references('id')->on('bookings');
             $table->foreign('room_id')->references('id')->on('rooms');

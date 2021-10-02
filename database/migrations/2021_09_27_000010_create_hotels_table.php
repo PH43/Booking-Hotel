@@ -22,6 +22,7 @@ class CreateHotelsTable extends Migration
             $table->string('website');
             $table->string('description');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('city_id')->references('id')->on('cities');
             $table->foreign('category_id')->references('id')->on('categories');

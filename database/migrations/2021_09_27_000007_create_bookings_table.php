@@ -20,6 +20,7 @@ class CreateBookingsTable extends Migration
             $table->integer('qty_room');
             $table->unsignedBigInteger('coupon_id');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('coupon_id')->references('id')->on('coupons');

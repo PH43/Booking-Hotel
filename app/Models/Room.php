@@ -26,7 +26,19 @@ class Room extends Model
         'roomtype_id',
     ];
 
-     
+    public function scopeFilters($query)
+    {
+        return $query
+            ->when(request()->input('hotel'), function ($query) {
+                $query->where('hotel_id', request()->input('hotel'));
+            })
+            ->when(request()->input('room_type'), function ($query) {
+                $query->where('room_type_id', request()->input('room_type'));
+            })
+            ->when(request()->input('room'), function ($query) {
+                $query->where('name', 'LIKE', '%'.request()->input('room').'%');
+            });
+    }
 
     public function hotel()
     {
