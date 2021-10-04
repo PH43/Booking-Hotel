@@ -15,7 +15,7 @@ class RoomTypesController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('room_type_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('room_type_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roomTypes = RoomType::all();
 
@@ -24,7 +24,7 @@ class RoomTypesController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('room_type_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('room_type_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.roomTypes.create');
     }
@@ -38,7 +38,7 @@ class RoomTypesController extends Controller
 
     public function edit(RoomType $roomType)
     {
-        abort_if(Gate::denies('room_type_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('room_type_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.roomTypes.edit', compact('roomType'));
     }
@@ -52,7 +52,7 @@ class RoomTypesController extends Controller
 
     public function show(RoomType $roomType)
     {
-        abort_if(Gate::denies('room_type_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('room_type_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roomType->load('roomTypeRooms');
 
@@ -61,7 +61,7 @@ class RoomTypesController extends Controller
 
     public function destroy(RoomType $roomType)
     {
-        abort_if(Gate::denies('room_type_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('room_type_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roomType->delete();
 

@@ -14,30 +14,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 
-Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
-    // Permissions
-    Route::apiResource('permissions', 'PermissionsApiController');
+// Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
+//     // Permissions
+//     Route::apiResource('permissions', 'PermissionsApiController');
 
-    // Roles
-    Route::apiResource('roles', 'RolesApiController');
+//     // Roles
+//     Route::apiResource('roles', 'RolesApiController');
 
-    // Users
-    Route::apiResource('users', 'UsersApiController');
+//     // Users
+//     Route::apiResource('users', 'UsersApiController');
 
-    // Hotels
-    Route::apiResource('hotels', 'HotelsApiController');
+//     // Hotels
+//     Route::apiResource('hotels', 'HotelsApiController');
 
-    // Room Types
-    Route::apiResource('room-types', 'RoomTypesApiController');
+//     // Room Types
+//     Route::apiResource('room-types', 'RoomTypesApiController');
 
-    // Rooms
-    Route::apiResource('rooms', 'RoomsApiController');
+//     // Rooms
+//     Route::apiResource('rooms', 'RoomsApiController');
 
-    // Bookings
-    Route::apiResource('bookings', 'BookingsApiController');
-});
+//     // Bookings
+//     Route::apiResource('bookings', 'BookingsApiController');
+// });

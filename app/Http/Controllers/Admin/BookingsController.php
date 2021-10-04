@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Booking;
+use App\Models\Booking;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBookingRequest;
 use App\Http\Requests\StoreBookingRequest;
 use App\Http\Requests\UpdateBookingRequest;
-use App\Room;
+use App\Models\Room;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,7 +56,7 @@ class BookingsController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('booking_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('booking_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $rooms = Room::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -72,7 +72,7 @@ class BookingsController extends Controller
 
     public function edit(Booking $booking)
     {
-        abort_if(Gate::denies('booking_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('booking_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $rooms = Room::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -90,7 +90,7 @@ class BookingsController extends Controller
 
     public function show(Booking $booking)
     {
-        abort_if(Gate::denies('booking_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('booking_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $booking->load('room');
 
@@ -99,7 +99,7 @@ class BookingsController extends Controller
 
     public function destroy(Booking $booking)
     {
-        abort_if(Gate::denies('booking_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('booking_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $booking->delete();
 

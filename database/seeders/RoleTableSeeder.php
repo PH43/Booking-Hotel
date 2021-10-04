@@ -16,15 +16,15 @@ class RoleTableSeeder extends Seeder
     {
         $data = [
             [
-                'tile'=>'Admin',
+                'title'=>'Admin',
                 'description' => 'Quản lý hệ thống',
             ],
             [
-                'tile'=>'Hotel',
+                'title'=>'Hotel',
                 'description' =>'Cho thuê phòng',
             ],
             [
-                'tile'=>'Khách hàng',
+                'title'=>'Khách hàng',
                 'description' =>'Đặt phòng',
             ],
         ];

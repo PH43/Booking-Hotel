@@ -33,10 +33,10 @@ class Room extends Model
                 $query->where('hotel_id', request()->input('hotel'));
             })
             ->when(request()->input('room_type'), function ($query) {
-                $query->where('room_type_id', request()->input('room_type'));
+                $query->where('roomtype_id', request()->input('room_type'));
             })
             ->when(request()->input('room'), function ($query) {
-                $query->where('name', 'LIKE', '%'.request()->input('room').'%');
+                $query->where('room_number', 'LIKE', '%'.request()->input('room').'%');
             });
     }
 
@@ -52,5 +52,8 @@ class Room extends Model
 
     public function bookingRooms(){
         return $this->hasMany('App\Models\BookingRoom');
+    }
+    public function bookings(){
+        return $this->belongsToMany('App\Models\Booking', 'booking_rooms');
     }
 }

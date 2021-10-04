@@ -78,10 +78,10 @@
                                                 {{ $room->hotel->name }}
                                             </td>
                                             <td>
-                                                {{ $room->room_type->name }}
+                                                {{ $room->roomType->name }}
                                             </td>
                                             <td>
-                                                {{ $room->name }}
+                                                {{ $room->room_number }}
                                             </td>
                                             @foreach($selectedWeek as $day)
                                                 <td>
@@ -89,8 +89,8 @@
                                                         <input
                                                             class="form-check-input booking-checkbox"
                                                             type="checkbox"
-                                                            {{ $room->roomBookings->where('booking_date', $day->format('m/d/Y'))->first() ? 'checked' : '' }}
-                                                            data-booked="{{ optional($room->roomBookings->where('booking_date', $day->format('m/d/Y'))->first())->id ?? '' }}"
+                                                            {{ $room->bookings->where('booking_date', $day->format('m/d/Y'))->first() ? 'checked' : '' }}
+                                                            data-booked="{{ optional($room->bookings->where('booking_date', $day->format('m/d/Y'))->first())->id ?? '' }}"
                                                             data-day="{{ $day->format('m/d/Y') }}"
                                                             data-room="{{ $room->id }}"
                                                         >
@@ -116,18 +116,18 @@
 @section('scripts')
 @parent
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script>
+{{-- <script>
 $(document).ready(() => {
     $('.booking-checkbox').change(function() {
         var checkbox = this;
         if(this.checked) {
             $.ajax({
-                url: "{{ route('api.bookings.store') }}",
-                method: "post",
-                dataType: "json",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
+                // url: "{{ route('api.bookings.store') }}",
+                // method: "post",
+                // dataType: "json",
+                // headers: {
+                //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                // },
                 data: {
                     room_id: $(this).data('room'),
                     booking_date: $(this).data('day')
@@ -137,7 +137,7 @@ $(document).ready(() => {
                 $(this).attr('data-booked', data.id);
                 Swal.fire(
                     'Good job!',
-                    'Booking for room '+data.room.name+' on '+data.booking_date+' is added',
+                    'Booking for room '+data.room.room_number+' on '+data.booking_date+' is added',
                     'success'
                 );
             }).fail(function(data) {
@@ -164,7 +164,7 @@ $(document).ready(() => {
                 $(this).attr('data-booked', '');
                 Swal.fire(
                     'Good job!',
-                    'Booking for room '+data.room.name+' on '+data.booking_date+' is deleted',
+                    'Booking for room '+data.room.room_number+' on '+data.booking_date+' is deleted',
                     'success'
                 );
             }).fail(function(data) {
@@ -178,6 +178,6 @@ $(document).ready(() => {
         }
     });
 });
-</script>
+</script> --}}
 @endsection
 

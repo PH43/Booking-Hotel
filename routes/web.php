@@ -24,7 +24,6 @@ Route::get('/home', function () {
 
 // Admin
 
-Route::redirect('/', '/login');
 Route::get('/home', function () {
     if (session('status')) {
         return redirect()->route('admin.home')->with('status', session('status'));
@@ -34,7 +33,7 @@ Route::get('/home', function () {
 });
 
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'] ], function () {
     Route::get('/', 'App\Http\Controllers\Admin\HomeController@index')->name('home');
     // Permissions
     Route::delete('permissions/destroy', 'App\Http\Controllers\Admin\PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -63,8 +62,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     // Bookings
     Route::delete('bookings/destroy', 'App\Http\Controllers\Admin\BookingsController@massDestroy')->name('bookings.massDestroy');
     Route::resource('bookings', 'App\Http\Controllers\Admin\BookingsController');
+
+    
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

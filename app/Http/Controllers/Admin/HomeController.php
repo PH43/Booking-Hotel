@@ -34,14 +34,14 @@ class HomeController
         }
         $selectedWeek = $period->toArray();
 
-        $rooms = Room::filters()->with(['hotel', 'room_type', 'roomBookings' => function($query) use ($weekInput) {
+        $rooms = Room::filters()->with(['hotel', 'roomType', 'bookings' => function($query) use ($weekInput) {
                 $query->whereBetween('booking_date', count($weekInput) === 2 ? $weekInput : [ now()->startOfWeek(), now()->endOfWeek() ]);
             }])
             ->take(101)
             ->get();
 
         $hotels = Hotel::pluck('name', 'id');
-        $roomTypes = RoomType::pluck('type', 'id');
+        $roomTypes = RoomType::pluck('name', 'id');
 
         if($rooms->count() > 100)
         {
@@ -49,6 +49,5 @@ class HomeController
         }
 
         return view('admin/home', compact('rooms', 'hotels', 'roomTypes', 'weeks', 'selectedWeek'));
-        
     }
 }

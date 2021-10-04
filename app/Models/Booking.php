@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Booking extends Model
 {
     use SoftDeletes;
+    use HasFactory;
 
     public $table = 'bookings';
 
@@ -54,5 +56,8 @@ class Booking extends Model
     }
     public function bookingRooms(){
         return $this->hasMany('App\Models\BookingRoom');
+        
     }
+
+
 }

@@ -25,12 +25,11 @@ class UserFactory extends Factory
     {
 
                 return [
-                    'fullname'=>$this->faker->name(),
+                    'name'=>$this->faker->name(),
                     'email'=>$this ->faker->email(),
                     'address'=>$this ->faker->address(),
                     'phone'=>$this->faker->phoneNumber(),
-                    'username'=>$this->faker->firstName(),
-                    'password'=>Bcrypt('hwehfuwehfuig'),
+                    'password'=>Bcrypt('1234567890'),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];

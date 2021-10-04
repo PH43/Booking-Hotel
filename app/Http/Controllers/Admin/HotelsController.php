@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Hotel;
+use App\Models\Hotel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyHotelRequest;
 use App\Http\Requests\StoreHotelRequest;
@@ -15,7 +15,7 @@ class HotelsController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('hotel_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('hotel_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $hotels = Hotel::all();
 
@@ -24,7 +24,7 @@ class HotelsController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('hotel_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('hotel_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.hotels.create');
     }
@@ -38,7 +38,7 @@ class HotelsController extends Controller
 
     public function edit(Hotel $hotel)
     {
-        abort_if(Gate::denies('hotel_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('hotel_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.hotels.edit', compact('hotel'));
     }
@@ -52,7 +52,7 @@ class HotelsController extends Controller
 
     public function show(Hotel $hotel)
     {
-        abort_if(Gate::denies('hotel_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('hotel_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $hotel->load('hotelRooms');
 
@@ -61,7 +61,7 @@ class HotelsController extends Controller
 
     public function destroy(Hotel $hotel)
     {
-        abort_if(Gate::denies('hotel_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('hotel_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $hotel->delete();
 

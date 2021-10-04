@@ -20,6 +20,11 @@ class DatabaseSeeder extends Seeder
             RolePermissionTableSeeder::class,
             UserTableSeeder::class,
             RoleUserTableSeeder::class,
+            CouponTableSeeder::class,
+            BookingTableSeeder::class,
+            CategoryTableSeeder::class,
+            CityTableSeeder::class,
+            HotelTableSeeder::class,
         ]);
     }
 }
