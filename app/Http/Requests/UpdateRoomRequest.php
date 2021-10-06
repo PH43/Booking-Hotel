@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Room;
+use App\Models\Room;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,14 +19,14 @@ class UpdateRoomRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'         => [
+            'price'         => [
                 'required',
             ],
             'hotel_id'     => [
                 'required',
                 'integer',
             ],
-            'room_type_id' => [
+            'roomtype_id' => [
                 'required',
                 'integer',
             ],

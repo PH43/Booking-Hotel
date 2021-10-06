@@ -10,7 +10,7 @@
         <form method="POST" action="{{ route("admin.rooms.update", [$room->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.room.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $room->name) }}" required>
                 @if($errors->has('name'))
@@ -19,6 +19,22 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.room.fields.name_helper') }}</span>
+            </div> -->
+            <div class="form-group">
+                <label class="required" for="price">Price</label>
+                <input class="form-control" type="text" name="price" id="price" value="{{ old('price', $room->price) }}" required>
+            </div>
+            <div class="form-group">
+                <label class="required" for="status">Status</label>
+                <input class="form-control" type="text" name="status" id="status" value="{{ old('status', $room->status) }}" required>
+            </div>
+            <div class="form-group">
+                <label class="required" for="room_number">Room Number</label>
+                <input class="form-control" type="text" name="room_number" id="room_number" value="{{ old('room_number', $room->room_number) }}" required>
+            </div>
+            <div class="form-group">
+                <label class="required" for="description">Description</label>
+                <input class="form-control" type="text" name="description" id="description" value="{{ old('description', $room->description) }}" required>
             </div>
             <div class="form-group">
                 <label class="required" for="hotel_id">{{ trans('cruds.room.fields.hotel') }}</label>
@@ -35,15 +51,15 @@
                 <span class="help-block">{{ trans('cruds.room.fields.hotel_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="room_type_id">{{ trans('cruds.room.fields.room_type') }}</label>
-                <select class="form-control select2 {{ $errors->has('room_type') ? 'is-invalid' : '' }}" name="room_type_id" id="room_type_id" required>
+                <label class="required" for="roomtype_id">{{ trans('cruds.room.fields.room_type') }}</label>
+                <select class="form-control select2 {{ $errors->has('room_type') ? 'is-invalid' : '' }}" name="roomtype_id" id="roomtype_id" required>
                     @foreach($room_types as $id => $room_type)
-                        <option value="{{ $id }}" {{ ($room->room_type ? $room->room_type->id : old('room_type_id')) == $id ? 'selected' : '' }}>{{ $room_type }}</option>
+                        <option value="{{ $id }}" {{ ($room->roomType ? $room->roomType->id : old('roomtype_id')) == $id ? 'selected' : '' }}>{{ $room_type }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('room_type_id'))
+                @if($errors->has('roomtype_id'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('room_type_id') }}
+                        {{ $errors->first('roomtype_id') }}
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.room.fields.room_type_helper') }}</span>

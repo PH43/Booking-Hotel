@@ -50,13 +50,13 @@ class BookingsController extends Controller
 
             return $table->make(true);
         }
-
-        return view('admin.bookings.index');
+        $bookings= Booking::with('user','coupon')->get();
+        return view('admin.bookings.index',compact('bookings'));
     }
 
     public function create()
     {
-        // abort_if(Gate::denies('booking_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('booking_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $rooms = Room::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -72,11 +72,11 @@ class BookingsController extends Controller
 
     public function edit(Booking $booking)
     {
-        // abort_if(Gate::denies('booking_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('booking_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $rooms = Room::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $booking->load('room');
+        $booking->load('rooms');
 
         return view('admin.bookings.edit', compact('rooms', 'booking'));
     }
@@ -90,16 +90,16 @@ class BookingsController extends Controller
 
     public function show(Booking $booking)
     {
-        // abort_if(Gate::denies('booking_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('booking_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $booking->load('room');
+        $booking->load('rooms'); 
 
         return view('admin.bookings.show', compact('booking'));
     }
 
     public function destroy(Booking $booking)
     {
-        // abort_if(Gate::denies('booking_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('booking_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $booking->delete();
 

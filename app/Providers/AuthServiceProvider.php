@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+         'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
 
     /**
@@ -25,6 +25,225 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('user_management_access', function ($user){
+            foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+            // return false;
+        });
+            Gate::define('permission_access', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+            });
+                Gate::define('permission_create', function ($user){
+                    foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+                });
+                Gate::define('permission_delete', function ($user){
+                    foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+                });
+                Gate::define('permission_show', function ($user){
+                    foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+                });
+                Gate::define('permission_edit', function ($user){
+                    foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+                });
+            Gate::define('role_access', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+            });
+                Gate::define('role_create', function ($user){
+                    foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+                });
+                Gate::define('role_delete', function ($user){
+                    foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+                });
+                Gate::define('role_show', function ($user){
+                    foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+                });
+                Gate::define('role_edit', function ($user){
+                    foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+                });
+            Gate::define('user_access', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+            });
+                Gate::define('user_create', function ($user){
+                    foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+                });
+                Gate::define('user_delete', function ($user){
+                    foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+                });
+                Gate::define('user_show', function ($user){
+                    foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+                });
+                Gate::define('user_edit', function ($user){
+                    foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+                });
+
+
+        Gate::define('hotel_access', function ($user){
+            foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+        });
+            Gate::define('hotel_show', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+            });
+            Gate::define('hotel_create', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+            });
+            Gate::define('hotel_edit', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+            });
+            Gate::define('hotel_delete', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 1;
+                }
+            });
+
+        Gate::define('room_type_access', function ($user){
+            foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+        });
+            Gate::define('room_type_create', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('room_type_edit', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('room_type_show', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('room_type_delete', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+        Gate::define('room_access', function ($user){
+            foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+        });
+            Gate::define('room_create', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('room_edit', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('room_show', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('room_delete', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+        Gate::define('booking_access', function ($user){
+            foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+        });
+            Gate::define('booking_create', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('booking_edit', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('booking_show', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('booking_delete', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
     }
 }

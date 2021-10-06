@@ -58,13 +58,13 @@ class RoomsController extends Controller
 
             return $table->make(true);
         }
-
-        return view('admin.rooms.index');
+        $rooms = Room::with('hotel','roomType')->get();
+        return view('admin.rooms.index',compact('rooms'));
     }
 
     public function create()
-    {
-        // abort_if(Gate::denies('room_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    { 
+        abort_if(Gate::denies('room_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $hotels = Hotel::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -76,19 +76,18 @@ class RoomsController extends Controller
     public function store(StoreRoomRequest $request)
     {
         $room = Room::create($request->all());
-
         return redirect()->route('admin.rooms.index');
     }
 
     public function edit(Room $room)
     {
-        // abort_if(Gate::denies('room_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('room_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $hotels = Hotel::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $room_types = RoomType::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $room->load('hotel', 'room_type');
+        $room->load('hotel', 'roomType');
 
         return view('admin.rooms.edit', compact('hotels', 'room_types', 'room'));
     }
@@ -102,7 +101,7 @@ class RoomsController extends Controller
 
     public function show(Room $room)
     {
-        // abort_if(Gate::denies('room_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('room_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $room->load('hotel', 'room_type', 'roomBookings');
 
@@ -111,7 +110,7 @@ class RoomsController extends Controller
 
     public function destroy(Room $room)
     {
-        // abort_if(Gate::denies('room_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('room_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $room->delete();
 

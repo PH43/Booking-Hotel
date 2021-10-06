@@ -53,8 +53,13 @@
 
         <div class="myAccount nav__pc">
           <div class="ctaGroup">
-            <div class="cta"><i class="fa fa-sign-in-alt"></i>Sign In</div>
-            <div class="cta active">Create Account</div>
+            @if(Auth::check())
+              <b>Xin chào:&nbsp;</b> <p class="nav__mobile-link"> {{ Auth::user()->name}}</p>
+              <p><a href="{{ route('home.logout')}}" style="text-decoration:none">&nbsp;| Đăng xuất</a></p>
+            @else
+              <div class="cta"><a href="{{ route('home.login')}}"><i class="fa fa-sign-in-alt"></i>Sign In</a></div>
+              <div class="cta active">Register</div>
+            @endif
           </div>
         </div>
       </nav>

@@ -17,9 +17,9 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/home', function () {
-    return redirect()->route('admin.home');
-});
+// Route::get('/home', function () {
+//     return redirect()->route('admin.home');
+// });
 
 
 // Admin
@@ -32,8 +32,11 @@ Route::get('/home', function () {
     return redirect()->route('admin.home');
 });
 
+Route::get('admin/login','App\Http\Controllers\Admin\UsersController@showloginAdmin')->name('admin.showlogin');
+Route::post('admin/login','App\Http\Controllers\Admin\UsersController@loginAdmin')->name('admin.login');
+Route::get('admin/logout','App\Http\Controllers\Admin\UsersController@logoutAdmin')->name('admin.logout');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'] ], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['check.admin.user'] ], function () {
     Route::get('/', 'App\Http\Controllers\Admin\HomeController@index')->name('home');
     // Permissions
     Route::delete('permissions/destroy', 'App\Http\Controllers\Admin\PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -66,6 +69,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'] ],
     
 });
 
-Auth::routes();
+// home
+Route::get('/login','App\Http\Controllers\Home\UserController@showlogin')->name('home.showlogin');
+Route::post('/login','App\Http\Controllers\Home\UserController@login')->name('home.login');
+
+Route::get('/logout','App\Http\Controllers\Home\UserController@logout')->name('home.logout');
+
+Route::get('/register','App\Http\Controllers\Home\UserController@showregister')->name('home.register');
+Route::post('/register','App\Http\Controllers\Home\UserController@register')->name('home.register');
+
+
+// Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

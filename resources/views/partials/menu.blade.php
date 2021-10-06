@@ -10,7 +10,7 @@
                     {{ trans('global.dashboard') }}
                 </a>
             </li>
-            {{-- @can('user_management_access') --}}
+             @can('user_management_access') 
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-users nav-icon">
@@ -19,7 +19,7 @@
                         {{ trans('cruds.userManagement.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
-                        {{-- @can('permission_access')  --}}
+                         @can('permission_access')  
                             <li class="nav-item">
                                 <a href="{{ route("admin.permissions.index") }}" class="nav-link {{ request()->is('admin/permissions') || request()->is('admin/permissions/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-unlock-alt nav-icon">
@@ -28,8 +28,8 @@
                                     {{ trans('cruds.permission.title') }}
                                 </a>
                             </li>
-                        {{-- @endcan --}}
-                        {{-- @can('role_access') --}}
+                        @endcan 
+                       @can('role_access') 
                             <li class="nav-item">
                                 <a href="{{ route("admin.roles.index") }}" class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-briefcase nav-icon">
@@ -38,8 +38,8 @@
                                     {{ trans('cruds.role.title') }}
                                 </a>
                             </li>
-                        {{-- @endcan --}}
-                        {{-- @can('user_access')  --}}
+                         @endcan 
+                         @can('user_access')  
                             <li class="nav-item">
                                 <a href="{{ route("admin.users.index") }}" class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-user nav-icon">
@@ -48,11 +48,11 @@
                                     {{ trans('cruds.user.title') }}
                                 </a>
                             </li>
-                        {{-- @endcan  --}}
+                         @endcan  
                     </ul>
                 </li>
-            {{-- @endcan
-            @can('hotel_access')  --}}
+           @endcan
+            @can('hotel_access') 
                 <li class="nav-item">
                     <a href="{{ route("admin.hotels.index") }}" class="nav-link {{ request()->is('admin/hotels') || request()->is('admin/hotels/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-hotel nav-icon">
@@ -61,8 +61,8 @@
                         {{ trans('cruds.hotel.title') }}
                     </a>
                 </li>
-            {{-- @endcan
-            @can('room_type_access')  --}}
+             @endcan
+            @can('room_type_access') 
                 <li class="nav-item">
                     <a href="{{ route("admin.room-types.index") }}" class="nav-link {{ request()->is('admin/roomTypes') || request()->is('admin/roomTypes/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-cogs nav-icon">
@@ -71,8 +71,8 @@
                         {{ trans('cruds.roomType.title')}}
                     </a>
                 </li>
-            {{-- @endcan
-            @can('room_access') --}}
+             @endcan
+            @can('room_access') 
                 <li class="nav-item">
                     <a href="{{ route("admin.rooms.index") }}" class="nav-link {{ request()->is('admin/rooms') || request()->is('admin/rooms/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-hotel nav-icon">
@@ -81,8 +81,8 @@
                         {{ trans('cruds.room.title') }}
                     </a>
                 </li>
-            {{-- @endcan
-            @can('booking_access') --}}
+            @endcan
+            @can('booking_access')
                 <li class="nav-item">
                     <a href="{{ route("admin.bookings.index") }}" class="nav-link {{ request()->is('admin/bookings') || request()->is('admin/bookings/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-user-tag nav-icon">
@@ -91,13 +91,13 @@
                         {{ trans('cruds.booking.title') }}
                     </a>
                 </li>
-            {{-- @endcan --}}
+             @endcan 
             <li class="nav-item">
                 <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                     <i class="nav-icon fas fa-fw fa-sign-out-alt">
 
                     </i>
-                    {{ trans('global.logout') }}
+                    {{trans('global.logout')}}
                 </a>
             </li>
         </ul>

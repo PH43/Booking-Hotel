@@ -15,7 +15,7 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Room">
+        <!-- <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Room">
             <thead>
                 <tr>
                     <th width="10">
@@ -38,6 +38,88 @@
                     </th>
                 </tr>
             </thead>
+        </table> -->
+        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Room">
+            <thead>
+                <tr>
+                    <th width="10">
+
+                    </th>                   
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Room Number
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Hotel
+                    </th>
+                    <th>
+                        Room Type
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($rooms as $room)
+                <tr>
+                    <td></td>
+                    <td>
+                        {{ $room->id}}
+                    </td>                   
+                    <td>
+                       {{ $room->price}}
+                    </td>
+                    <td>
+                        {{ $room->room_number}}
+                    </td>
+                    <td>
+                        {{ $room->description}}
+                    </td>
+                    <td>
+                        {{ $room->hotel->name }}
+                    </td>
+                    <td>
+                        {{ $room->roomType->name }}
+                    </td>
+                    <td>
+                        {{ $room->status }}
+                    </td>
+                    <td>
+                    @can('room_show')
+                        <a class="btn btn-xs btn-primary" href="{{ route('admin.rooms.show', $room->id) }}">
+                            {{ trans('global.view') }}
+                        </a>
+                    @endcan
+
+                    @can('room_edit')
+                        <a class="btn btn-xs btn-info" href="{{ route('admin.rooms.edit', $room->id) }}">
+                            {{ trans('global.edit') }}
+                        </a>
+                    @endcan
+
+                    @can('room_delete')
+                        <form action="{{ route('admin.rooms.destroy', $room->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                        </form>
+                    @endcan
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
 </div>

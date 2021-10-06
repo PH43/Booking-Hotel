@@ -48,7 +48,7 @@ class Booking extends Model
         return $this->belongsTo('App\Models\User');
     }
     public function rooms(){
-        return $this->belongsToMany('App\Models\Room');
+        return $this->belongsToMany('App\Models\Room', 'booking_rooms');
     }
     
     public function coupon(){
