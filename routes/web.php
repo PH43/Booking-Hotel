@@ -82,3 +82,4 @@ Route::post('/register','App\Http\Controllers\Home\UserController@register')->na
 // Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/','App\Http\Controllers\RoomController@index')->name('home.index');

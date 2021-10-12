@@ -67,7 +67,7 @@
 	</div>
 	
 	<div class="w3footeragile">
-		<p> &copy; 2017 Existing Login Form. All Rights Reserved | Design by <a href="http://w3layouts.com" target="_blank">W3layouts</a></p>
+		<p> &copy; 2017 Existing Login Form. All Rights Reserved | Dũng & Hiền <a href="http://w3layouts.com" target="_blank"></a></p>
 	</div>
 
 	
