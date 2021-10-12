@@ -25,10 +25,26 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.room.fields.name') }}
+                            Price
                         </th>
                         <td>
-                            {{ $room->name }}
+                        {{ number_format($room->price)}}đ
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Room Number
+                        </th>
+                        <td>
+                            {{ $room->room_number }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Description
+                        </th>
+                        <td>
+                            {{ $room->description }}
                         </td>
                     </tr>
                     <tr>
@@ -44,9 +60,25 @@
                             {{ trans('cruds.room.fields.room_type') }}
                         </th>
                         <td>
-                            {{ $room->room_type->name ?? '' }}
+                            {{ $room->roomType->name  }}
                         </td>
                     </tr>
+                </tbody>
+                
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>
+                            Image
+                        </th>
+                        @foreach ($room->images as $image)
+                        <td>
+                            <img height="200px" width="200px" src="../../../resources/images/rooms/{{$image->path}}" alt="">
+                        </td>
+                        @endforeach
+                    </tr>
+                    
                 </tbody>
             </table>
             <div class="form-group">

@@ -1,3 +1,4 @@
+
 @extends('layouts.admin')
 @section('content')
 @can('room_create')
@@ -13,32 +14,10 @@
     <div class="card-header">
         {{ trans('cruds.room.title_singular') }} {{ trans('global.list') }}
     </div>
-
+    @if(session()->has('success'))
+        <b style="color: red;margin:20px">{{session()->get('success')}}</b> 
+    @endif
     <div class="card-body">
-        <!-- <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Room">
-            <thead>
-                <tr>
-                    <th width="10">
-
-                    </th>
-                    <th>
-                        {{ trans('cruds.room.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.room.fields.name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.room.fields.hotel') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.room.fields.room_type') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-            </thead>
-        </table> -->
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Room">
             <thead>
                 <tr>
@@ -53,12 +32,6 @@
                     </th>
                     <th>
                         Room Number
-                    </th>
-                    <th>
-                        Description
-                    </th>
-                    <th>
-                        Hotel
                     </th>
                     <th>
                         Room Type
@@ -79,22 +52,16 @@
                         {{ $room->id}}
                     </td>                   
                     <td>
-                       {{ $room->price}}
+                       {{ number_format($room->price)}}đ
                     </td>
                     <td>
                         {{ $room->room_number}}
                     </td>
                     <td>
-                        {{ $room->description}}
-                    </td>
-                    <td>
-                        {{ $room->hotel->name }}
-                    </td>
-                    <td>
                         {{ $room->roomType->name }}
                     </td>
                     <td>
-                        {{ $room->status }}
+                        <input type="checkbox" data-toggle="toggle" data-on="Enabled" data-off="Disabled">
                     </td>
                     <td>
                     @can('room_show')
@@ -123,8 +90,6 @@
         </table>
     </div>
 </div>
-
-
 
 @endsection
 @section('scripts')
@@ -187,5 +152,14 @@
     });
 });
 
+</script>
+
+<script>
+  $(function() {
+    $('#toggle-two').bootstrapToggle({
+      on: 'Enabled',
+      off: 'Disabled'
+    });
+  })
 </script>
 @endsection

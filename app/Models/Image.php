@@ -6,25 +6,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Coupon extends Model
+class Image extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
-    public $table = 'coupons';
+    use SoftDeletes;
+    use HasFactory;
+
+    public $table = 'images';
 
     protected $fillable = [
-        'code',
-        'remain',
-        'reduction',
-        'startDate',
-        'endDate',
+        'path',
+        'room_id',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
-    public function bookings(){
-        return $this->hasMany('App\Models\Booking');
+    public function room(){
+        return $this->belongsTo('App\Models\Room');
     }
 }

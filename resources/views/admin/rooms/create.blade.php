@@ -20,10 +20,6 @@
                 <span class="help-block">{{ trans('cruds.room.fields.name_helper') }}</span>
             </div> -->
             <div class="form-group">
-                <label class="required" for="status">Status</label>
-                <input class="form-control" type="text" name="status" id="status" value="{{ old('status', '') }}" required>
-            </div>
-            <div class="form-group">
                 <label class="required" for="price">Price</label>
                 <input class="form-control" type="text" name="price" id="price" value="{{ old('price', '') }}" required>
             </div>
@@ -63,7 +59,12 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.room.fields.room_type_helper') }}</span>
             </div>
-            
+            <div class="form-group">
+                <label class="required" for="status">Status</label><br>
+                <!-- <input class="form-control" type="text" name="status" id="status" value="{{ old('status', '') }}" required> -->
+                Trống <input type="radio" name="status" value="Trống">
+                Kín <input type="radio" check name="status" value="Kín">
+            </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

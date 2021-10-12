@@ -21,6 +21,11 @@ class StoreRoomRequest extends FormRequest
         return [
             'price'         => [
                 'required',
+                'numeric',
+            ],
+            'room_number'=>
+            [
+                'unique'
             ],
             'hotel_id'     => [
                 'required',

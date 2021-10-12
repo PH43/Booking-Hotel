@@ -59,4 +59,8 @@ class Room extends Model
     public function bookings(){
         return $this->belongsToMany('App\Models\Booking', 'booking_rooms');
     }
+
+    public function images(){
+        return $this->hasMany('App\Models\Image');
+    }
 }

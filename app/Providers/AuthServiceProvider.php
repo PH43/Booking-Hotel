@@ -245,5 +245,103 @@ class AuthServiceProvider extends ServiceProvider
                     return $role->pivot->role_id == 2;
                 }
             });
+            Gate::define('booking_access', function ($user){
+                foreach($user->roles as $role)
+                    {
+                        return $role->pivot->role_id == 2;
+                    }
+            });
+            Gate::define('coupon_create', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('coupon_edit', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('coupon_show', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('coupon_delete', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('coupon_access', function ($user){
+                foreach($user->roles as $role)
+                    {
+                        return $role->pivot->role_id == 2;
+                    }
+            });
+
+            Gate::define('image_create', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('image_edit', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('image_show', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('image_delete', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('image_access', function ($user){
+                foreach($user->roles as $role)
+                    {
+                        return $role->pivot->role_id == 2;
+                    }
+            });
+
+            Gate::define('booking_room_create', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('booking_room_edit', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('booking_room_show', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('booking_room_delete', function ($user){
+                foreach($user->roles as $role)
+                {
+                    return $role->pivot->role_id == 2;
+                }
+            });
+            Gate::define('booking_room_access', function ($user){
+                foreach($user->roles as $role)
+                    {
+                        return $role->pivot->role_id == 2;
+                    }
+            });
     }
 }

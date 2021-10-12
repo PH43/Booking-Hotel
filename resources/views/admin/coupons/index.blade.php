@@ -1,26 +1,20 @@
-
 @extends('layouts.admin')
-
 @section('content')
-
-@can('booking_create')
+@can('coupon_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.bookings.create") }}">
-                {{ trans('global.add') }} {{ trans('cruds.booking.title_singular') }}
+            <a class="btn btn-success" href="{{ route("admin.coupons.create") }}">
+                {{ trans('global.add') }} {{ trans('cruds.coupon.title_singular') }}
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.booking.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.coupon.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
-        @if(Session::has('messages'))
-            <div class="alert alert-success" role="alert">{{Session::get('messages')}}</div>
-        @endif
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Booking">
            
             <thead>
@@ -32,16 +26,19 @@
                         ID
                     </th>
                     <th>
-                        Booking Date
+                        Code
                     </th>
                     <th>
-                        Qty Room
+                        Remain
                     </th>
                     <th>
-                        Coupon
+                        Reduction
                     </th>
                     <th>
-                        Status
+                        startDate
+                    </th>
+                    <th>
+                        endDate
                     </th>
                     <th>
                         &nbsp;
@@ -49,32 +46,42 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($bookings as $booking)
+                @foreach($coupons as $coupon)
                 <tr>
                     <td></td>
                     <td>
-                        {{ $booking->id}}
+                        {{ $coupon->id}}
                     </td>                   
                     <td>
-                        {{ $booking->booking_date}}
+                       {{ $coupon->code}}
                     </td>
                     <td>
-                        {{ $booking->qty_room}}
+                        {{ $coupon->remain}}
                     </td>
                     <td>
-                        {{ $booking->coupon->reduction }}
+                        {{ $coupon->reduction}}
                     </td>
                     <td>
-                    {{ $booking->booking_msg }}
+                        {{ $coupon->startDate }}
                     </td>
                     <td>
-                        @can('booking_show')
-                            <a class="btn btn-xs btn-primary" href="{{ route('admin.bookings.show', $booking->id) }}">
-                                View
+                        {{ $coupon->endDate }}
+                    </td>
+                    <td>
+                        @can('coupon_show')
+                            <a class="btn btn-xs btn-primary" href="{{ route('admin.coupons.show', $coupon->id) }}">
+                                {{ trans('global.view') }}
                             </a>
                         @endcan
+
+                        @can('coupon_edit')
+                            <a class="btn btn-xs btn-info" href="{{ route('admin.coupons.edit', $coupon->id) }}">
+                                {{ trans('global.edit') }}
+                            </a>
+                        @endcan
+
                         @can('booking_delete')
-                            <form action="{{ route('admin.bookings.destroy', $booking->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                            <form action="{{ route('admin.coupons.destroy', $coupon->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">

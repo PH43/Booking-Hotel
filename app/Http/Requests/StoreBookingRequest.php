@@ -19,13 +19,8 @@ class StoreBookingRequest extends FormRequest
     public function rules()
     {
         return [
-            'room_id'      => [
-                'required',
-                'integer',
-            ],
             'booking_date' => [
                 'required',
-                'date_format:' . config('panel.date_format'),
             ],
         ];
     }

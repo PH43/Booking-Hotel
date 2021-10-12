@@ -10,28 +10,29 @@
         <form method="POST" action="{{ route("admin.bookings.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label class="required" for="room_id">{{ trans('cruds.booking.fields.room') }}</label>
-                <select class="form-control select2 {{ $errors->has('room') ? 'is-invalid' : '' }}" name="room_id" id="room_id" required>
-                    @foreach($rooms as $id => $room)
-                        <option value="{{ $id }}" {{ old('room_id') == $id ? 'selected' : '' }}>{{ $room }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('room_id'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('room_id') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.booking.fields.room_helper') }}</span>
+                <label class="required" for="user_id">Customer Name <i style="color:red"> *</i></label>
+                <input class="form-control" type="text" name="user_id" id="user_id" value="{{ old('user_id', '') }}" required>
             </div>
             <div class="form-group">
-                <label class="required" for="booking_date">{{ trans('cruds.booking.fields.booking_date') }}</label>
-                <input class="form-control date {{ $errors->has('booking_date') ? 'is-invalid' : '' }}" type="text" name="booking_date" id="booking_date" value="{{ old('booking_date') }}" required>
-                @if($errors->has('booking_date'))
+                <label class="required" for="booking_date">Booking Date <i style="color:red"> *</i></label>
+                <input class="form-control" type="date" name="booking_date" id="booking_date" value="{{ old('booking_date','') }}" required>
+            </div>
+            <div class="form-group">
+                <label class="required" for="qty_room">Qty Room <i style="color:red"> *</i></label>
+                <input class="form-control" type="number" name="qty_room" id="qty_room" value="{{ old('qty_room', '') }}" required>
+            </div>
+            <div class="form-group">
+                <label class="required" for="coupon_id">Coupon</label>
+                <select class="form-control" name="coupon_id" id="coupon_id">
+                    @foreach($coupons as $id => $coupon)
+                        <option value="{{ $id }}" {{ ( old('coupon_id')) == $id ? 'selected' : '' }}>{{ $coupon }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('coupon_id'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('booking_date') }}
+                        {{ $errors->first('coupon_id') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.booking.fields.booking_date_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

@@ -1,27 +1,23 @@
-
 @extends('layouts.admin')
-
 @section('content')
-
-@can('booking_create')
+@can('image_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.bookings.create") }}">
-                {{ trans('global.add') }} {{ trans('cruds.booking.title_singular') }}
+            <a class="btn btn-success" href="{{ route("admin.images.create") }}">
+                {{ trans('global.add') }} {{ trans('cruds.image.title_singular') }}
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.booking.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.image.title_singular') }} {{ trans('global.list') }}
     </div>
-
+    @if(session()->has('success'))
+        <div class="alert alert-success">{{session()->get('success')}}</div> 
+    @endif
     <div class="card-body">
-        @if(Session::has('messages'))
-            <div class="alert alert-success" role="alert">{{Session::get('messages')}}</div>
-        @endif
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Booking">
+        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Image">
            
             <thead>
                 <tr>
@@ -32,16 +28,10 @@
                         ID
                     </th>
                     <th>
-                        Booking Date
+                        Image
                     </th>
                     <th>
-                        Qty Room
-                    </th>
-                    <th>
-                        Coupon
-                    </th>
-                    <th>
-                        Status
+                        Room Number
                     </th>
                     <th>
                         &nbsp;
@@ -49,37 +39,23 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($bookings as $booking)
+                @foreach($images as $image)
                 <tr>
                     <td></td>
                     <td>
-                        {{ $booking->id}}
+                        {{ $image->id}}
                     </td>                   
                     <td>
-                        {{ $booking->booking_date}}
+                        <img height="80px" src="../../resources/images/rooms/{{$image->path}}" alt="">
                     </td>
                     <td>
-                        {{ $booking->qty_room}}
+                        @if($image->room !=NULL)                
+                        <a href="{{ route('admin.rooms.show',$image->room->id)}}">{{ $image->room->room_number }}</a>
+                        @endif
                     </td>
+                    
                     <td>
-                        {{ $booking->coupon->reduction }}
-                    </td>
-                    <td>
-                    {{ $booking->booking_msg }}
-                    </td>
-                    <td>
-                        @can('booking_show')
-                            <a class="btn btn-xs btn-primary" href="{{ route('admin.bookings.show', $booking->id) }}">
-                                View
-                            </a>
-                        @endcan
-                        @can('booking_delete')
-                            <form action="{{ route('admin.bookings.destroy', $booking->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                            </form>
-                        @endcan
+                        
                     </td>
                 </tr>
                 @endforeach

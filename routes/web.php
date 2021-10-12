@@ -63,9 +63,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['check.adm
     Route::resource('rooms', 'App\Http\Controllers\Admin\RoomsController');
 
     // Bookings
+    Route::put('bookings/update-status/{id}','App\Http\Controllers\Admin\BookingsController@bookingStatus')->name('update.status');
+    Route::put('bookings/cancel-booking/{id}','App\Http\Controllers\Admin\BookingsController@cancelBooking')->name('cancel.booking');
+    Route::put('bookings/complete-booking/{id}','App\Http\Controllers\Admin\BookingsController@completeBooking')->name('complete.booking');
     Route::delete('bookings/destroy', 'App\Http\Controllers\Admin\BookingsController@massDestroy')->name('bookings.massDestroy');
     Route::resource('bookings', 'App\Http\Controllers\Admin\BookingsController');
+    
 
+    // Coupons
+    Route::delete('coupons/destroy', 'App\Http\Controllers\Admin\CouponsController@massDestroy')->name('coupons.massDestroy');
+    Route::resource('coupons', 'App\Http\Controllers\Admin\CouponsController');
+    
+
+    // Image
+    Route::delete('images/destroy', 'App\Http\Controllers\Admin\ImagesController@massDestroy')->name('images.massDestroy');
+    Route::resource('images', 'App\Http\Controllers\Admin\ImagesController');
+
+   
     
 });
 

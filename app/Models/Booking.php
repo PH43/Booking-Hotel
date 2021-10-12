@@ -18,7 +18,7 @@ class Booking extends Model
         'updated_at',
         'created_at',
         'deleted_at',
-        'booking_date',
+        
         
     ];
 
@@ -32,16 +32,6 @@ class Booking extends Model
         'deleted_at',
     ];
 
-
-    // public function getBookingDateAttribute($value)
-    // {
-    //     return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    // }
-
-    // public function setBookingDateAttribute($value)
-    // {
-    //     $this->attributes['booking_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    // }
 
 
     public function user(){
