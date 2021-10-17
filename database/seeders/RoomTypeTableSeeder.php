@@ -15,9 +15,11 @@ class RoomTypeTableSeeder extends Seeder
     public function run()
     {
         $data = [
-            ['name'=>'giường đôi'],
-            ['name'=>'giường đơn'],
-            
+            ['type'=>'Standard (STD)', 'bed' => '2',  'capactity' => '2'],
+            ['type'=>'Superior (SUP)', 'bed' => '2',  'capactity' => '2'],
+            ['type'=>'Deluxe (DLX)', 'bed' => '2',  'capactity' => '3'],
+            ['type'=>'Suite (SUT)', 'bed' => '1',  'capactity' => '3'],
+            ['type'=>'Connecting room','bed' => '4',  'capactity' => '8'],
         ];
         RoomType::insert($data);
     }

@@ -18,4 +18,8 @@ class City extends Model
     {
         return $this->hasMany('App\Models\Hotel', 'hotel_id', 'id');
     }
+    public function rooms()
+    {
+        return $this->hasManyThrough('App\Models\Room', 'App\Models\Hotel','city_id', 'hotel_id', 'id');
+    }
 }

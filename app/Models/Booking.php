@@ -48,14 +48,14 @@ class Booking extends Model
         return $this->belongsTo('App\Models\User');
     }
     public function rooms(){
-        return $this->belongsToMany('App\Models\Room', 'booking_rooms');
+        return $this->belongsToMany('App\Models\Room', 'booking_rooms', 'booking_id', 'room_id');
     }
     
     public function coupon(){
         return $this->belongsTo('App\Models\Coupon');
     }
     public function bookingRooms(){
-        return $this->hasMany('App\Models\BookingRoom');
+        return $this->hasMany('App\Models\BookingRoom', 'booking_id');
         
     }
 

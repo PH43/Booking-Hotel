@@ -21,6 +21,7 @@ class CreateHotelsTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->string('website');
             $table->string('description');
+            $table->integer('star');
             $table->timestamps();
             $table->softDeletes();
 

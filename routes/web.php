@@ -13,13 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-
-// Route::get('/home', function () {
-//     return redirect()->route('admin.home');
-// });
 
 
 // Admin
@@ -81,5 +74,6 @@ Route::post('/register','App\Http\Controllers\Home\UserController@register')->na
 
 // Auth::routes();
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/','App\Http\Controllers\RoomController@index')->name('home.index');
+Route::get('/','App\Http\Controllers\HomeController@index')->name('home.index');
+
+Route::post('/search','App\Http\Controllers\HomeController@searchhotel')->name('search.hotel');

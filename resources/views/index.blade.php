@@ -10,7 +10,10 @@
   <link rel="stylesheet" href="../resources/css/btr.css" />
   <link rel="stylesheet" href="../resources/css/bootstrap.min.css" />
   <link rel="stylesheet" href="../resources/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="../resources/css/style.scss" />
+  <link rel="stylesheet" href="../resources/css/style.css" />
+  <link rel="stylesheet" href="../resources/js/bootstrap.bundle.min.js" />
+
+
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="../resources/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
@@ -78,10 +81,10 @@
         <div class="myAccount nav__pc">
           <div class="ctaGroup">
             @if(Auth::check())
-              <b>Xin chào:&nbsp;</b> <p class="nav__mobile-link"> {{ Auth::user()->name}}</p>
-              <p><a href="{{ route('home.logout')}}" style="text-decoration:none">&nbsp;| Đăng xuất</a></p>
+              <b>Xin chào:&nbsp;</b> <p class="nav__mobile-link" style="margin: 0px"> {{ Auth::user()->name}}</p>
+              <p style="margin: 0px ;"><a href="{{ route('home.logout')}}" style="text-decoration:none">&nbsp;| Đăng xuất</a></p>
             @else
-              <div class="cta"><a href="{{ route('home.login')}}">Sign In</a></div>
+              <div class="cta"><a href="{{ route('home.login')}}" style="color: black">Sign In</a></div>
               <div class="cta active"><a style="color: white" href="{{ route('home.register')}}">Register</a></div> 
             @endif
           </div>
@@ -93,7 +96,6 @@
 
       <div class="info PC">
         <h2>Book hotels online</h2>
-        <p>Lorem ipsum dolor sit.</p>
       </div>
 
       <div class="booking_info PC">
@@ -103,29 +105,33 @@
           <span class="tab__link">Homes</span>
         </div>
 
-        <div class="booking_details tab__content" id="Hotels">
+        <form class="booking_details tab__content" id="Hotels" action="{{ route('search.hotel') }}" method="POST" >
           <div class="item">
-             <i class="fa fa-search"></i><input class="timkiem" type="text" placeholder="Enter a destination" style="border: none;padding-left: 4px;">
+             <i class="fa fa-search"></i>
+             <input class="timkiem" type="text" name="city" placeholder="Enter a destination" style="border: none;padding-left: 4px;">
           </div>
 
           <div class="item">
-            <div class="date">31st Dec 2020 <i class="fa fa-angle-down"></i></div>
-            <div class="days">Thursday</div>
+            <p style="margin: 0px;">Thời gian đến:</p>
+            <input type="date"  name="startDate" value="{{ $dtnow }}">
           </div>
 
           <div class="item">
-            <div class="date">31st Dec 2020 <i class="fa fa-angle-down"></i></div>
-            <div class="days">Thursday</div>
+            <p style="margin: 0px;">Thời điểm đi:</p>
+            <input type="date" name="endDate" value="{{ $dt }}">
           </div>
 
-          <div class="item">
+          {{-- <div class="item">
             <div class="people">2 adults, 0 children <i class="fa fa-angle-down"></i></div>
-          </div>
+          </div> --}}
 
           <div class="item">
-            <div class="cta active">Search</div>
+            <div class="cta active">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+              <input class="cta active" type="submit" value="Tìm">
+            </div>
           </div>
-        </div>
+        </form>
 
         <div class="booking_details tab__content" id="Homes">
           <div class="item">
@@ -268,7 +274,7 @@
 
   </main>
 
-  <div class="topdiemden" style="margin: 0 auto; padding-inline: 100px; margin-top: 20px; background-color: white;">
+  <div class="roomtype" style="margin: 0 auto; padding-inline: 100px; margin-top: 20px; background-color: white;">
     <div class="roww mrgl0 mrgr0">
       <div class="deals-title mrgb1x">
         <h3>
@@ -296,6 +302,9 @@
                 <h3 class="mrgt1x mrgb05 padl1x padr1x">
                   <a class="title-promotion " href="//khachsan.chudu24.com/ks.5921.melia-ho-tram-beach-resort.html" target="_blank" hotelname=" {{ $room->hotel->name }}" hotelidint=" {{ $room->hotel->id }}" roomtypeidint=" {{ $room->roomType->id }}">{{ $room->hotel->name }}</a>
                 </h3>
+                    @for ($i=0; $i < $room->hotel->star; $i++)
+                      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" viewBox="0 0 576 512" style="height: 12px;"><path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" style="color: #f38e11;"/></svg>
+                    @endfor
                 <div class="padb1x padl1x padr1x">
                   <span class="summary">Giá đặc biệt chỉ từ <span>{{ $room->price}}</span>/đêm</span>
                 </div>
@@ -307,7 +316,7 @@
     </div> 
   </div>
 
-  <div class="roomtype" style="margin: 0 auto; padding-inline: 100px; margin-top: 20px; background-color: #e7e7e7;">
+  <div class="topdiemden" style="margin: 0 auto; padding-inline: 100px; margin-top: 20px; background-color: #e7e7e7;">
     <div class="roww mrgl0 mrgr0">
       <div class="deals-title mrgb1x">
         <h3>
@@ -318,18 +327,18 @@
       <div class="rowư flexboxx">
 
 
-        @foreach($rooms as $key => $room)
-            <div id="{{ $room->id }}" iddanhmuc="97" class=" flexitem flexitem_4">
+        @foreach($cities as $key => $city)
+            <div id="" iddanhmuc="97" class=" flexitem flexitem_4">
               <div class="popluar-category" style="background-color: white;">
-                <a  title=" {{ $room->hotel->name }}" class="mihawk-list-hotel popup_detail" >
+                <a  title=" {{ $city->city }}" class="mihawk-list-hotel popup_detail" >
                   <span class="thumb-info">
                     <div  class="thumb-info-wrapper">
-                      <img class="img"  title="  {{ $room->hotel->name }} " src="https://du-lich.chudu24.com/f/m/1907/30/melia-ho-tram-6701-1632578.jpg?w=266&amp;h=232">
+                      <img class="img"  title="" src="https://du-lich.chudu24.com/f/m/1907/30/melia-ho-tram-6701-1632578.jpg?w=266&amp;h=232">
                     </div>
                   </span>
                 </a>
                 <h3 class="mrgt1x mrgb05 padl1x padr1x" style="padding: 30px 0 30px 10px;">
-                  <a class="title-promotion " href="//khachsan.chudu24.com/ks.5921.melia-ho-tram-beach-resort.html" target="_blank" hotelname=" {{ $room->hotel->name }}" hotelidint=" {{ $room->hotel->id }}" roomtypeidint=" {{ $room->roomType->id }}" style="font-weight: 500;">{{ $room->hotel->name }}</a>
+                  <a class="title-promotion " href="//khachsan.chudu24.com/ks.5921.melia-ho-tram-beach-resort.html" target="_blank" hotelname=" " hotelidint="" roomtypeidint="" style="font-weight: 500;">{{ $city->city }}</a>
                 </h3>
               </div>
             </div>
@@ -339,7 +348,7 @@
     </div> 
   </div>
 
-  <div class="topdiemden" style="margin: 0 auto; padding-inline: 100px; margin-top: 20px; background-color: white; padding-bottom: 50px;border-bottom: 5px solid #f38e11;">
+  <div class="chancang" style="margin: 0 auto; padding-inline: 100px; margin-top: 20px; background-color: white; padding-bottom: 50px;border-bottom: 5px solid #f38e11;">
     <div class="roww mrgl0 mrgr0">
       <div class="deals-title mrgb1x">
         <h3>
@@ -563,30 +572,28 @@
       </div>
       <div class="footer__bottom">
         <div class="" style="margin: 0 auto;padding-inline: 100px;margin-top: 20px;background-color: #f38e11;display: flex;height: 50px;align-items: center;justify-content: space-between;">
-          <p class="footer__copyright" style="float: left;width: 50%;margin: 0;">Web bookinghotel © 2021 Bookinghotel.vn</p>
+          <p class="footer__copyright" style="float: left;width: 50%;margin: 0; color: black">Web bookinghotel © 2021 Bookinghotel.vn</p>
           <div class="footer__social" style="float: right;">
-            <a href="https://www.facebook.com/vntrip" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.facebook.com/nguyendoun1001" target="_blank" rel="noopener noreferrer">
               <svg width="18" height="18" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                 <path d="m437 0h-362c-41.351562 0-75 33.648438-75 75v362c0 41.351562 33.648438 75 75 75h151v-181h-60v-90h60v-61c0-49.628906 40.371094-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.351562 0 75-33.648438 75-75v-362c0-41.351562-33.648438-75-75-75zm0 0"></path>
               </svg>
-              <span>Facebook</span>
+              <span style="color: black">Facebook</span>
             </a>
-            <a href="https://www.instagram.com/vntrip.vn/" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.instagram.com/nguyendoun1001/" target="_blank" rel="noopener noreferrer">
               <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="m12.004 5.838c-3.403 0-6.158 2.758-6.158 6.158 0 3.403 2.758 6.158 6.158 6.158 3.403 0 6.158-2.758 6.158-6.158 0-3.403-2.758-6.158-6.158-6.158zm0 10.155c-2.209 0-3.997-1.789-3.997-3.997s1.789-3.997 3.997-3.997 3.997 1.789 3.997 3.997c.001 2.208-1.788 3.997-3.997 3.997z"></path>
                 <path d="m16.948.076c-2.208-.103-7.677-.098-9.887 0-1.942.091-3.655.56-5.036 1.941-2.308 2.308-2.013 5.418-2.013 9.979 0 4.668-.26 7.706 2.013 9.979 2.317 2.316 5.472 2.013 9.979 2.013 4.624 0 6.22.003 7.855-.63 2.223-.863 3.901-2.85 4.065-6.419.104-2.209.098-7.677 0-9.887-.198-4.213-2.459-6.768-6.976-6.976zm3.495 20.372c-1.513 1.513-3.612 1.378-8.468 1.378-5 0-7.005.074-8.468-1.393-1.685-1.677-1.38-4.37-1.38-8.453 0-5.525-.567-9.504 4.978-9.788 1.274-.045 1.649-.06 4.856-.06l.045.03c5.329 0 9.51-.558 9.761 4.986.057 1.265.07 1.645.07 4.847-.001 4.942.093 6.959-1.394 8.453z"></path>
                 <circle cx="18.406" cy="5.595" r="1.439"></circle>
               </svg>
-              <span>Instagram</span>
+              <span style="color: black">Instagram</span>
             </a>
           </div>
         </div>
       </div>
-    </footer>
-
+  </footer>
 
     
-  
 
 
         <!-- Modal -->
@@ -694,6 +701,569 @@
     }
     showContent('Hotels');
 </script>
+<script type="text/javascript">
+    function getWeekNumber(date) {
+      const firstDayOfTheYear = new Date(date.getFullYear(), 0, 1);
+      const pastDaysOfYear = (date - firstDayOfTheYear) / 86400000;
+      
+      return Math.ceil((pastDaysOfYear + firstDayOfTheYear.getDay() + 1) / 7)
+    }
 
+    function isLeapYear(year) {
+      return year % 100 === 0 ? year % 400 === 0 : year % 4 === 0;
+    }
 
+    class Day {
+      constructor(date = null, lang = 'default') {
+        date = date ?? new Date();
+        
+        this.Date = date;
+        this.date = date.getDate();
+        this.day = date.toLocaleString(lang, { weekday: 'long'});
+        this.dayNumber = date.getDay() + 1;
+        this.dayShort = date.toLocaleString(lang, { weekday: 'short'});
+        this.year = date.getFullYear();
+        this.yearShort = date.toLocaleString(lang, { year: '2-digit'});
+        this.month = date.toLocaleString(lang, { month: 'long'});
+        this.monthShort = date.toLocaleString(lang, { month: 'short'});
+        this.monthNumber = date.getMonth() + 1;
+        this.timestamp = date.getTime();
+        this.week = getWeekNumber(date);
+      }
+  
+      get isToday() {
+        return this.isEqualTo(new Date());
+      }
+      
+      isEqualTo(date) {
+        date = date instanceof Day ? date.Date : date;
+        
+        return date.getDate() === this.date &&
+          date.getMonth() === this.monthNumber - 1 &&
+          date.getFullYear() === this.year;
+      }
+  
+        format(formatStr) {
+          return formatStr
+            .replace(/\bYYYY\b/, this.year)
+            .replace(/\bYYY\b/, this.yearShort)
+            .replace(/\bWW\b/, this.week.toString().padStart(2, '0'))
+            .replace(/\bW\b/, this.week)
+            .replace(/\bDDDD\b/, this.day)
+            .replace(/\bDDD\b/, this.dayShort)
+            .replace(/\bDD\b/, this.date.toString().padStart(2, '0'))
+            .replace(/\bD\b/, this.date)
+            .replace(/\bMMMM\b/, this.month)
+            .replace(/\bMMM\b/, this.monthShort)
+            .replace(/\bMM\b/, this.monthNumber.toString().padStart(2, '0'))
+            .replace(/\bM\b/, this.monthNumber)
+        }
+      }
+
+      class Month {
+        constructor(date = null, lang = 'default') {
+          const day = new Day(date, lang);
+          const monthsSize = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+          this.lang = lang;
+          
+          this.name = day.month;
+          this.number = day.monthNumber;
+          this.year = day.year;
+          this.numberOfDays = monthsSize[this.number - 1];
+          
+          if(this.number === 2) {
+            this.numberOfDays += isLeapYear(day.year) ? 1 : 0;
+          }
+          
+          this[Symbol.iterator] = function* () {
+            let number = 1;
+            yield this.getDay(number);
+            while(number < this.numberOfDays) {
+              ++number;
+              yield this.getDay(number);
+            }
+          }
+        }
+        
+        getDay(date) {
+          return new Day(new Date(this.year, this.number - 1, date), this.lang);
+        }
+      }
+
+      class Calendar {
+        weekDays = Array.from({length: 7});
+        
+        constructor(year = null, monthNumber = null, lang = 'default') {
+          this.today = new Day(null, lang);
+          this.year = year ?? this.today.year;
+          this.month = new Month(new Date(this.year, (monthNumber || this.today.monthNumber) - 1), lang);
+          this.lang = lang;
+          
+          this[Symbol.iterator] = function* () {
+            let number = 1;
+            yield this.getMonth(number);
+            while(number < 12) {
+              ++number;
+              yield this.getMonth(number);
+            }
+          }
+          
+          this.weekDays.forEach((_, i) => {
+            const day = this.month.getDay(i + 1);
+            if(!this.weekDays.includes(day.day)) {
+              this.weekDays[day.dayNumber - 1] = day.day
+            }
+          })
+        }
+  
+        get isLeapYear() {
+          return isLeapYear(this.year);
+        }
+        
+        getMonth(monthNumber) {
+          return new Month(new Date(this.year, monthNumber - 1), this.lang);
+        }
+        
+        getPreviousMonth() {
+          if(this.month.number === 1) {
+            return new Month(new Date(this.year - 1, 11), this.lang);
+          }
+          
+          return new Month(new Date(this.year, this.month.number - 2), this.lang);
+        }
+        
+        getNextMonth() {
+          if(this.month.number === 12) {
+            return new Month(new Date(this.year + 1, 0), this.lang);
+          }
+          
+          return new Month(new Date(this.year, this.month.number + 2), this.lang);
+        }
+        
+        goToDate(monthNumber, year) {
+          this.month = new Month(new Date(year, monthNumber - 1), this.lang);
+          this.year = year;
+        }
+        
+        goToNextYear() {
+          this.year += 1;
+          this.month = new Month(new Date(this.year, 0), this.lang);
+        }
+        
+        goToPreviousYear() {
+          this.year -= 1;
+          this.month = new Month(new Date(this.year, 11), this.lang);
+        }
+        
+        goToNextMonth() {
+          if(this.month.number === 12) {
+            return this.goToNextYear();
+          }
+          
+          this.month = new Month(new Date(this.year, (this.month.number + 1) - 1), this.lang);
+        }
+        
+        goToPreviousMonth() {
+          if(this.month.number === 1) {
+            return this.goToPreviousYear();
+          }
+          
+          this.month = new Month(new Date(this.year, (this.month.number - 1) - 1), this.lang);
+        }
+      }
+
+      class DatePicker extends HTMLElement {
+        format = 'MMM DD, YYYY';
+        position = 'bottom';
+        visible = false;
+        date = null;
+        mounted = false;
+        // elements
+        toggleButton = null;
+        calendarDropDown = null;
+        calendarDateElement = null;
+        calendarDaysContainer = null;
+        selectedDayElement = null;
+        
+        constructor() {
+          super();
+          
+          const lang = window.navigator.language;
+          const date = new Date(this.date ?? (this.getAttribute("date") || Date.now()));
+          
+          this.shadow = this.attachShadow({mode: "open"});
+          this.date = new Day(date, lang);
+          this.calendar = new Calendar(this.date.year, this.date.monthNumber, lang);
+          
+          this.format = this.getAttribute('format') || this.format;
+          this.position = DatePicker.position.includes(this.getAttribute('position'))
+            ? this.getAttribute('position')
+            : this.position;
+          this.visible = this.getAttribute('visible') === '' 
+            || this.getAttribute('visible') === 'true'
+            || this.visible;
+          
+          this.render();
+        }
+        
+        connectedCallback() {
+          this.mounted = true;
+          
+          this.toggleButton = this.shadow.querySelector('.date-toggle');
+          this.calendarDropDown = this.shadow.querySelector('.calendar-dropdown');
+          const [prevBtn, calendarDateElement, nextButton] = this.calendarDropDown
+            .querySelector('.header').children;
+          this.calendarDateElement = calendarDateElement;
+          this.calendarDaysContainer = this.calendarDropDown.querySelector('.month-days');
+          
+          this.toggleButton.addEventListener('click', () => this.toggleCalendar());
+          prevBtn.addEventListener('click', () => this.prevMonth());
+          nextButton.addEventListener('click', () => this.nextMonth());
+          document.addEventListener('click', (e) => this.handleClickOut(e));
+          
+          this.renderCalendarDays();
+        }
+        
+        attributeChangedCallback(name, oldValue, newValue) {
+          if(!this.mounted) return;
+          
+          switch(name) {
+            case "date":
+              this.date = new Day(new Date(newValue));
+              this.calendar.goToDate(this.date.monthNumber, this.date.year);
+              this.renderCalendarDays();
+              this.updateToggleText();
+              break;
+            case "format":
+              this.format = newValue;
+              this.updateToggleText();
+              break;
+            case "visible":
+              this.visible = ['', 'true', 'false'].includes(newValue) 
+                ? newValue === '' || newValue === 'true'
+                : this.visible;
+              this.toggleCalendar(this.visible);
+              break;
+            case "position":
+              this.position = DatePicker.position.includes(newValue)
+                ? newValue
+                : this.position;
+              this.calendarDropDown.className = 
+                `calendar-dropdown ${this.visible ? 'visible' : ''} ${this.position}`;
+              break;
+          }
+        }
+        
+        toggleCalendar(visible = null) {
+          if(visible === null) {
+            this.calendarDropDown.classList.toggle('visible');
+          } else if(visible) {
+            this.calendarDropDown.classList.add('visible');
+          } else {
+            this.calendarDropDown.classList.remove('visible');
+          }
+          
+          this.visible = this.calendarDropDown.className.includes('visible');
+          
+          if(this.visible) {
+            this.calendarDateElement.focus();
+          } else {
+            this.toggleButton.focus();
+            
+            if(!this.isCurrentCalendarMonth()) {
+              this.calendar.goToDate(this.date.monthNumber, this.date.year);
+              this.renderCalendarDays();
+            }
+          }
+        }
+        
+        prevMonth() {
+          this.calendar.goToPreviousMonth();
+          this.renderCalendarDays();
+        }
+        
+        nextMonth() {
+          this.calendar.goToNextMonth();
+          this.renderCalendarDays();
+        }
+        
+        updateHeaderText() {
+          this.calendarDateElement.textContent = 
+            `${this.calendar.month.name}, ${this.calendar.year}`;
+          const monthYear = `${this.calendar.month.name}, ${this.calendar.year}`
+          this.calendarDateElement
+            .setAttribute('aria-label', `current month ${monthYear}`);
+        }
+        
+        isSelectedDate(date) {
+          return date.date === this.date.date &&
+            date.monthNumber === this.date.monthNumber &&
+            date.year === this.date.year;
+        }
+        
+        isCurrentCalendarMonth() {
+          return this.calendar.month.number === this.date.monthNumber &&
+            this.calendar.year === this.date.year;
+        }
+        
+        selectDay(el, day) {
+          if(day.isEqualTo(this.date)) return;
+          
+          this.date = day;
+          
+          if(day.monthNumber !== this.calendar.month.number) {
+            this.prevMonth();
+          } else {
+            el.classList.add('selected');
+            this.selectedDayElement.classList.remove('selected');
+            this.selectedDayElement = el;
+          }
+          
+          this.toggleCalendar();
+          this.updateToggleText();
+        }
+        
+        handleClickOut(e) {
+          if(this.visible && (this !== e.target)) {
+            this.toggleCalendar(false);
+          }
+        }
+        
+        getWeekDaysElementStrings() {
+          return this.calendar.weekDays
+            .map(weekDay => `<span>${weekDay.substring(0, 3)}</span>`)
+            .join('');
+        }
+        
+        getMonthDaysGrid() {
+          const firstDayOfTheMonth = this.calendar.month.getDay(1);
+          const prevMonth = this.calendar.getPreviousMonth();
+          const totalLastMonthFinalDays = firstDayOfTheMonth.dayNumber - 1;
+          const totalDays = this.calendar.month.numberOfDays + totalLastMonthFinalDays;
+          const monthList = Array.from({length: totalDays});
+          
+          for(let i = totalLastMonthFinalDays; i < totalDays; i++) {
+            monthList[i] = this.calendar.month.getDay(i + 1 - totalLastMonthFinalDays)
+          }
+          
+          for(let i = 0; i < totalLastMonthFinalDays; i++) {
+            const inverted = totalLastMonthFinalDays - (i + 1);
+            monthList[i] = prevMonth.getDay(prevMonth.numberOfDays - inverted);
+          }
+          
+          return monthList;
+        }
+        
+        updateToggleText() {
+          const date = this.date.format(this.format)
+          this.toggleButton.textContent = date;
+        }
+        
+        updateMonthDays() {
+          this.calendarDaysContainer.innerHTML = '';
+          
+          this.getMonthDaysGrid().forEach(day => {
+            const el = document.createElement('button');
+            el.className = 'month-day';
+            el.textContent = day.date;
+            el.addEventListener('click', (e) => this.selectDay(el, day));
+            el.setAttribute('aria-label', day.format(this.format));
+              
+            if(day.monthNumber === this.calendar.month.number) {
+              el.classList.add('current');
+            }
+
+            if(this.isSelectedDate(day)) {
+              el.classList.add('selected');
+              this.selectedDayElement = el;
+            }
+            
+            this.calendarDaysContainer.appendChild(el);
+          })
+        }
+        
+        renderCalendarDays() {
+          this.updateHeaderText();
+          this.updateMonthDays();
+          this.calendarDateElement.focus();
+        }
+        
+        static get observedAttributes() { 
+          return ['date', 'format', 'visible', 'position']; 
+        }
+          
+        static get position() {
+          return ['top', 'left', 'bottom', 'right'];
+        }
+        
+        get style() {
+          return `
+            :host {
+              position: relative;
+              font-family: sans-serif;
+            }
+            
+            .date-toggle {
+              // padding: 8px 15px;
+              border: none;
+              -webkit-appearance: none;
+              -moz-appearance: none;
+              appearance: none;
+              background: #eee;
+              color: #333;
+              border-radius: 6px;
+              font-weight: bold;
+              cursor: pointer;
+              text-transform: capitalize;
+            }
+            
+            .calendar-dropdown {
+              display: none;
+              width: 300px;
+              height: 300px;
+              position: absolute;
+              top: 100%;
+              left: 50%;
+              transform: translate(-50%, 8px);
+              padding: 20px;
+              background: #fff;
+              border-radius: 5px;
+              box-shadow: 0 0 8px rgba(0,0,0,0.2);
+            }
+            
+            .calendar-dropdown.top {
+              top: auto;
+              bottom: 100%;
+              transform: translate(-50%, -8px);
+            }
+            
+            .calendar-dropdown.left {
+              top: 50%;
+              left: 0;
+              transform: translate(calc(-8px + -100%), -50%);
+            }
+            
+            .calendar-dropdown.right {
+              top: 50%;
+              left: 100%;
+              transform: translate(8px, -50%);
+            }
+            
+            .calendar-dropdown.visible {
+              display: block;
+            }
+            
+            .header {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin: 10px 0 30px;
+            }
+            
+            .header h4 {
+              margin: 0;
+              text-transform: capitalize;
+              font-size: 21px;
+              font-weight: bold;
+            }
+            
+            .header button {
+              padding: 0;
+              border: 8px solid transparent;
+              width: 0;
+              height: 0;
+              border-radius: 2px;
+              border-top-color: #222;
+              transform: rotate(90deg);
+              cursor: pointer;
+              background: none;
+              position: relative;
+            }
+            
+            .header button::after {
+              content: '';
+              display: block;
+              width: 25px;
+              height: 25px;
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+            }
+            
+            .header button:last-of-type {
+              transform: rotate(-90deg);
+            }
+            
+            .week-days {
+              display: grid;
+              grid-template-columns: repeat(7, 1fr);
+              grid-gap: 5px;
+              margin-bottom: 10px;
+            }
+            
+            .week-days span {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-size: 10px;
+              text-transform: capitalize;
+            }
+            
+            .month-days {
+              display: grid;
+              grid-template-columns: repeat(7, 1fr);
+              grid-gap: 5px;
+            }
+            
+            .month-day {
+              padding: 8px 5px;
+              background: #c7c9d3;
+              color: #fff;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-radius: 2px;
+              cursor: pointer;
+              border: none;
+            }
+            
+            .month-day.current {
+              background: #444857;
+            }
+            
+            .month-day.selected {
+              background: #28a5a7;
+              color: #ffffff;
+            }
+            
+            .month-day:hover {
+              background: #34bd61;
+            }
+          `;
+        }
+        
+        render() {
+          const monthYear = `${this.calendar.month.name}, ${this.calendar.year}`;
+          const date = this.date.format(this.format)
+          this.shadow.innerHTML = `
+            <style>${this.style}</style>
+            <button type="button" class="date-toggle">${date}</button>
+            <div class="calendar-dropdown ${this.visible ? 'visible' : ''} ${this.position}">
+              <div class="header">
+                  <button type="button" class="prev-month" aria-label="previous month"></button>
+                  <h4 tabindex="0" aria-label="current month ${monthYear}">
+                    ${monthYear}
+                  </h4>
+                  <button type="button" class="prev-month" aria-label="next month"></button>
+              </div>
+              <div class="week-days">${this.getWeekDaysElementStrings()}</div>
+              <div class="month-days"></div>
+            </div>
+          `
+        }
+      }
+
+      customElements.define("date-picker", DatePicker);
+</script>
 </html>

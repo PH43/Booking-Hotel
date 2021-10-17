@@ -128,7 +128,16 @@
     display:block;
     clear:both;          
 }
-   
+  .item>input{
+            color:
+        #1a202c;
+        font-family:
+        -apple-system;
+        font-weight:
+        600;
+        line-height:
+        19px;
+          } 
 
  
 /*----- Phần menu -----*/
@@ -203,7 +212,7 @@
           margin: 0 auto;
           position: relative;
           z-index: 10;
-          margin-top: 50px;
+          margin-top: 62px;
         }
 
         .info h2 {
@@ -215,7 +224,7 @@
         }
 
         .booking_info {
-          margin-top: -15px;
+          margin-top: -80px;
         }
 
         .booking_info .opt {
@@ -245,7 +254,7 @@
         }
 
         .booking_info .opt span.active {
-          background-color: #241a71;
+          background-color: #f38e11;
           color: #fff;
         }
 
