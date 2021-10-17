@@ -26,6 +26,9 @@ class Booking extends Model
         'user_id',
         'booking_date',
         'qty_room', 
+        'status',
+        'cancel_reason',
+        'payment_status',
         'coupon_id',
         'created_at',
         'updated_at',
@@ -34,8 +37,8 @@ class Booking extends Model
 
 
 
-    public function user(){
-        return $this->belongsTo('App\Models\User');
+    public function customer(){
+        return $this->belongsTo('App\Models\Customer');
     }
     public function rooms(){
         return $this->belongsToMany('App\Models\Room', 'booking_rooms');
@@ -48,6 +51,8 @@ class Booking extends Model
         return $this->hasMany('App\Models\BookingRoom');
         
     }
-
+    public function bookingInfo(){
+        return $this->belongsTo('App\Models\BookingInfo');
+    }
 
 }

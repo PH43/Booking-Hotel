@@ -154,6 +154,20 @@ class AuthServiceProvider extends ServiceProvider
                     return $role->pivot->role_id == 1;
                 }
             });
+            
+
+            Gate::define('advise_access', function ($user){
+                foreach($user->roles as $role)
+                    {
+                        return $role->pivot->role_id == 1;
+                    }
+            });
+                Gate::define('advise_delete', function ($user){
+                    foreach($user->roles as $role)
+                    {
+                        return $role->pivot->role_id == 1;
+                    }
+                });
 
         Gate::define('room_type_access', function ($user){
             foreach($user->roles as $role)

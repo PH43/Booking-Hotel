@@ -1,235 +1,5 @@
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hotel Booking Landing Page</title>
-  <link rel="stylesheet" href="../resources/css/font.css" />
-  <link rel="stylesheet" href="../resources/css/btr.css" />
-  <link rel="stylesheet" href="../resources/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="../resources/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="../resources/css/style.scss" />
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-  <script src="../resources/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-    <script>
-        function zoom(e) {
-          var zoomer = e.currentTarget;
-          e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
-          e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
-          x = (offsetX / zoomer.offsetWidth) * 100
-          y = (offsetY / zoomer.offsetHeight) * 100
-          zoomer.style.backgroundPosition = x + "% " + y + "%";
-        }
-    </script>
-</head>
-
-<body>
-  <div class="containerr" style="heigh: 80vh"> 
-
-    <header>
-      <nav>
-        <div class="wrapper">
-          <div class="menu nav__pc">
-            <div class="logo">Booking<span>Hotel</span>.vn</div>
-            <ul class="nav__list clearfix">
-              <li>Khuyến mãi</li>
-              <li>Liên hệ</li>
-              <li><a href="">Đặt phòng nhanh</a>
-                <ul class="sub-menu">
-                      <li style="margin: 0;" ><a style="padding: 15px 30px;" href="#" data-toggle="modal" data-target="#exampleModal">Cá nhân</a></li>
-                      <li style="margin: 0;" ><a style="padding: 15px 33px;" href="#" data-toggle="modal" data-target="#phongdoan">Tập thể</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-        
-
-        <div class="menu__mobile">
-          <div class="logo">Booking <span>Hotel</span>.vn</div>
-        </div>
-          
-
-
-        <label for="nav-mobile-input" class="nav__bars-btn">
-          <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>
-        </label>
-        
-        <input type="checkbox" class="nav__input" name="" id="nav-mobile-input" hidden>
-
-        <label for="nav-mobile-input" class="nav__overlay"></label>
-
-        <div class="nav__mobile">
-          <label for="nav-mobile-input" class="nav__mobile-close">
-              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" class="svg-inline--fa fa-times fa-w-11" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
-          </label>
-          <ul class="nav__mobile-list">
-            <li class="nav__mobile-link">Room</li>
-            <li class="nav__mobile-link">Flight</li>
-            <li class="nav__mobile-link">Today's Deal</li>
-            <li class="nav__mobile-link">Sign In</li>
-            <li class="nav__mobile-link">Create Account</li>
-          </ul>
-        </div>
-
-        <div class="myAccount nav__pc">
-          <div class="ctaGroup">
-            @if(Auth::check())
-              <b>Xin chào:&nbsp;</b> <p class="nav__mobile-link"> {{ Auth::user()->name}}</p>
-              <p><a href="{{ route('home.logout')}}" style="text-decoration:none">&nbsp;| Đăng xuất</a></p>
-            @else
-              <div class="cta"><a href="{{ route('home.login')}}">Sign In</a></div>
-              <div class="cta active"><a style="color: white" href="{{ route('home.register')}}">Register</a></div> 
-            @endif
-          </div>
-        </div>
-      </nav>
-    </header>
-
-    <div class="hotel_content">
-
-      <div class="info PC">
-        <h2>Book hotels online</h2>
-        <p>Lorem ipsum dolor sit.</p>
-      </div>
-
-      <div class="booking_info PC">
-
-        <div class="opt">
-          <span class="tab__link active">Hotels</span>
-          <span class="tab__link">Homes</span>
-        </div>
-
-        <div class="booking_details tab__content" id="Hotels">
-          <div class="item">
-             <i class="fa fa-search"></i><input class="timkiem" type="text" placeholder="Enter a destination" style="border: none;padding-left: 4px;">
-          </div>
-
-          <div class="item">
-            <div class="date">31st Dec 2020 <i class="fa fa-angle-down"></i></div>
-            <div class="days">Thursday</div>
-          </div>
-
-          <div class="item">
-            <div class="date">31st Dec 2020 <i class="fa fa-angle-down"></i></div>
-            <div class="days">Thursday</div>
-          </div>
-
-          <div class="item">
-            <div class="people">2 adults, 0 children <i class="fa fa-angle-down"></i></div>
-          </div>
-
-          <div class="item">
-            <div class="cta active">Search</div>
-          </div>
-        </div>
-
-        <div class="booking_details tab__content" id="Homes">
-          <div class="item">
-            <i class="fa fa-search"></i>
-            Enter a destination
-          </div>
-
-          <div class="item">
-            <div class="date">31st Dec 2020 <i class="fa fa-angle-down"></i></div>
-            <div class="days">Thursday</div>
-          </div>
-
-          <div class="item">
-            <div class="date">31st Dec 2020 <i class="fa fa-angle-down"></i></div>
-            <div class="days">Thursday</div>
-          </div>
-
-          <div class="item">
-            <div class="people price">Giá<i class="fa fa-angle-down"></i></div>
-          </div>
-
-          <div class="item">
-            <div class="cta active">Search</div>
-          </div>
-
-        </div>
-
-      </div>
-      
-      {{-- <div class="booking_info mobile">
-
-        <div class="opt">
-          <span class="tab__link_mobile active">Hotels</span>
-          <span class="tab__link_mobile">Homes</span>
-        </div>
-
-        <div class="booking_details tab__content" id="Hotels">
-          <div class="item">
-            <i class="fa fa-search"></i>
-            Enter a destination
-          </div>
-
-          <div class="item">
-            <div class="date">31st Dec 2020 <i class="fa fa-angle-down"></i></div>
-            <div class="days">Thursday</div>
-          </div>
-
-          <div class="item">
-            <div class="date">31st Dec 2020 <i class="fa fa-angle-down"></i></div>
-            <div class="days">Thursday</div>
-          </div>
-
-          <div class="item">
-            <div class="people">2 adults, 0 children <i class="fa fa-angle-down"></i></div>
-          </div>
-
-          <div class="item">
-            <div class="cta active">Search</div>
-          </div>
-        </div>
-
-        <div class="booking_details tab__content_mobile" id="Homes">
-          <div class="item">
-            <i class="fa fa-search"></i>
-            Enter a destination
-          </div>
-
-          <div class="item">
-            <div class="date">31st Dec 2020 <i class="fa fa-angle-down"></i></div>
-            <div class="days">Thursday</div>
-          </div>
-
-          <div class="item">
-            <div class="date">31st Dec 2020 <i class="fa fa-angle-down"></i></div>
-            <div class="days">Thursday</div>
-          </div>
-
-          <div class="item">
-            <div class="people price">Giá<i class="fa fa-angle-down"></i></div>
-          </div>
-
-          <div class="item">
-            <div class="cta active">Search</div>
-          </div>
-
-        </div>
-
-      </div> --}}
-
-    </div>
-
-    <img src="../resources/images/hotel.png" class="hotel">
-    <img src="../resources/images/car1.png" class="car1">
-    <img src="../resources/images/car2.png" class="car2">
-    <img src="../resources/images/car3.png" class="car3">
-    <img src="../resources/images/car4.png" class="car4">
-    {{-- <img src="../resources/images/dog.gif" class="dog_1"> --}}
-    <img src="../resources/images/cloud.png" class="cloud">
-    <img src="../resources/images/cloud.png" class="cloud_2">
-    <img src="../resources/images/cloud.png" class="cloud_3">
-    <img src="../resources/images/cloud.png" class="cloud_4">
-
-  </div>
-
+@extends('layouts.header')
+@section('main')
   <main style="margin-top: 20px; margin-inline: 80px;">
       <div class="qcao">
         <div class="nobody">
@@ -279,16 +49,20 @@
       <div class="rowư flexboxx">
 
 
-        @foreach($rooms as $key => $room)
+
+        @foreach($rooms as $key => $room)        
             <div id="{{ $room->id }}" class=" flexitem flexitem_4" style="border: 1px solid #e8e8e8;">
               <div class="popluar-category" style="background-color: white;">
                 <a  title=" {{ $room->hotel->name }}" class="mihawk-list-hotel popup_detail" >
                   <span class="thumb-info">
-                    <div  class="thumb-info-wrapper zoom" style="background:url(https://du-lich.chudu24.com/f/m/1907/30/melia-ho-tram-6701-1632578.jpg?)" onmousemove="zoom(event)" ontouchmove="zoom(event)">
-                      <img class="img"  title="  {{ $room->hotel->name }} " src="https://du-lich.chudu24.com/f/m/1907/30/melia-ho-tram-6701-1632578.jpg?w=266&amp;h=232">
-                    </div>
+                    <div  class="thumb-info-wrapper zoom" style="background:url(../resources/images/rooms/{{$room->images->first()->path}})" onmousemove="zoom(event)" ontouchmove="zoom(event)">
+                    @if($room->images != NULL)
+                    <img class="img" with="170" height="170" title=" " src="../resources/images/rooms/{{$room->images->first()->path}}">
+                    @endif
+                  </div>                     
                     <span class="table-see-all" >
-                      <input type="button" value="xem chi tiết" data-toggle="modal" data-target="#phongdoan">
+                      <!-- <a href="{{route('room.detail',$room->id)}}" class="btn btn-xs btn-primary">Xem chi tiết</a> -->
+                    <input type="button"  value="xem chi tiết" >
                     </span>
                   </span>
                 </a>
@@ -297,7 +71,7 @@
                   <a class="title-promotion " href="//khachsan.chudu24.com/ks.5921.melia-ho-tram-beach-resort.html" target="_blank" hotelname=" {{ $room->hotel->name }}" hotelidint=" {{ $room->hotel->id }}" roomtypeidint=" {{ $room->roomType->id }}">{{ $room->hotel->name }}</a>
                 </h3>
                 <div class="padb1x padl1x padr1x">
-                  <span class="summary">Giá đặc biệt chỉ từ <span>{{ $room->price}}</span>/đêm</span>
+                  <span class="summary">Giá đặc biệt chỉ từ <span><b>{{ number_format($room->price)}}đ</b></span>/đêm</span>
                 </div>
               </div>
             </div>
@@ -318,18 +92,18 @@
       <div class="rowư flexboxx">
 
 
-        @foreach($rooms as $key => $room)
-            <div id="{{ $room->id }}" iddanhmuc="97" class=" flexitem flexitem_4">
+        @foreach($cities as $key => $city)
+            <div id="{{ $city->id }}" iddanhmuc="97" class=" flexitem flexitem_4">
               <div class="popluar-category" style="background-color: white;">
-                <a  title=" {{ $room->hotel->name }}" class="mihawk-list-hotel popup_detail" >
+                <a  title=" {{ $city->city }}" class="mihawk-list-hotel popup_detail" >
                   <span class="thumb-info">
                     <div  class="thumb-info-wrapper">
-                      <img class="img"  title="  {{ $room->hotel->name }} " src="https://du-lich.chudu24.com/f/m/1907/30/melia-ho-tram-6701-1632578.jpg?w=266&amp;h=232">
+                      <img class="img"  title="  {{ $city->city }} " src="https://du-lich.chudu24.com/f/m/1907/30/melia-ho-tram-6701-1632578.jpg?w=266&amp;h=232">
                     </div>
                   </span>
                 </a>
                 <h3 class="mrgt1x mrgb05 padl1x padr1x" style="padding: 30px 0 30px 10px;">
-                  <a class="title-promotion " href="//khachsan.chudu24.com/ks.5921.melia-ho-tram-beach-resort.html" target="_blank" hotelname=" {{ $room->hotel->name }}" hotelidint=" {{ $room->hotel->id }}" roomtypeidint=" {{ $room->roomType->id }}" style="font-weight: 500;">{{ $room->hotel->name }}</a>
+                  <a class="title-promotion " href="//khachsan.chudu24.com/ks.5921.melia-ho-tram-beach-resort.html" target="_blank" hotelname=" {{ $city->city }}" hotelidint=" {{ $city->city }}" roomtypeidint=" {{ $city->city }}" style="font-weight: 500;">{{ $city->city }}</a>
                 </h3>
               </div>
             </div>
@@ -511,189 +285,11 @@
       </div>
 
     </div> 
-  </div>
-
-  <footer class="footer">
-    <div class="container_footer" style="margin: 0 auto; padding-inline: 100px; margin-top: 20px; background-color: #e7e7e7;">
-      <div class="footer__middle">
-        <div class="footer__nav">
-          <a href="/ve-vntrip">Về Bookinghotel.vn</a>
-          <a href="/lien-he">Liên hệ</a>
-          <a href="/dieu-khoan-su-dung">Điều khoản sử dụng</a>
-          <a href="/quy-che-hoat-dong">Quy chế hoạt động</a>
-          <a href="/chinh-sach-bao-mat">Chính sách bảo mật</a>
-          <a target="_blank" href="https://www.vntrip.vn/cam-nang" rel="noopener noreferrer">Blog du lịch</a>
-          <a target="_blank" href="http://hr.vntrip.vn/" rel="noopener noreferrer">Tuyển dụng</a>
-          <a target="_blank" href="https://policy.vntrip.vn/loyalty-vntrip" rel="noopener noreferrer">Hoàn tiền thành viên</a>
-          <a target="_blank" href="https://partner.vntrip.vn/" rel="noopener noreferrer">Hợp tác đại lý</a>
-        </div>
-        <div class="footer__contact">
-          <p class="semibold">CÔNG TY TNHH BOOKINGHOTEL.VN</p>
-          <p class="semibold">Tầng 1001 Tòa nhà chiến thắng</p>
-          <p>Số 92 Quang Trunh, Hải Châu, Đà Nẵng</p>
-          <p>Số tài khoản: 100120010000</p>
-          <p>Ngân hàng: demo</p>
-          <p>Chi nhánh: Thăng Long</p>
-          <p>Ngày cấp ĐKKD: 9/5/2016</p>
-          <p>Email:&nbsp;<a href="mailto:cs@vntrip.vn" class="semibold">cskh@vnbookinghotel.vn</a></p>
-          <p>Hotline:&nbsp;<span class="green-1 semibold"><a href="tel:096 326 6688" class="green-1">0123456789</a></span></p>
-        </div>
-        <div class="footer__form">
-          <p class="mb15"><strong>Du lịch thông minh!&nbsp;</strong>Đăng ký nhận tin để lên kế hoạch cho kỳ nghỉ tới ngay từ bây giờ:</p>
-          <form class="ant-form ant-form-horizontal d-flex mb15">
-            <div class="ant-row ant-form-item mb0 flex1 ant-form-item-has-success" style="row-gap: 0px;">
-              <div class="ant-col ant-form-item-control">
-                <div class="ant-form-item-control-input">
-                  <div class="ant-form-item-control-input-content">
-                    <input type="text" class="ant-input form-control" placeholder="Email của bạn" value="">
-                  </div>
-                </div>
-                <div class="ant-form-item-explain ant-form-item-explain-success">
-                  <div role="alert">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <button type="button" class="ant-btn ant-btn-primary" style="border: 1px solid #f38e11;color: #f38e11;">
-                <span>Đăng ký</span>
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-      <div class="footer__bottom">
-        <div class="" style="margin: 0 auto;padding-inline: 100px;margin-top: 20px;background-color: #f38e11;display: flex;height: 50px;align-items: center;justify-content: space-between;">
-          <p class="footer__copyright" style="float: left;width: 50%;margin: 0;">Web bookinghotel © 2021 Bookinghotel.vn</p>
-          <div class="footer__social" style="float: right;">
-            <a href="https://www.facebook.com/vntrip" target="_blank" rel="noopener noreferrer">
-              <svg width="18" height="18" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                <path d="m437 0h-362c-41.351562 0-75 33.648438-75 75v362c0 41.351562 33.648438 75 75 75h151v-181h-60v-90h60v-61c0-49.628906 40.371094-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.351562 0 75-33.648438 75-75v-362c0-41.351562-33.648438-75-75-75zm0 0"></path>
-              </svg>
-              <span>Facebook</span>
-            </a>
-            <a href="https://www.instagram.com/vntrip.vn/" target="_blank" rel="noopener noreferrer">
-              <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="m12.004 5.838c-3.403 0-6.158 2.758-6.158 6.158 0 3.403 2.758 6.158 6.158 6.158 3.403 0 6.158-2.758 6.158-6.158 0-3.403-2.758-6.158-6.158-6.158zm0 10.155c-2.209 0-3.997-1.789-3.997-3.997s1.789-3.997 3.997-3.997 3.997 1.789 3.997 3.997c.001 2.208-1.788 3.997-3.997 3.997z"></path>
-                <path d="m16.948.076c-2.208-.103-7.677-.098-9.887 0-1.942.091-3.655.56-5.036 1.941-2.308 2.308-2.013 5.418-2.013 9.979 0 4.668-.26 7.706 2.013 9.979 2.317 2.316 5.472 2.013 9.979 2.013 4.624 0 6.22.003 7.855-.63 2.223-.863 3.901-2.85 4.065-6.419.104-2.209.098-7.677 0-9.887-.198-4.213-2.459-6.768-6.976-6.976zm3.495 20.372c-1.513 1.513-3.612 1.378-8.468 1.378-5 0-7.005.074-8.468-1.393-1.685-1.677-1.38-4.37-1.38-8.453 0-5.525-.567-9.504 4.978-9.788 1.274-.045 1.649-.06 4.856-.06l.045.03c5.329 0 9.51-.558 9.761 4.986.057 1.265.07 1.645.07 4.847-.001 4.942.093 6.959-1.394 8.453z"></path>
-                <circle cx="18.406" cy="5.595" r="1.439"></circle>
-              </svg>
-              <span>Instagram</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-
-    
-  
-
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header" style="background-color: #ff7b0a;">
-                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Đặt Phòng Cá Nhân</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form dialog-book-quick">
-                      <div class="form-group">
-                        <p class="quote" style=" border: solid 1px #e4e2e2;padding: 10px;font-size: .8em;background-color: #edf9d2;font-style: italic;line-height: 18px;">
-                        Không muốn mất thời gian tìm kiếm, lựa chọn?<br>
-                        Hãy để lại yêu cầu đặt phòng và thông tin liên lạc của bạn tại đây.<br>
-                        Chúng tôi sẽ liên hệ với bạn trong vòng 12 tiếng giờ hành chính.
-                        </p>
-                        <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Yêu cầu đặt phòng</label>
-                        <textarea class="" id="txtBody" style="width: 100%;height: 100px;border: solid 1px #e4e2e2;font-size: small;font-family: none;padding: 0 5px;" placeholder="Xin vui lòng điền tóm tắt thông tin đặt phòng nhanh của bạn tại đây.Chúng tôi sẽ liên hệ bạn trong vòng 12 tiếng giờ hành chính."></textarea>
-                      </div>
-                      <div class="form-group">
-                        <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Email</label>
-                        <input type="email" class="form-control" id="txtEmail_divBookQuick">
-                      </div>
-                      <div class="form-group">
-                        <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Số di động</label>
-                        <input type="text" class="form-control" id="txtMobile_divBookQuick">
-                      </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary" style="background-color: #ff7b0a;">Đặt Phòng Nhanh</button>
-                </div>
-              </div>
-          </div>
-        </div>
-
-        <div class="modal fade" id="phongdoan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header" style="background-color: #ff7b0a;">
-                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Đặt Phòng Đoàn</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form dialog-book-quick">
-                      <div class="form-group">
-                        <p class="quote" style=" border: solid 1px #e4e2e2;padding: 10px;font-size: .8em;background-color: #edf9d2;font-style: italic;line-height: 18px;">
-                          <b>Lợi ích khi đặt phòng cho đoàn với Bookinghotel.vn</b>
-                          <br>Uy tín, trách nhiệm &amp; giá tốt.
-                          <br>Giảm giá tối đa cho khách hàng cá nhân.
-                          <br>Chiết khấu hấp dẫn cho khách hàng công ty.
-                        </p>
-                        <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Yêu cầu đặt phòng</label>
-                        <textarea class="" id="txtBody" style="width: 100%;height: 100px;border: solid 1px #e4e2e2;font-size: small;font-family: none;padding: 0 5px;" placeholder="Không muốn mất thời gian tìm kiếm, lựa chọn? Hãy để lại yêu cầu đặt phòng và thông tin liên lạc của bạn tại đây. Chúng tôi sẽ liên hệ với bạn trong vòng 12 tiếng giờ hành chính."></textarea>
-                      </div>
-                      <div class="form-group">
-                        <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Email</label>
-                        <input type="text" class="form-control" id="txtEmail_divBookQuick">
-                      </div>
-                      <div class="form-group">
-                        <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Số di động</label>
-                        <input type="text" class="form-control" id="txtMobile_divBookQuick">
-                      </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary" style="background-color: #ff7b0a;">Đặt Phòng Đoàn</button>
-                </div>
-              </div>
-          </div>
-        </div>
-
+  </div>  
+@endsection
         
-</body>
+        
 
 
 
-<script type="text/javascript">
-    var buttons = document.getElementsByClassName('tab__link');
-    var contents = document.getElementsByClassName('tab__content');
-    function showContent(id){
-        for (var i = 0; i < contents.length; i++) {
-            contents[i].style.display = 'none';
-        }
-        var content = document.getElementById(id);
-        content.style.display = 'inline-flex';
-    }
-    for (var i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener("click", function(){
-            var id = this.textContent;
-            for (var i = 0; i < buttons.length; i++) {
-                buttons[i].classList.remove("active");
-            }
-            this.className += " active";
-            showContent(id);
-        });
-    }
-    showContent('Hotels');
-</script>
 
-
-</html>

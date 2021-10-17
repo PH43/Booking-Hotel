@@ -10,25 +10,16 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            @if($booking->booking_msg == "Đã xác nhận")
-                <div class="modal-body">
-                    <h5>Không thể hoàn thành booking này! Khách chưa check-in</h5>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            @else
+            @if($booking->status == "2")
             <form  action="{{route('admin.complete.booking',$booking->id)}}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}
                 <div class="modal-body">
-                    @if($booking->payment_status == "0" or $booking->payment_status == "1")
+                    @if($booking->payment_status == "0" )
                         <h6>
                             <input type="checkbox" name="cash_received" required>Thanh toán khi check-in hotel
                         </h6>
                         <p>Nhấn đồng ý khi bạn đã nhận được tiền từ khách hàng</p>
-                    @else
-                        <h5>Thanh toán bằng hình thức trực tuyến</h5>
                     @endif
                 </div>
                 <div class="modal-footer">
@@ -115,28 +106,24 @@
                        <h6 class="card-header">Booking Status</h6>
                         <div class="card-body">
                             <p>
-                                @if($booking->booking_msg ==NULL)
-                                    No Status Update
+                            @if($booking->status == '0')
+                                Pending
+                            @elseif($booking->status == '1')
+                                Confirmed
+                            @elseif($booking->status == '2' )
+                                @if($booking->payment_status=="0")
+                                    Payment confirmation !!!                                   
                                 @else
-                                    {{$booking->booking_msg}}
+                                    Completed
                                 @endif
-
-                            </p>
-                        </div>
-                   </div>
-                </div>
-                <div class="col-md-4">
-                   <div class="card shadow-sm border">
-                       <h6 class="card-header">Current Status</h6>
-                        <div class="card-body">
-                            <p>
-                                @if($booking->status == "0")
-                                    Booking room đang hoạt động
-                                @elseif($booking->status == "1")
-                                    Booking room đã hoàn thành
-                                @elseif($booking->status == "2")
-                                    Booking room đã hủy:{{ $booking->cancel_reason }}
+                            @else
+                                @if( $booking->cancel_reason != NULL)
+                                    Cancelled <br>
+                                    Lý do: {{$booking->cancel_reason}}
+                                @else
+                                    Hãy điền lý do
                                 @endif
+                            @endif
                             </p>
                         </div>
                    </div>
@@ -147,13 +134,11 @@
                         <div class="card-body">
                             <p>
                                 @if($booking->payment_status == '0')
-                                    Status:{{_('Đang chờ thanh toán')}}<br>
-                                    Mode:{{$booking->payment_mode}}
+                                    Đang chờ thanh toán
                                 @elseif($booking->payment_status == '1')
-                                    Status:{{_('Thanh toán khi check-in hotel')}}<br>
-                                    Mode:{{$booking->payment_mode}}
+                                    Đã thanh toán
                                 @else
-                                    {{_('Thanh toán trực tuyến')}}
+                                   Thanh toán trực tuyến
                                 @endif
                             </p>
                         </div>
@@ -166,19 +151,22 @@
                         <div class="card-body">
                             <h5>Booking Status Update</h5>
                             <hr>
-                            @if($booking->status == "1")
-                                {{$booking->booking_msg}}
-                            @elseif($booking->status =="2")
-                                {{$booking->booking_msg}}   
-                            @else
+                            @if($booking->status == "2")
+                                Yêu cầu hoàn thành
+                            @elseif($booking->status =="3")
+                                Yêu cầu hủy
+                            @else 
                                 <form  action="{{route('admin.update.status',$booking->id)}}" method="POST">
                                     {{ csrf_field() }}
                                     {{ method_field('PUT') }}
                                     <div class="input-group mb-3">
-                                        <select name="booking_msg" class="custom-select" required id="inputGroupSelect02">
+                                        <select name="status" class="custom-select" required id="inputGroupSelect02">
                                             <option value="">--Status--</option>
-                                            <option value="Đã xác nhận" {{ $booking->booking_msg == "Đã xác nhận" ? 'selected':''}}>Confirmed</option>
-                                            <option value="Khách đã nhận phòng" {{ $booking->booking_msg == "Khách đã nhận phòng" ? 'selected':''}}>Operational</option>
+                                            <option value="1" {{ $booking->status == "1" ? 'selected':''}}>Confirmed</option>
+                                            <!-- <option value="Khách đã nhận phòng" {{ $booking->booking_msg == "Khách đã nhận phòng" ? 'selected':''}}>Operational</option> -->
+                                            <option value="2" {{ $booking->status == "2" ? 'selected':''}}>Completed</option>
+                                            </option>
+                                            <option value="3" {{ $booking->status == "3" ? 'selected':''}}>Cancel</option>
                                         </select>
                                         <div class="input-group-append">
                                             <button type="submit" class="input-group-text bg-info text-white" for="inputGroup">Update</button>
@@ -190,57 +178,46 @@
                     </div>
 
                 </div>
-                <div class="col-md-6">
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            <h5>Cancel Booking Room</h5>
-                            <hr>
-                            @if($booking->status == "1")
-                                Book - Completed
-                            @elseif($booking->status =="2")
-                                {{$booking->cancel_reason}}   
-                            @else
-                                <form  action="{{route('admin.cancel.booking',$booking->id)}}" method="POST">
-                                    {{ csrf_field() }}
-                                    {{ method_field('PUT') }}
-                                    <div class="input-group mb-3">
-                                        <select name="cancel_reason" class="custom-select" required id="inputGroupSelect02">
-                                            <option value="">--Cancel--</option>
-                                            <option value="Khách hàng đã hủy phòng">Cancel By Customers</option>
-                                            <option value="Khách đã đặt phòng nhưng không đến nhận">No Show</option>
-                                            <option value="Không còn phòng trống">On Request</option>
-                                        </select>
-                                        <div class="input-group-append">
-                                            <button type="submit" class="input-group-text bg-info text-white" for="inputGroup">Cancel</button>
+                @if($booking->status == "3")
+                    
+                        <div class="col-md-6">
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <h5>Complete Booking</h5>                    
+                                    <form  action="{{route('admin.cancel.booking',$booking->id)}}" method="POST">
+                                        {{ csrf_field() }}
+                                        {{ method_field('PUT') }}
+                                        <div class="form-group">
+                                            <input class="form-control" type="text" name="cancel"  value="{{ old('cancel', '') }}" required placeholder="nhập lý do hủy">
                                         </div>
-                                    </div>
-                                </form>         
-                            @endif
-                        </div>
-                    </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-danger" type="submit">
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </form>         
+                                </div>
+                            </div>
+                        </div> 
+                                
+                @endif
 
-                </div>
-                <div class="col-md-6">
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            <h5>Complete Booking</h5>
-                            <hr>
-                            @if($booking->status == "0")
-                                <a href="javascript:void(0)" data-toggle="modal" data-target="#CompleteOrderModal"
-                                class="badge badge-pill badge-primary px-3 py-2">
-                                    Booking room đang hoạt động
-                                </a>
-                            @elseif($booking->status =="1")
-                                Booking room hoàn thành! khách đã check-out.
-                            @elseif($booking->status =="2")
-                                Booking room đã hủy! Không được phép hoàn thành 
-                            @else
-                                Không có gì khác   
-                            @endif
+                @if($booking->status=="2")
+                    @if($booking->payment_status == "0")
+                        <div class="col-md-6">
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <h5>Complete Booking</h5>
+                                    <hr>                            
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#CompleteOrderModal"
+                                    class="badge badge-pill badge-primary px-3 py-2">
+                                        Xác nhận thanh toán
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                </div>
+                    @endif
+                @endif
             </div>
             <div class="form-group">
                 <a class="btn btn-default" href="{{ route('admin.bookings.index') }}">

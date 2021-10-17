@@ -65,7 +65,16 @@
                         {{ $booking->coupon->reduction }}
                     </td>
                     <td>
-                    {{ $booking->booking_msg }}
+                        @if($booking->status == '0')
+                            <span class="badge badge-secondary"> Pending</span>
+                        @elseif($booking->status == '1')
+                            <span class="badge badge-primary">Confirmed</span>
+                        @elseif($booking->status == '2')
+                            <span class="badge badge-success">Completed</span>
+                        @else
+                            <span class="badge badge-danger">Cancelled</span>
+                        @endif
+                    <!-- {{ $booking->booking_msg }} -->
                     </td>
                     <td>
                         @can('booking_show')

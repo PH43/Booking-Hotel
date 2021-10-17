@@ -114,7 +114,7 @@ class RoomsController extends Controller
 
         $room->delete();
 
-        return back();
+        return back()->with(['success'=>'delete booking success']);
     }
 
     public function massDestroy(MassDestroyRoomRequest $request)

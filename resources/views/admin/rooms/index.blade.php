@@ -15,7 +15,7 @@
         {{ trans('cruds.room.title_singular') }} {{ trans('global.list') }}
     </div>
     @if(session()->has('success'))
-        <b style="color: red;margin:20px">{{session()->get('success')}}</b> 
+        <div class="alert alert-success">{{session()->get('success')}}</div> 
     @endif
     <div class="card-body">
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Room">

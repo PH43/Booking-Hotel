@@ -109,6 +109,14 @@
                     </a>
                 </li>
              @endcan 
+             @can('advise_access')
+                <li class="nav-item">
+                    <a href="{{ route("admin.advise.index") }}" class="nav-link {{ request()->is('admin/coupons') || request()->is('admin/coupons/*') ? 'active' : '' }}">
+                        <i class="fa-fw fas fa fa-phone-square nav-icon"></i>
+                        Quick advice
+                    </a>
+                </li>
+             @endcan 
             <li class="nav-item">
                 <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                     <i class="nav-icon fas fa-fw fa-sign-out-alt">

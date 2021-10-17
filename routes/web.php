@@ -79,21 +79,31 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['check.adm
     Route::delete('images/destroy', 'App\Http\Controllers\Admin\ImagesController@massDestroy')->name('images.massDestroy');
     Route::resource('images', 'App\Http\Controllers\Admin\ImagesController');
 
+    // Image
+    Route::resource('advise', 'App\Http\Controllers\Admin\AdviseController');
+
    
     
 });
 
-// home
+// login home
 Route::get('/login','App\Http\Controllers\Home\UserController@showlogin')->name('home.showlogin');
 Route::post('/login','App\Http\Controllers\Home\UserController@login')->name('home.login');
-
+//logout home
 Route::get('/logout','App\Http\Controllers\Home\UserController@logout')->name('home.logout');
-
+//register home
 Route::get('/register','App\Http\Controllers\Home\UserController@showregister')->name('home.register');
 Route::post('/register','App\Http\Controllers\Home\UserController@register')->name('home.register');
 
 
-// Auth::routes();
+//home
+Route::get('/','App\Http\Controllers\HomeController@index')->name('home.index');
+Route::post('/advise','App\Http\Controllers\HomeController@storeAdvise')->name('Store.advise');
+//room
+Route::get('/room/{id}','App\Http\Controllers\RoomController@show')->name('room.detail');
+//comment
+Route::post('/commnets/{id}','App\Http\Controllers\CommentsController@storeComment')->name('room.comment');
+//
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/','App\Http\Controllers\RoomController@index')->name('home.index');
+
+Route::get('/room/{id}/booking','App\Http\Controllers\BookingController@show')->name('home.booking');

@@ -15,10 +15,13 @@ class CreateBookingsTable extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->date('booking_date');
             $table->integer('qty_room');
             $table->unsignedBigInteger('coupon_id')->nullable();
+            $table->tinyInteger('status')->default(0);
+            $table->string('cancel_reason')->nullable();
+            $table->tinyInteger('payment_status')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

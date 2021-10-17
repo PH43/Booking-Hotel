@@ -113,64 +113,57 @@ class BookingsController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
+    
     public function bookingStatus(Request $request,$id)
     {
-        $booking = Booking::find($id);
-        if($booking->status != "2")
+        $booking=Booking::find($id);
+        if($request->status == "1")
         {
-            $booking->booking_msg = $request->input('booking_msg');
+            $booking->status = "1";
             $booking->update();
-            return redirect()->back()->with('status','Cập nhật status booking thành công');
-        }
-        else
+            return redirect()->back()->with('status','Comfirmed success');
+        }elseif($request->status == "2")
         {
-            return redirect()->back()->with('status','Booking room này đã  hủy bỏ');
+            if($booking->payment_status == "0")
+            {
+                $booking->status = "2";
+                $booking->update();
+                return redirect()->back();
+            }
+            else
+            {
+                $booking->status = "2";
+                $booking->update();
+                return redirect()->back()->with('status','Completed success');
+            }
+            
+        }elseif($request->status =="3")
+        {
+            $booking->status = "3";
+            $booking->update();
+            return redirect()->back();
         }
     }
 
     public function cancelBooking(Request $request,$id)
     {
         $booking = Booking::find($id);
-        if($booking->booking_msg!= NULL)
-        {
-            $booking->cancel_reason = $request->input('cancel_reason');
-            $booking->booking_msg = "Booking room đã hủy";
-            $booking->status = "2";
-            $booking->update();
-            return redirect()->back()->with('status','Booking room hủy thành công');
-        }
-        else
-        {
-            return redirect()->back()->with('status','Cập nhật trạng thái booking room thành công');
-        }
+        $booking->cancel_reason = $request->cancel;
+        $booking->update();
+        return redirect()->back()->with('status','Cancel success');
     }
 
     public function completeBooking(Request $request,$id)
     {
-        $booking = Booking::find($id);
-        if($booking->booking_msg != NULL) {
-            if($booking->status !="2")
-            {
-                $booking->booking_msg = "Booking room đã hoàn thành khi khách đã thanh toán ";
-                if($booking->payment_status=="0")
-                {
-                    $booking->payment_status = $request->input('cash_received') == TRUE ? '1' : '0';
-                }
-                $booking->status = "1";
-                $booking->update();
-                return redirect()->back()->with('status','Booking room này đã hoàn thành');
-
-            }
-            else
-            {
-                return redirect()->back()->with('status','Booking room này đã  hủy bỏ');
-            }
-        }
-        else
+        $booking = Booking::find($id); 
+        if($booking->payment_status=="0")
         {
-            return redirect()->back()->with('status','Cập nhật trạng thái booking room thành công');
+            $booking->payment_status = $request->input('cash_received') == TRUE ? '1' : '0';
         }
+        $booking->update();
+        return redirect()->back()->with('status','Booking room này đã hoàn thành');
+
+
     }
 
 }
