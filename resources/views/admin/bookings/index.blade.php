@@ -1,5 +1,8 @@
+
 @extends('layouts.admin')
+
 @section('content')
+
 @can('booking_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
@@ -15,6 +18,9 @@
     </div>
 
     <div class="card-body">
+        @if(Session::has('messages'))
+            <div class="alert alert-success" role="alert">{{Session::get('messages')}}</div>
+        @endif
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Booking">
            
             <thead>
@@ -26,16 +32,16 @@
                         ID
                     </th>
                     <th>
-                        Customer Name
-                    </th>
-                    <th>
-                        Date
+                        Booking Date
                     </th>
                     <th>
                         Qty Room
                     </th>
                     <th>
                         Coupon
+                    </th>
+                    <th>
+                        Status
                     </th>
                     <th>
                         &nbsp;
@@ -50,31 +56,32 @@
                         {{ $booking->id}}
                     </td>                   
                     <td>
-                       {{ $booking->user->name}}
-                    </td>
-                    <td>
                         {{ $booking->booking_date}}
                     </td>
                     <td>
                         {{ $booking->qty_room}}
                     </td>
                     <td>
-                        {{ $booking->coupon->code }}
+                        {{ $booking->coupon->reduction }}
                     </td>
-                    
+                    <td>
+                        @if($booking->status == '0')
+                            <span class="badge badge-secondary"> Pending</span>
+                        @elseif($booking->status == '1')
+                            <span class="badge badge-primary">Confirmed</span>
+                        @elseif($booking->status == '2')
+                            <span class="badge badge-success">Completed</span>
+                        @else
+                            <span class="badge badge-danger">Cancelled</span>
+                        @endif
+                    <!-- {{ $booking->booking_msg }} -->
+                    </td>
                     <td>
                         @can('booking_show')
                             <a class="btn btn-xs btn-primary" href="{{ route('admin.bookings.show', $booking->id) }}">
-                                {{ trans('global.view') }}
+                                View
                             </a>
                         @endcan
-
-                        @can('booking_edit')
-                            <a class="btn btn-xs btn-info" href="{{ route('admin.bookings.edit', $booking->id) }}">
-                                {{ trans('global.edit') }}
-                            </a>
-                        @endcan
-
                         @can('booking_delete')
                             <form action="{{ route('admin.bookings.destroy', $booking->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                 <input type="hidden" name="_method" value="DELETE">

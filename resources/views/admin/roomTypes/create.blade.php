@@ -10,11 +10,11 @@
         <form method="POST" action="{{ route("admin.room-types.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.roomType.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
-                @if($errors->has('name'))
+                <label class="required" for="type">{{ trans('cruds.roomType.fields.name') }}</label>
+                <input class="form-control {{ $errors->has('type') ? 'is-invalid' : '' }}" type="text" name="type"  value="{{ old('type', '') }}" required>
+                @if($errors->has('type'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
+                        {{ $errors->first('type') }}
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.roomType.fields.name_helper') }}</span>

@@ -60,4 +60,12 @@ class Room extends Model
         return $this->belongsToMany('App\Models\Booking', 'booking_rooms', 'room_id', 'booking_id' );
     
     }
+
+    public function images(){
+        return $this->hasMany('App\Models\Image');
+    }
+
+    public function comments(){
+        return $this->hasMany('App\Models\Comment');
+    }
 }

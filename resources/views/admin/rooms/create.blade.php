@@ -20,20 +20,25 @@
                 <span class="help-block">{{ trans('cruds.room.fields.name_helper') }}</span>
             </div> -->
             <div class="form-group">
-                <label class="required" for="status">Status</label>
-                <input class="form-control" type="text" name="status" id="status" value="{{ old('status', '') }}" required>
-            </div>
-            <div class="form-group">
                 <label class="required" for="price">Price</label>
                 <input class="form-control" type="text" name="price" id="price" value="{{ old('price', '') }}" required>
+                @if($errors->has('price'))
+                    <p style="color:red">{{$errors->first('price')}}</p>
+                @endif  
             </div>
             <div class="form-group">
                 <label class="required" for="room_number">Room Number</label>
                 <input class="form-control" type="text" name="room_number" id="room_number" value="{{ old('room_number', '') }}" required>
+                @if($errors->has('room_number'))
+                    <p style="color:red">{{$errors->first('room_number')}}</p>
+                @endif 
             </div>
             <div class="form-group">
                 <label class="required" for="description">Description</label>
                 <input class="form-control" type="text" name="description" id="description" value="{{ old('description', '') }}" required>
+                @if($errors->has('description'))
+                    <p style="color:red">{{$errors->first('description')}}</p>
+                @endif 
             </div>
             <div class="form-group">
                 <label class="required" for="hotel_id">{{ trans('cruds.room.fields.hotel') }}</label>
@@ -63,7 +68,15 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.room.fields.room_type_helper') }}</span>
             </div>
-            
+            <div class="form-group">
+                <label class="required" for="status">Status</label><br>
+                <!-- <input class="form-control" type="text" name="status" id="status" value="{{ old('status', '') }}" required> -->
+                Display <input type="radio" name="status" value="Display" {{old('status','Display')}}>
+                No Display <input type="radio" check name="status" value="No Display" {{old('status','Display')}}>
+                 @if($errors->has('status'))
+                    <p style="color:red">{{$errors->first('status')}}</p>
+                @endif
+            </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

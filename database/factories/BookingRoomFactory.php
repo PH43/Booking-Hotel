@@ -30,7 +30,7 @@ class BookingRoomFactory extends Factory
                     'booking_id'=>$this->faker->randomElement($booking),
                     'room_id'=>$this->faker->randomElement($room),
                     'startDate'=> now(),
-                    'endDate'=> '2021-10-10',
+                    'endDate'=> '2021-12-12',
                     'num_days'=> '4',
                     'note'=>$this->faker->text(),
                     'created_at' => now(),

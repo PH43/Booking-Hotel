@@ -43,7 +43,7 @@
                                 {{ $roomType->id ?? '' }}
                             </td>
                             <td>
-                                {{ $roomType->name ?? '' }}
+                                {{ $roomType->type ?? '' }}
                             </td>
                             <td>
                                 @can('room_type_show')

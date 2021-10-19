@@ -76,7 +76,7 @@ class RoomsController extends Controller
     public function store(StoreRoomRequest $request)
     {
         $room = Room::create($request->all());
-        return redirect()->route('admin.rooms.index');
+        return redirect()->route('admin.rooms.index')->with(['success'=>'create room success']);
     }
 
     public function edit(Room $room)
@@ -99,12 +99,12 @@ class RoomsController extends Controller
         return redirect()->route('admin.rooms.index');
     }
 
-    public function show(Room $room)
+    public function show($id)
     {
         abort_if(Gate::denies('room_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $room->load('hotel', 'room_type', 'roomBookings');
-
+        // $room->load('hotel', 'roomType', 'bookingRooms','images');
+        $room = Room::with('hotel', 'roomType', 'bookingRooms','images')->findOrFail($id);
         return view('admin.rooms.show', compact('room'));
     }
 
@@ -114,7 +114,7 @@ class RoomsController extends Controller
 
         $room->delete();
 
-        return back();
+        return back()->with(['success'=>'delete booking success']);
     }
 
     public function massDestroy(MassDestroyRoomRequest $request)

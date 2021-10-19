@@ -18,7 +18,7 @@ class Booking extends Model
         'updated_at',
         'created_at',
         'deleted_at',
-        'booking_date',
+        
         
     ];
 
@@ -26,6 +26,9 @@ class Booking extends Model
         'user_id',
         'booking_date',
         'qty_room', 
+        'status',
+        'cancel_reason',
+        'payment_status',
         'coupon_id',
         'created_at',
         'updated_at',
@@ -33,19 +36,9 @@ class Booking extends Model
     ];
 
 
-    // public function getBookingDateAttribute($value)
-    // {
-    //     return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    // }
 
-    // public function setBookingDateAttribute($value)
-    // {
-    //     $this->attributes['booking_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    // }
-
-
-    public function user(){
-        return $this->belongsTo('App\Models\User');
+    public function customer(){
+        return $this->belongsTo('App\Models\Customer');
     }
     public function rooms(){
         return $this->belongsToMany('App\Models\Room', 'booking_rooms', 'booking_id', 'room_id');
@@ -58,6 +51,8 @@ class Booking extends Model
         return $this->hasMany('App\Models\BookingRoom', 'booking_id');
         
     }
-
+    public function bookingInfo(){
+        return $this->belongsTo('App\Models\BookingInfo');
+    }
 
 }

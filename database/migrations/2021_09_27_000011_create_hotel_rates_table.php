@@ -17,6 +17,7 @@ class CreateHotelRatesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('hotel_id');
             $table->integer('rate');
+            $table->string('comment');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
             $table->softDeletes();

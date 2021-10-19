@@ -19,8 +19,14 @@ class StoreRoomRequest extends FormRequest
     public function rules()
     {
         return [
-            'price'         => [
+            'price'  =>
+            [
                 'required',
+                'numeric',
+            ],
+            'room_number' =>
+            [
+                'unique:rooms',
             ],
             'hotel_id'     => [
                 'required',
@@ -30,6 +36,9 @@ class StoreRoomRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'status'=>[
+                'required',
+            ]
         ];
     }
 }

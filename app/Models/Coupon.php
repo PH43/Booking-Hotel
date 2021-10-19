@@ -13,6 +13,17 @@ class Coupon extends Model
 
     public $table = 'coupons';
 
+    protected $fillable = [
+        'code',
+        'remain',
+        'reduction',
+        'startDate',
+        'endDate',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
     public function bookings(){
         return $this->hasMany('App\Models\Booking');
     }

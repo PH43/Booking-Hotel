@@ -56,24 +56,54 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['check.adm
     Route::resource('rooms', 'App\Http\Controllers\Admin\RoomsController');
 
     // Bookings
+    Route::put('bookings/update-status/{id}','App\Http\Controllers\Admin\BookingsController@bookingStatus')->name('update.status');
+    Route::put('bookings/cancel-booking/{id}','App\Http\Controllers\Admin\BookingsController@cancelBooking')->name('cancel.booking');
+    Route::put('bookings/complete-booking/{id}','App\Http\Controllers\Admin\BookingsController@completeBooking')->name('complete.booking');
     Route::delete('bookings/destroy', 'App\Http\Controllers\Admin\BookingsController@massDestroy')->name('bookings.massDestroy');
     Route::resource('bookings', 'App\Http\Controllers\Admin\BookingsController');
+    
 
+    // Coupons
+    Route::delete('coupons/destroy', 'App\Http\Controllers\Admin\CouponsController@massDestroy')->name('coupons.massDestroy');
+    Route::resource('coupons', 'App\Http\Controllers\Admin\CouponsController');
+    
+
+    // Image
+    Route::delete('images/destroy', 'App\Http\Controllers\Admin\ImagesController@massDestroy')->name('images.massDestroy');
+    Route::resource('images', 'App\Http\Controllers\Admin\ImagesController');
+
+    // Image
+    Route::resource('advise', 'App\Http\Controllers\Admin\AdviseController');
+
+   
     
 });
 
-// home
+// login home
 Route::get('/login','App\Http\Controllers\Home\UserController@showlogin')->name('home.showlogin');
 Route::post('/login','App\Http\Controllers\Home\UserController@login')->name('home.login');
-
+//logout home
 Route::get('/logout','App\Http\Controllers\Home\UserController@logout')->name('home.logout');
-
+//register home
 Route::get('/register','App\Http\Controllers\Home\UserController@showregister')->name('home.register');
 Route::post('/register','App\Http\Controllers\Home\UserController@register')->name('home.register');
 
 
-// Auth::routes();
+//home
+Route::get('/','App\Http\Controllers\HomeController@index')->name('home.index');
+Route::post('/advise','App\Http\Controllers\HomeController@storeAdvise')->name('Store.advise');
+//room
+// Route::get('/room/{id}','App\Http\Controllers\RoomController@show')->name('room.detail');
+//comment
+// Route::post('/commnets/{id}','App\Http\Controllers\CommentsController@storeComment')->name('room.comment');
+//hotel
+Route::get('/hotel/{id}','App\Http\Controllers\HotelController@show')->name('hotel.detail');
 
 Route::get('/','App\Http\Controllers\HomeController@index')->name('home.index');
 
-Route::post('/search','App\Http\Controllers\HomeController@searchhotel')->name('search.hotel');
+Route::any('/search','App\Http\Controllers\HomeController@searchhotel')->name('search.hotel');
+Route::get('/city/{id}','App\Http\Controllers\HomeController@searchwithcity')->name('searchwithcity');
+// Route::get('/city/{id}','App\Http\Controllers\HomeController@searchbycondition')->name('searchbycondition');
+
+
+Route::get('/room/{id}/booking','App\Http\Controllers\BookingController@show')->name('home.booking');

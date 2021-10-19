@@ -19,7 +19,7 @@ class StoreRoomTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
+            'type' => [
                 'required',
             ],
         ];

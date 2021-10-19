@@ -41,7 +41,7 @@ class HomeController
             ->get();
 
         $hotels = Hotel::pluck('name', 'id');
-        $roomTypes = RoomType::pluck('name', 'id');
+        $roomTypes = RoomType::pluck('type', 'id');
 
         if($rooms->count() > 100)
         {

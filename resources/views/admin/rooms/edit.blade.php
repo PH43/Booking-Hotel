@@ -10,31 +10,31 @@
         <form method="POST" action="{{ route("admin.rooms.update", [$room->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <!-- <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.room.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $room->name) }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.room.fields.name_helper') }}</span>
-            </div> -->
             <div class="form-group">
                 <label class="required" for="price">Price</label>
                 <input class="form-control" type="text" name="price" id="price" value="{{ old('price', $room->price) }}" required>
+                @if($errors->has('price'))
+                    <p style="color:red">{{$errors->first('price')}}</p>
+                @endif  
             </div>
             <div class="form-group">
                 <label class="required" for="status">Status</label>
                 <input class="form-control" type="text" name="status" id="status" value="{{ old('status', $room->status) }}" required>
+                
             </div>
             <div class="form-group">
                 <label class="required" for="room_number">Room Number</label>
                 <input class="form-control" type="text" name="room_number" id="room_number" value="{{ old('room_number', $room->room_number) }}" required>
+                @if($errors->has('room_number'))
+                    <p style="color:red">{{$errors->first('room_number')}}</p>
+                @endif 
             </div>
             <div class="form-group">
                 <label class="required" for="description">Description</label>
                 <input class="form-control" type="text" name="description" id="description" value="{{ old('description', $room->description) }}" required>
+                @if($errors->has('description'))
+                    <p style="color:red">{{$errors->first('description')}}</p>
+                @endif 
             </div>
             <div class="form-group">
                 <label class="required" for="hotel_id">{{ trans('cruds.room.fields.hotel') }}</label>

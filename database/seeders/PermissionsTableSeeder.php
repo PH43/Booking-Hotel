@@ -151,6 +151,42 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title' => 'booking_access',
             ],
+            [
+
+                'title' => 'coupon_create',
+            ],
+            [
+
+                'title' => 'coupon_edit',
+            ],
+            [
+
+                'title' => 'coupon_show',
+            ],
+            [
+                'title' => 'coupon_delete',
+            ],
+            [
+                'title' => 'coupon_access',
+            ],
+            [
+
+                'title' => 'image_create',
+            ],
+            [
+
+                'title' => 'image_edit',
+            ],
+            [
+
+                'title' => 'image_show',
+            ],
+            [
+                'title' => 'image_delete',
+            ],
+            [
+                'title' => 'image_access',
+            ],
         ];
 
         Permission::insert($permissions);
