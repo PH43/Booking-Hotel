@@ -34,8 +34,8 @@
 
                         <select class="custom-select mb-2 mr-sm-2" id="room_type" name="room_type">
                             <option value="">Choose room type</option>
-                            @foreach($roomTypes as $id=>$name)
-                                <option value="{{ $id }}" {{ request()->input('room_type') == $id ? 'selected' : '' }}>{{ $name }}</option>
+                            @foreach($roomTypes as $id=>$type)
+                                <option value="{{ $id }}" {{ request()->input('room_type') == $id ? 'selected' : '' }}>{{ $type }}</option>
                             @endforeach
                         </select>
 
@@ -78,7 +78,7 @@
                                                 {{ $room->hotel->name }}
                                             </td>
                                             <td>
-                                                {{ $room->roomType->name }}
+                                                {{ $room->roomType->type }}
                                             </td>
                                             <td>
                                                 {{ $room->room_number }}

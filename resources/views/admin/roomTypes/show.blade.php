@@ -28,7 +28,7 @@
                             {{ trans('cruds.roomType.fields.name') }}
                         </th>
                         <td>
-                            {{ $roomType->name }}
+                            {{ $roomType->type }}
                         </td>
                     </tr>
                 </tbody>

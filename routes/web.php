@@ -13,13 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-
-// Route::get('/home', function () {
-//     return redirect()->route('admin.home');
-// });
 
 
 // Admin
@@ -103,10 +96,17 @@ Route::post('/register','App\Http\Controllers\Home\UserController@register')->na
 Route::get('/','App\Http\Controllers\HomeController@index')->name('home.index');
 Route::post('/advise','App\Http\Controllers\HomeController@storeAdvise')->name('Store.advise');
 //room
-Route::get('/room/{id}','App\Http\Controllers\RoomController@show')->name('room.detail');
+// Route::get('/room/{id}','App\Http\Controllers\RoomController@show')->name('room.detail');
 //comment
-Route::post('/commnets/{id}','App\Http\Controllers\CommentsController@storeComment')->name('room.comment');
-//
+// Route::post('/commnets/{id}','App\Http\Controllers\CommentsController@storeComment')->name('room.comment');
+//hotel
+Route::get('/hotel/{id}','App\Http\Controllers\HotelController@show')->name('hotel.detail');
+
+Route::get('/','App\Http\Controllers\HomeController@index')->name('home.index');
+
+Route::any('/search','App\Http\Controllers\HomeController@searchhotel')->name('search.hotel');
+Route::get('/city/{id}','App\Http\Controllers\HomeController@searchwithcity')->name('searchwithcity');
+// Route::get('/city/{id}','App\Http\Controllers\HomeController@searchbycondition')->name('searchbycondition');
 
 
 Route::get('/room/{id}/booking','App\Http\Controllers\BookingController@show')->name('home.booking');

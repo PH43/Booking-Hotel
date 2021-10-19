@@ -28,6 +28,7 @@ class HotelTableSeeder extends Seeder
                 'category_id'=> '1',
                 'website'=>'https://www.booking.com/hotel/vn',
                 'description'=>'Situated in Da Nang, less than 1 km from My Khe Beach and 1.2 km from Song Han Bridge, Serena Apartment Đà Nẵng features accommodation with free WiFi, air conditioning, a shared lounge and a terrace.',
+                'star'=>'3',
             ], 
             [
                 'name'=>'New Century Hotel Cau Giay ',
@@ -36,9 +37,8 @@ class HotelTableSeeder extends Seeder
                 'category_id'=> '1',
                 'website'=>'https://www.booking.com/hotel/vn',
                 'description'=>'Tọa lạc tại thành phố Hà Nội, cách Bảo tàng Dân tộc học Việt Nam 1,2 km, New Hotel có quán bar, sảnh khách chung và tầm nhìn ra quang cảnh thành phố.',
-            ], 
-               
-            
+                'star'=>'1',
+            ],         
         ];
         Hotel::insert($data);
 

@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             CategoryTableSeeder::class,
             CityTableSeeder::class,
             HotelTableSeeder::class,
+            RoomTypeTableSeeder::class,
         ]);
     }
 }

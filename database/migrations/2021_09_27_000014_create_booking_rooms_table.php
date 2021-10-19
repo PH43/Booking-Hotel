@@ -17,8 +17,8 @@ class CreateBookingRoomsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('booking_id');
             $table->unsignedBigInteger('room_id');
-            $table->date('startDate');
-            $table->date('endDate');
+            $table->date('startDate')->format('d-m-Y');
+            $table->date('endDate')->format('d-m-Y');
             $table->integer('num_days');
             $table->string('note');
             $table->timestamps();

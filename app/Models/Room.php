@@ -54,10 +54,11 @@ class Room extends Model
     }
 
     public function bookingRooms(){
-        return $this->hasMany('App\Models\BookingRoom');
+        return $this->hasMany('App\Models\BookingRoom', 'room_id');
     }
     public function bookings(){
-        return $this->belongsToMany('App\Models\Booking', 'booking_rooms');
+        return $this->belongsToMany('App\Models\Booking', 'booking_rooms', 'room_id', 'booking_id' );
+    
     }
 
     public function images(){

@@ -26,8 +26,8 @@ class RoomController extends Controller
 
     public function show($id)
     {
-        $comments = Comment::with('user','room')->get();
+        // $comments = Comment::with('user','room')->get();
         $room = Room::find($id);
-        return view('roomDetail', compact('room','comments'));
+        return view('roomDetail', compact('room'));
     }
 }
