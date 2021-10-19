@@ -18,39 +18,7 @@ class BookingsController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            $query = Booking::with(['room'])->select(sprintf('%s.*', (new Booking)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'booking_show';
-                $editGate      = 'booking_edit';
-                $deleteGate    = 'booking_delete';
-                $crudRoutePart = 'bookings';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
-            $table->addColumn('room_name', function ($row) {
-                return $row->room ? $row->room->name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'room']);
-
-            return $table->make(true);
-        }
+    
         $bookings= Booking::with('user','coupon')->get();
         return view('admin.bookings.index',compact('bookings'));
     }
@@ -119,6 +87,10 @@ class BookingsController extends Controller
         $booking=Booking::find($id);
         if($request->status == "1")
         {
+            if($booking->status =="1")
+            {
+                return redirect()->back()->with('error','confirmed');
+            }
             $booking->status = "1";
             $booking->update();
             return redirect()->back()->with('status','Comfirmed success');
@@ -132,13 +104,20 @@ class BookingsController extends Controller
             }
             else
             {
+                if($booking->status == "1")
+                {
                 $booking->status = "2";
                 $booking->update();
                 return redirect()->back()->with('status','Completed success');
+                }
+                else
+                {
+                    return redirect()->back()->with('error','unconfimred ! cannot be completed');
+                }
             }
             
         }elseif($request->status =="3")
-        {
+        {          
             $booking->status = "3";
             $booking->update();
             return redirect()->back();

@@ -3,35 +3,28 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.booking.title_singular') }}
+        {{ trans('global.edit') }} {{ trans('cruds.image.title_singular') }}
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.bookings.update", [$booking->id]) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.images.update", [$image->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="user_id">Customer Name <i style="color:red"> *</i></label>
-                <input class="form-control" type="text" name="user_id" id="user_id" value="{{ old('user_id', $booking->user->name) }}" required>
+                <label class="required" for="path">Image<i style="color:red"> *</i></label>
+                <input class="form-control" type="file" name="path" id="path" value="{{ old('path', $image->path) }}" >
+                <img src="../../../../resources/images/rooms/{{$image->path}}"" height="100" width="100" alt="ảnh">
             </div>
             <div class="form-group">
-                <label class="required" for="booking_date">Booking Date <i style="color:red"> *</i></label>
-                <input class="form-control" type="date" name="booking_date" id="booking_date" value="{{ old('booking_date', $booking->booking_date) }}" required>
-            </div>
-            <div class="form-group">
-                <label class="required" for="qty_room">Qty Room <i style="color:red"> *</i></label>
-                <input class="form-control" type="number" name="qty_room" id="qty_room" value="{{ old('qty_room', $booking->qty_room) }}" required>
-            </div>
-            <div class="form-group">
-                <label class="required" for="coupon_id">Coupon</label>
-                <select class="form-control" name="coupon_id" id="coupon_id">
-                    @foreach($coupons as $id => $coupon)
-                        <option value="{{ $id }}" {{ ($booking->coupon ? $booking->coupon->id : old('coupon_id')) == $id ? 'selected' : '' }}>{{ $coupon }}</option>
+                <label class="required" for="room_id">Room Number</label>
+                <select class="form-control" name="room_id" id="room_id">
+                    @foreach($rooms as $id => $room)
+                        <option value="{{ $id }}" {{ ($image->room ? $image->room->id : old('room_id')) == $id ? 'selected' : '' }}>{{ $room }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('coupon_id'))
+                @if($errors->has('room_id'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('coupon_id') }}
+                        {{ $errors->first('room_id') }}
                     </div>
                 @endif
             </div>

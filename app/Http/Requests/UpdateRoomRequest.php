@@ -19,8 +19,10 @@ class UpdateRoomRequest extends FormRequest
     public function rules()
     {
         return [
-            'price'         => [
+            'price'  =>
+            [
                 'required',
+                'numeric',
             ],
             'hotel_id'     => [
                 'required',
@@ -30,6 +32,9 @@ class UpdateRoomRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'status'=>[
+                'required',
+            ]
         ];
     }
 }

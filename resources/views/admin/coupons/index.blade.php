@@ -15,7 +15,7 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Booking">
+        <table class=" table table-bordered table-striped table-hover  datatable datatable-Coupon" width="1189">
            
             <thead>
                 <tr>
@@ -104,15 +104,15 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('booking_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+@can('coupon_delete')
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.bookings.massDestroy') }}",
+    url: "{{ route('admin.coupons.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -134,29 +134,16 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.bookings.index') }}",
-    columns: [
-        { data: 'placeholder', name: 'placeholder' },
-        { data: 'id', name: 'id' },
-        { data: 'room_name', name: 'room.name' },
-        { data: 'booking_date', name: 'booking_date' },
-        { data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  $('.datatable-Booking').DataTable(dtOverrideGlobals);
+  });
+  $('.datatable-Coupon:not(.ajaxTable)').DataTable({ buttons: dtButtons })
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
         $($.fn.dataTable.tables(true)).DataTable()
             .columns.adjust();
     });
-});
+})
 
 </script>
 @endsection

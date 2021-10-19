@@ -308,12 +308,6 @@ class AuthServiceProvider extends ServiceProvider
                     return $role->pivot->role_id == 2;
                 }
             });
-            Gate::define('image_show', function ($user){
-                foreach($user->roles as $role)
-                {
-                    return $role->pivot->role_id == 2;
-                }
-            });
             Gate::define('image_delete', function ($user){
                 foreach($user->roles as $role)
                 {
@@ -352,6 +346,12 @@ class AuthServiceProvider extends ServiceProvider
                 }
             });
             Gate::define('booking_room_access', function ($user){
+                foreach($user->roles as $role)
+                    {
+                        return $role->pivot->role_id == 2;
+                    }
+            });
+            Gate::define('searchRoom', function ($user){
                 foreach($user->roles as $role)
                     {
                         return $role->pivot->role_id == 2;

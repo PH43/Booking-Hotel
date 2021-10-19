@@ -9,35 +9,31 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.rooms.store") }}" enctype="multipart/form-data">
             @csrf
-            <!-- <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.room.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.room.fields.name_helper') }}</span>
-            </div> -->
             <div class="form-group">
                 <label class="required" for="price">Price</label>
                 <input class="form-control" type="text" name="price" id="price" value="{{ old('price', '') }}" required>
                 @if($errors->has('price'))
-                    <p style="color:red">{{$errors->first('price')}}</p>
+                <div class="invalid-feedback">
+                    {{$errors->first('price')}}
+                </div>
                 @endif  
             </div>
             <div class="form-group">
                 <label class="required" for="room_number">Room Number</label>
                 <input class="form-control" type="text" name="room_number" id="room_number" value="{{ old('room_number', '') }}" required>
                 @if($errors->has('room_number'))
-                    <p style="color:red">{{$errors->first('room_number')}}</p>
+                <div class="invalid-feedback">
+                    {{$errors->first('room_number')}}</p>
+                </div>
                 @endif 
             </div>
             <div class="form-group">
                 <label class="required" for="description">Description</label>
                 <input class="form-control" type="text" name="description" id="description" value="{{ old('description', '') }}" required>
                 @if($errors->has('description'))
-                    <p style="color:red">{{$errors->first('description')}}</p>
+                    <div class="invalid-feedback">
+                        {{$errors->first('description')}}
+                    </div>
                 @endif 
             </div>
             <div class="form-group">
@@ -74,7 +70,9 @@
                 Display <input type="radio" name="status" value="Display" {{old('status','Display')}}>
                 No Display <input type="radio" check name="status" value="No Display" {{old('status','Display')}}>
                  @if($errors->has('status'))
-                    <p style="color:red">{{$errors->first('status')}}</p>
+                    <div class="invalid-feedback">
+                    {{$errors->first('status')}}
+                </div>
                 @endif
             </div>
             <div class="form-group">
@@ -83,6 +81,11 @@
                 </button>
             </div>
         </form>
+        <div class="form-group">
+            <a class="btn btn-default" href="{{ route('admin.rooms.index') }}">
+                {{ trans('global.back_to_list') }}
+            </a>
+        </div>
     </div>
 </div>
 

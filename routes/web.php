@@ -61,6 +61,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['check.adm
     // Rooms
     Route::delete('rooms/destroy', 'App\Http\Controllers\Admin\RoomsController@massDestroy')->name('rooms.massDestroy');
     Route::resource('rooms', 'App\Http\Controllers\Admin\RoomsController');
+    Route::get('changeStatus','App\Http\Controllers\Admin\RoomsController@changeStatus')->name('changeStatus');
 
     // Bookings
     Route::put('bookings/update-status/{id}','App\Http\Controllers\Admin\BookingsController@bookingStatus')->name('update.status');
@@ -82,9 +83,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['check.adm
     // Image
     Route::resource('advise', 'App\Http\Controllers\Admin\AdviseController');
 
-   
+    Route::get('searchroom', 'App\Http\Controllers\Admin\RoomsController@searchRoom')->name('searchRoom');
     
 });
+
+
 
 // login home
 Route::get('/login','App\Http\Controllers\Home\UserController@showlogin')->name('home.showlogin');

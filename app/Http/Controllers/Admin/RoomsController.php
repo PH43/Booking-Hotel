@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateRoomRequest;
 use App\Models\Room;
 use App\Models\RoomType;
 use Gate;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -18,46 +19,7 @@ class RoomsController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            $query = Room::with(['hotel', 'room_type'])->select(sprintf('%s.*', (new Room)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'room_show';
-                $editGate      = 'room_edit';
-                $deleteGate    = 'room_delete';
-                $crudRoutePart = 'rooms';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : "";
-            });
-            $table->addColumn('hotel_name', function ($row) {
-                return $row->hotel ? $row->hotel->name : '';
-            });
-
-            $table->addColumn('room_type_name', function ($row) {
-                return $row->room_type ? $row->room_type->name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'hotel', 'room_type']);
-
-            return $table->make(true);
-        }
+        
         $rooms = Room::with('hotel','roomType')->get();
         return view('admin.rooms.index',compact('rooms'));
     }
@@ -92,11 +54,17 @@ class RoomsController extends Controller
         return view('admin.rooms.edit', compact('hotels', 'room_types', 'room'));
     }
 
-    public function update(UpdateRoomRequest $request, Room $room)
+    public function update(UpdateRoomRequest $request,$id)
     {
-        $room->update($request->all());
-
-        return redirect()->route('admin.rooms.index');
+        $room = new Room;
+        $arr['price'] = $request->price;
+        $arr['status'] = $request->status;
+        $arr['room_number'] = $request->room_number;
+        $arr['description'] = $request->description;
+        $arr['hotel_id'] = $request->hotel_id;
+        $arr['roomtype_id'] = $request->roomtype_id;
+        $room::where('id',$id)->update($arr);
+        return redirect()->route('admin.rooms.index')->with(['success'=>'update room success']);
     }
 
     public function show($id)
@@ -122,5 +90,31 @@ class RoomsController extends Controller
         Room::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function changeStatus(Request $request){
+        $room = Room::find($request->id);
+        $room->status = $request->status;
+        $room->save();
+        return response()->json(['success' => 'Status Changed Successfully']);
+    }
+
+    public function searchRoom(Request $request)
+    {
+        $rooms = null;
+        // if($request->filled(['start_time', 'end_time', 'capacity'])) 
+        // {
+        //     $times = [
+        //         Carbon::parse($request->input('startDate')),
+        //         Carbon::parse($request->input('endDate')),
+        //     ];
+        //     $rooms = Room::with('bookingRooms')->whereHas('bookingRooms',function($q) use ($startDate,$endDate){
+        //         $q->where(function($q2) use ($startDate,$endDate){
+        //             $q2->where('startDate','>=',$endDate)
+        //             ->orwhere('endDate','<=',$startDate);
+        //         });
+        //     })->orWhereDoesntHave('bookingRooms')->get();   
+        // }
+        return view('admin.searchrooms.index', compact('rooms'));
     }
 }

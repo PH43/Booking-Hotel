@@ -13,10 +13,12 @@
     <div class="card-header">
         {{ trans('cruds.roomType.title_singular') }} {{ trans('global.list') }}
     </div>
-
+    @if(session()->has('success'))
+        <div class="alert alert-success">{{session()->get('success')}}</div> 
+    @endif
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-RoomType">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-RoomType" width="1189">
                 <thead>
                     <tr>
                         <th width="10">

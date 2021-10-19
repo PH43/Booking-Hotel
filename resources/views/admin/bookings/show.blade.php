@@ -36,6 +36,11 @@
         {{session('status')}}
     </div>
 @endif 
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{session('error')}}
+    </div>
+@endif 
 <div class="card">
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.booking.title') }}
