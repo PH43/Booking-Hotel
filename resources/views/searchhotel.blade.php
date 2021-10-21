@@ -21,10 +21,15 @@
             cursor: pointer;
             margin-right: 35px;
         }
-        .MuiBox-root-item:hover, .MuiBox-root-item:active, .active{
+        .MuiBox-root-item:hover, .MuiBox-root-item:active, .active, .MuiBox-root-item>a:hover {
              color: #f38e11;
-            border-bottom: solid 1px #f38e11;
+             border-bottom: solid 1px #f38e11;
+            text-decoration: none;
         }
+        .MuiBox-root-item>a{
+             padding-bottom: 17px;
+        }
+       
        
        .clearfix:after {
             content: ".";
@@ -295,7 +300,7 @@
                     <div class="hotel_content" style="margin-top: 80px; width:100%">
                         <div class="booking_info PC">
 
-                            <form class="booking_details tab__content" style="width: 1111px" id="Hotels" action="{{ route('search.hotel') }}" method="POST" >
+                            <form class="booking_details tab__content" style="width: 1111px" id="Hotels" action="{{ route('search.hotel') }}" method="GET" >
                             <div class="item">
                                 <p style="margin: 0px;">Địa điểm:</p>
                                 <i class="fa fa-search"></i>
@@ -324,7 +329,7 @@
 
                             <div class="item">
                                 <div class="cta active">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="orderBy" value="DEFAULT">
                                 <input class="cta active" type="submit" value="Tìm">
                                 </div>
                             </div>
@@ -440,20 +445,20 @@
                     <div  style="width: 100%;min-height: 500px;">
                         <div class="fillter"  style="    min-height: 500px;float: left;width: 25%;">
                             <div class="filter" style="border-radius: 8px;background-color: white;margin-right: 10px;">
-                                <form action="" method="get">
-                                    <div class="filter-title" style=" margin-right: 10px;display: flex;padding: 14px 16px;font-size: 16px;align-items: center;font-weight: 600;line-height: 19px;justify-content: space-between;">
-                                        <div>Bộ lọc</div>
-                                        <div>
-                                            <input type="reset" name="" id="" value="Xóa tất cả lọc">
-                                        </div>
-                                    </div>
+                                <form action="{{ route('searchwithcity', $id) }}" id="form_price" method="get">
                                     <div class="clearfix"></div>
                                     <div class="" style="width: 100%;height: 1px;background: #EDF2F7;"></div>
-                                    <div class=" ">
+                                    <div>
                                         <p class="">Khoảng giá (1 đêm)</p>
-                                        <h6 class="" style="font-weight:normal;margin-top:8px">
-                                            <input type="range" name="price" min="0" max="1000000">
-                                        </h6>
+                                        <ul class="gia">
+                                            <li><a class="{{ Request::get('price') == 1 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '1']) }}">Dưới 500.000</a></li>
+                                            <li><a class="{{ Request::get('price') == 2 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '2']) }}">500.000 - 1.000.000</a></li>
+                                            <li><a class="{{ Request::get('price') == 3 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '3']) }}">1.000.000 - 3.000.000</a></li>
+                                            <li><a class="{{ Request::get('price') == 4 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '4']) }}">3.000.000 - 5.000.000</a></li>
+                                            <li><a class="{{ Request::get('price') == 5 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '5']) }}">5.000.000 - 7.000.000</a></li>
+                                            <li><a class="{{ Request::get('price') == 6 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '6']) }}">7.000.000 - 10.000.000</a></li>
+                                            <li><a class="{{ Request::get('price') == 7 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '7']) }}">>10.000.000</a></li>
+                                        </ul>
                                         <div class="" style="width:100%;padding-right:14px">
                                             <span class="MuiSlider-root jss143 MuiSlider-colorPrimary">
                                                 <span class="MuiSlider-rail jss148"></span>
@@ -471,15 +476,17 @@
                         <div class="hotels"  style="width: 75%;float: right;min-height: 500px;">
                             <div class="title" style="width: 100%;height: 50px; margin-bottom: 10px; font-family: sans-serif;">
                                 <div class="MuiBox-root">
-                                    <div class="MuiBox-root-item">BKHT đề xuất</div>
                                     <div class="MuiBox-root-item">
-                                        <a href="{{ route('searchwithcity', $id) }}?city={{ $namecity }}&condition=price&orderBy=ASC">Giá tăng dần</a>
+                                        <a class="{{ Request::get('orderBy') == 'DEFAULT' ? 'active' : ''}}" href="{{ route('searchwithcity', $id) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=price&orderBy=DEFAULT&price=1">BKHT đề xuất</a>
                                     </div>
                                     <div class="MuiBox-root-item">
-                                        <a href="{{ route('searchwithcity', $id) }}?city={{ $namecity }}&condition=price&orderBy=DESC">Giá giảm dần</a>
+                                        <a class="{{ Request::get('orderBy') == 'ASC' ? 'active' : ''}}" href="{{ route('searchwithcity', $id) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=price&orderBy=ASC&price=1">Giá tăng dần</a>
                                     </div>
                                     <div class="MuiBox-root-item">
-                                        <a href="{{ route('searchwithcity', $id) }}?city={{ $namecity }}&condition=star&orderBy=DESC">Sao khách sạn</a>
+                                        <a class="{{ Request::get('orderBy') == 'DESC' ? 'active' : ''}}" href="{{ route('searchwithcity', $id) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=price&orderBy=DESC&price=1">Giá giảm dần</a>
+                                    </div>
+                                    <div class="MuiBox-root-item">
+                                        <a class="{{ Request::get('orderBy') == 'STARDEFAULT' ? 'active' : ''}}" href="{{ route('searchwithcity', $id) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=star&orderBy=STARDEFAULT&price=1">Sao khách sạn</a>
                                     </div>
                                     <div class="MuiBox-root-item">Đánh giá cao nhất</div>
                                 </div>
@@ -536,28 +543,34 @@
 
 @section('scripts')
     <script type="text/javascript">
-    var buttons = document.getElementsByClassName('tab__link');
-    var contents = document.getElementsByClassName('tab__content');
-    function showContent(id){
-        for (var i = 0; i < contents.length; i++) {
-            contents[i].style.display = 'none';
-        }
-        var content = document.getElementById(id);
-        content.style.display = 'inline-flex';
-    }
-    for (var i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener("click", function(){
-            var id = this.textContent;
-            for (var i = 0; i < buttons.length; i++) {
-                buttons[i].classList.remove("active");
+        var buttons = document.getElementsByClassName('tab__link');
+        var contents = document.getElementsByClassName('tab__content');
+        function showContent(id){
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].style.display = 'none';
             }
-            this.className += " active";
-            showContent(id);
-        });
-    }
-    showContent('Hotels');
+            var content = document.getElementById(id);
+            content.style.display = 'inline-flex';
+        }
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener("click", function(){
+                var id = this.textContent;
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].classList.remove("active");
+                }
+                this.className += " active";
+                showContent(id);
+            });
+        }
+        showContent('Hotels');
     </script>
-
+    <script type="text/javascript">
+        $(function(){
+            $('.gia').change(function(){
+                $("#form_price").submit();
+            })
+        })
+    </script>
 @stop
 
     
