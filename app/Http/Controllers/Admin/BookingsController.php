@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Booking;
+use App\Models\BookingInfo;
+use App\Models\BookingRoom;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBookingRequest;
 use App\Http\Requests\StoreBookingRequest;
@@ -34,7 +36,29 @@ class BookingsController extends Controller
 
     public function store(Request $request)
     {
-        $booking = Booking::create($request->all());
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $days= floor((strtotime($endDate) - strtotime($startDate))/(60*60*24));
+        $booking = new Booking();       
+        $booking->status = "1";
+        $booking->coupon_id = $request->coupon_id;
+        $booking->payment_status = $request->payment_status;	
+        $booking->save();
+        $booking_room = new BookingRoom();
+        $booking_room->booking_id= $booking->id;
+        $booking_room->room_id = $request->room_id;
+        $booking_room->startDate = $startDate ;
+        $booking_room->endDate = $endDate;
+        $booking_room->num_days = $days;
+        $booking_room->note = $request->note;
+        $booking_room->save();
+        $booking_info = new BookingInfo();
+        $booking_info->name = $request->name;
+        $booking_info->email = $request->email;
+        $booking_info->phone = $request->phone;
+        $booking_info->address = $request->address;
+        $booking_info->booking_id = $booking->id;
+        $booking_info->save();
 
         return redirect()->route('admin.bookings.index')->with(['messages'=>'create booking success']);
     }

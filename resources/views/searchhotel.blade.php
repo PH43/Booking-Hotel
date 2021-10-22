@@ -358,7 +358,7 @@
 
                         </div>
                         
-                        {{-- <div class="booking_info mobile">
+                        <div class="booking_info mobile">
 
                             <div class="opt">
                             <span class="tab__link_mobile active">Hotels</span>
@@ -416,7 +416,7 @@
 
                             </div>
 
-                        </div> --}}
+                        </div> 
 
                     </div>
 

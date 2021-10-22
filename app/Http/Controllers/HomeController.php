@@ -52,13 +52,11 @@ class HomeController extends Controller
     
             })->orWhereDoesntHave('bookingRooms')->where('city_id', '=', $city)->get();
             
-           
+        
            
         } else {
             $rooms = null;
         }
-
-
         $rooms = $rooms->toArray();
         
         $temp = array_unique(array_column($rooms, 'hotel_id'));

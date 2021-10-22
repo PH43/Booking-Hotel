@@ -16,7 +16,7 @@ class RoomTableSeeder extends Seeder
         $data = [
             [
                 'price'=>'120000',
-                'status'=>'Trống',
+                'status'=>'1',
                 'room_number'=>'1',
                 'description'=>'dfshdifhsduif',
                 'hotel_id'=>'1',
@@ -24,7 +24,7 @@ class RoomTableSeeder extends Seeder
             ],
             [
                 'price'=>'260000',
-                'status'=>'Trống',
+                'status'=>'1',
                 'room_number'=>'2',
                 'description'=>'dfshdifhsduif',
                 'hotel_id'=>'2',
@@ -32,7 +32,7 @@ class RoomTableSeeder extends Seeder
             ],
             [
                 'price'=>'170000',
-                'status'=>'Trống',
+                'status'=>'1',
                 'room_number'=>'3',
                 'description'=>'dfshdifhsduif',
                 'hotel_id'=>'2',
@@ -40,7 +40,7 @@ class RoomTableSeeder extends Seeder
             ],
             [
                 'price'=>'240000',
-                'status'=>'Trống',
+                'status'=>'1',
                 'room_number'=>'4',
                 'description'=>'dfshdifhsduif',
                 'hotel_id'=>'2',
@@ -49,7 +49,7 @@ class RoomTableSeeder extends Seeder
 
             [
                 'price'=>'180000',
-                'status'=>'Trống',
+                'status'=>'1',
                 'room_number'=>'5',
                 'description'=>'dfshdifhsduif',
                 'hotel_id'=>'1',
@@ -57,7 +57,7 @@ class RoomTableSeeder extends Seeder
             ],
             [
                 'price'=>'350000',
-                'status'=>'Trống',
+                'status'=>'1',
                 'room_number'=>'6',
                 'description'=>'dfshdifhsduif',
                 'hotel_id'=>'2',
@@ -66,7 +66,7 @@ class RoomTableSeeder extends Seeder
 
             [
                 'price'=>'120000',
-                'status'=>'Trống',
+                'status'=>'1',
                 'room_number'=>'7',
                 'description'=>'dfshdifhsduif',
                 'hotel_id'=>'1',
@@ -74,7 +74,7 @@ class RoomTableSeeder extends Seeder
             ],
             [
                 'price'=>'260000',
-                'status'=>'Trống',
+                'status'=>'1',
                 'room_number'=>'8',
                 'description'=>'dfshdifhsduif',
                 'hotel_id'=>'2',

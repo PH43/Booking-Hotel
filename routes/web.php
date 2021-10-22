@@ -77,6 +77,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['check.adm
     Route::resource('advise', 'App\Http\Controllers\Admin\AdviseController');
 
     Route::get('searchroom', 'App\Http\Controllers\Admin\RoomsController@searchRoom')->name('searchRoom');
+    Route::post('searchroom', 'App\Http\Controllers\Admin\RoomsController@searchRoom')->name('searchRoom');
+    
     
 });
 

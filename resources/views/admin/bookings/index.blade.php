@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('booking_create')
+<!-- @can('booking_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route("admin.bookings.create") }}">
@@ -8,7 +8,7 @@
             </a>
         </div>
     </div>
-@endcan
+@endcan -->
 <div class="card">
     <div class="card-header">
         {{ trans('cruds.booking.title_singular') }} {{ trans('global.list') }}
@@ -56,7 +56,7 @@
                             {{ $booking->id}}
                         </td>                   
                         <td>
-                            {{ $booking->booking_date}}
+                            {{ $booking->created_at}}
                         </td>
                         <td>
                             {{ $booking->qty_room}}

@@ -8,6 +8,8 @@ use App\Http\Requests\MassDestroyRoomRequest;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
 use App\Models\Room;
+use App\Models\Booking;
+use App\Models\Coupon;
 use App\Models\RoomType;
 use Gate;
 use Carbon\Carbon;
@@ -30,7 +32,7 @@ class RoomsController extends Controller
 
         $hotels = Hotel::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $room_types = RoomType::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $room_types = RoomType::all()->pluck('type', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.rooms.create', compact('hotels', 'room_types'));
     }
@@ -47,7 +49,7 @@ class RoomsController extends Controller
 
         $hotels = Hotel::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $room_types = RoomType::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $room_types = RoomType::all()->pluck('type', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $room->load('hotel', 'roomType');
 
@@ -101,20 +103,28 @@ class RoomsController extends Controller
 
     public function searchRoom(Request $request)
     {
-        $rooms = null;
-        // if($request->filled(['start_time', 'end_time', 'capacity'])) 
-        // {
-        //     $times = [
-        //         Carbon::parse($request->input('startDate')),
-        //         Carbon::parse($request->input('endDate')),
-        //     ];
-        //     $rooms = Room::with('bookingRooms')->whereHas('bookingRooms',function($q) use ($startDate,$endDate){
-        //         $q->where(function($q2) use ($startDate,$endDate){
-        //             $q2->where('startDate','>=',$endDate)
-        //             ->orwhere('endDate','<=',$startDate);
-        //         });
-        //     })->orWhereDoesntHave('bookingRooms')->get();   
-        // }
-        return view('admin.searchrooms.index', compact('rooms'));
+        // $booking = Booking::with('bookingRooms');
+        $coupons = Coupon::all()->pluck('reduction', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $roomTypes = RoomType::all()->pluck('type', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+         if ($request->isMethod('POST')) {
+            
+            $rooms = Room::filters()->with('roomType')
+            ->with('bookingRooms')->whereHas('bookingRooms', function ($q) use ($startDate, $endDate) {
+                $q->where(function ($q2) use ($startDate, $endDate) {
+                    $q2->where('startDate', '>=', $endDate)
+                       ->orWhere('endDate', '<=', $startDate);
+                });
+                
+            })->orWhereDoesntHave('bookingRooms')->get();
+           
+           
+        } else {
+            $rooms = null;
+        }
+       
+
+        return view('admin.searchrooms.index', compact('rooms','roomTypes','coupons'));
     }
 }

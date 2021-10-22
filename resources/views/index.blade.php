@@ -11,7 +11,9 @@
   <link rel="stylesheet" href="../resources/css/bootstrap.min.css" />
   <link rel="stylesheet" href="../resources/css/font-awesome.min.css" />
   <link rel="stylesheet" href="../resources/css/style.css" />
+  <link rel="stylesheet" href="../resources/css/room.css" />
   <link rel="stylesheet" href="../resources/js/bootstrap.bundle.min.js" />
+  <link rel='stylesheet' href='https://sachinchoolur.github.io/lightslider/dist/css/lightslider.css'>
 
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -84,8 +86,8 @@
               <b>Xin chào:&nbsp;</b> <p class="nav__mobile-link" style="margin: 0px"> {{ Auth::user()->name}}</p>
               <p style="margin: 0px ;"><a href="{{ route('home.logout')}}" style="text-decoration:none">&nbsp;| Đăng xuất</a></p>
             @else
-              <div class="cta"><a href="{{ route('home.login')}}" style="color: black">Sign In</a></div>
-              <div class="cta active"><a style="color: white" href="{{ route('home.register')}}">Register</a></div> 
+              <div class="cta"><a href="#" style="color: black"  data-toggle="modal" data-target="#login">Sign In</a></div>
+              <div class="cta active"><a style="color: white" href="#" data-toggle="modal" data-target="#register">Register</a></div> 
             @endif
           </div>
         </div>
@@ -121,9 +123,9 @@
             <input type="date" name="endDate" value="{{ $dt }}">
           </div>
 
-          {{-- <div class="item">
+           <!-- <div class="item">
             <div class="people">2 adults, 0 children <i class="fa fa-angle-down"></i></div>
-          </div> --}}
+          </div>  -->
 
           <div class="item">
             <div class="cta active">
@@ -284,76 +286,119 @@
       </div>
       <div class="rowư flexboxx">
 
-
-
         @foreach($rooms as $key => $room)        
-            <div id="{{ $room->id }}" class=" flexitem flexitem_4" style="border: 1px solid #e8e8e8;">
-              <div class="popluar-category" style="background-color: white;">
-                <a  title=" {{ $room->hotel->name }}" class="mihawk-list-hotel popup_detail" >
-                  <span class="thumb-info">
-                    <div  class="thumb-info-wrapper zoom" style="" onmousemove="zoom(event)" ontouchmove="zoom(event)">
-                      {{-- background:url(../resources/images/rooms/{{$room->images->first()->path}}) --}}
-                    @if($room->images != NULL)
-                    <img class="img" width="266px" height="232px" title=" " src="https://du-lich.chudu24.com/f/m/1907/30/melia-ho-tram-6701-1632578.jpg?w=266&amp;h=232">
-                    @endif
-                  </div>                     
-                    <span class="table-see-all" >
-                    <input type="button"  value="xem chi tiết"  href="" data-toggle="modal" data-target="#xemchitiet{{ $room->id }}">
-                    </span>
+          <div id="{{ $room->id }}" class=" flexitem flexitem_4" style="border: 1px solid #e8e8e8;">
+            <div class="popluar-category" style="background-color: white;">
+              <a  title=" {{ $room->hotel->name }}" class="mihawk-list-hotel popup_detail" >
+                <span class="thumb-info">
+                  <div  class="thumb-info-wrapper zoom" style="" onmousemove="zoom(event)" ontouchmove="zoom(event)">
+                    {{-- background:url(../resources/images/rooms/{{$room->images->first()->path}}) --}}
+                  @if($room->images != NULL)
+                  <img class="img" width="266px" height="232px" title=" " src="https://du-lich.chudu24.com/f/m/1907/30/melia-ho-tram-6701-1632578.jpg?w=266&amp;h=232">
+                  @endif
+                </div>                     
+                  <span class="table-see-all" >
+                  <input type="button"  value="xem chi tiết"  href="" data-toggle="modal" data-target="#xemchitiet{{$room->id}}">
                   </span>
-                </a>
-                <p>Loại phòng: {{ $room->roomType->type }}</p>
-                <h3 class="mrgt1x mrgb05 padl1x padr1x">
-                  <a class="title-promotion " href="//khachsan.chudu24.com/ks.5921.melia-ho-tram-beach-resort.html" target="_blank" hotelname=" {{ $room->hotel->name }}" hotelidint=" {{ $room->hotel->id }}" roomtypeidint=" {{ $room->roomType->id }}">{{ $room->hotel->name }}</a>
-                </h3>
-                    @for ($i=0; $i < $room->hotel->star; $i++)
-                      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" viewBox="0 0 576 512" style="height: 12px;"><path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" style="color: #f38e11;"/></svg>
-                    @endfor
-                <div class="padb1x padl1x padr1x">
-                  <span class="summary">Giá đặc biệt chỉ từ <span><b>{{ number_format($room->price)}}đ</b></span>/đêm</span>
-                </div>
+                </span>
+              </a>
+              <p>Loại phòng: {{ $room->roomType->type }}</p>
+              <h3 class="mrgt1x mrgb05 padl1x padr1x">
+                <a class="title-promotion " href="//khachsan.chudu24.com/ks.5921.melia-ho-tram-beach-resort.html" target="_blank" hotelname=" {{ $room->hotel->name }}" hotelidint=" {{ $room->hotel->id }}" roomtypeidint=" {{ $room->roomType->id }}">{{ $room->hotel->name }}</a>
+              </h3>
+                  @for ($i=0; $i < $room->hotel->star; $i++)
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" viewBox="0 0 576 512" style="height: 12px;"><path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" style="color: #f38e11;"/></svg>
+                  @endfor
+              <div class="padb1x padl1x padr1x">
+                <span class="summary">Giá đặc biệt chỉ từ <span><b>{{ number_format($room->price)}}đ</b></span>/đêm</span>
               </div>
             </div>
+          </div>
 
 
-            <div class="modal fade" id="xemchitiet{{ $room->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header" style="background-color: #ff7b0a;">
-                      <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Chi tiết phòng {{ $room->roomType->type }}</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
-                  {{-- <div class="modal-body">
-                      <div class="form dialog-book-quick">
-                        <div class="form-group">
-                          <p class="quote" style=" border: solid 1px #e4e2e2;padding: 10px;font-size: .8em;background-color: #edf9d2;font-style: italic;line-height: 18px;">
-                            <b>Lợi ích khi đặt phòng cho đoàn với Bookinghotel.vn</b>
-                            <br>Uy tín, trách nhiệm &amp; giá tốt.
-                            <br>Giảm giá tối đa cho khách hàng cá nhân.
-                            <br>Chiết khấu hấp dẫn cho khách hàng công ty.
-                          </p>
-                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Yêu cầu đặt phòng</label>
-                          <textarea class="" id="txtBody" style="width: 100%;height: 100px;border: solid 1px #e4e2e2;font-size: small;font-family: none;padding: 0 5px;" placeholder="Không muốn mất thời gian tìm kiếm, lựa chọn? Hãy để lại yêu cầu đặt phòng và thông tin liên lạc của bạn tại đây. Chúng tôi sẽ liên hệ với bạn trong vòng 12 tiếng giờ hành chính."></textarea>
-                        </div>
-                        <div class="form-group">
-                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Email</label>
-                          <input type="text" class="form-control" id="txtEmail_divBookQuick">
-                        </div>
-                        <div class="form-group">
-                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Số di động</label>
-                          <input type="text" class="form-control" id="txtMobile_divBookQuick">
-                        </div>
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                      <button type="button" class="btn btn-primary" style="background-color: #ff7b0a;">Đặt Phòng Đoàn</button>
-                  </div> --}}
+          <div class="modal fade" id="xemchitiet{{$room->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff7b0a;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Chi tiết phòng {{ $room->roomType->type }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                <div class="modal-body">
+                  <div class="container-fluid mt-2 mb-3">
+                    <div class="row no-gutters">
+                        <div class="col-md-5 pr-2">
+                            <div class="card">
+                                <div class="demo">
+                                  <!-- <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                      <div class="carousel-item active">
+                                        <img src="https://i.imgur.com/KZpuufK.jpg" class="d-block w-100" alt="...">
+                                      </div>
+                                      <div class="carousel-item">
+                                        <img src="https://i.imgur.com/GwiUmQA.jpg" class="d-block w-100" alt="...">
+                                      </div>
+                                      <div class="carousel-item">
+                                        <img src="https://i.imgur.com/DhKkTrG.jpg" class="d-block w-100" alt="...">
+                                      </div>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+                                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                      <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+                                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                      <span class="sr-only">Next</span>
+                                    </a>
+                                  </div>
+                                   -->
+                                  <ul id="lightSlider">
+                                      @foreach ($room->images as $image)
+                                      <li data-thumb="../resources/images/rooms/{{$image->path}}"> <img src="../resources/images/rooms/{{$image->path}}" /> </li>
+                                      @endforeach
+                                  </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card">
+                                <div class="d-flex flex-row align-items-center">
+                                    <div class="p-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="ml-1">5.0</span>
+                                </div>
+                                <div class="about"> <span class="font-weight-bold">{{$room->hotel->name }}</span>
+                                    <h4 class="font-weight-bold">{{ number_format($room->price)}}đ</h4>
+                                </div>
+                                <hr>
+                                <div class="product-description">
+                                    <div class="mt-2"> <span class="font-weight-bold">Description</span>
+                                        <p>{{$room->description}}</p>
+                                        <div class="bullets">
+                                            <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Wifi</span> </div>
+                                            <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Tivi</span> </div>
+                                            <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Phục vụ bữa ăn sáng</span> </div>
+                                            <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Không hút thuốc</span> </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2"> <span class="font-weight-bold">Store</span> </div>
+                                    <div class="d-flex flex-row align-items-center"> <img src="https://i.imgur.com/N2fYgvD.png" class="rounded-circle store-image">
+                                        <div class="d-flex flex-column ml-1 comment-profile">
+                                            <div class="comment-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="username">Rare Boutique</span> <small class="followers">25K Followers</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                  <button type="button" class="btn btn-primary" style="background-color: #ff7b0a;">Đặt</button>
+                </div> 
               </div>
             </div>
+          </div>
 
         @endforeach
       </div>
@@ -719,9 +764,141 @@
           </div>
         </div>
 
+        //login
+        <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff7b0a;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Đăng nhập</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form dialog-book-quick">
+                      <form action="{{ route('home.login')}}" method="post">
+                        @csrf
+                        @if(session()->has('error'))
+                          <p style="color:red">{{session()->get('error')}}</p>
+                        @endif
+                       
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Email</label>
+                          <input type="email"  name="email" class="form-control" id="txtEmail_divBookQuick" value="{{ old('email', '') }}" required>
+                          @if($errors->has('email'))
+                            <p style="color:red">{{$errors->first('email')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Password</label>
+                          <input type="password" name="password" class="form-control" id="txtMobile_divBookQuick" required>
+                          @if($errors->has('password'))
+                            <p style="color:red">{{$errors->first('password')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-group">
+                          <input type="checkbox" id="brand1" value="">
+                          <label for="brand1"><span></span>Remember me</label>
+                          <a href="#">Forgot password?</a><br>              
+                        </div>
+                        <div class="form-group">
+                          <input type="submit" class="btn btn-primary" style="background-color: #ff7b0a;padding: left 40px;" value="Đăng nhập" ></input>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <p>Nếu chưa có tài khoản hãy đăng ký tại đây<span>→</span> <a class="w3_play_icon1" href="#" data-toggle="modal" data-target="#register">Đăng ký</a></p>
+                    <div class="clear"></div>
+                </div>
+              </div>
+          </div>
+        </div>
 
-          
-        
+        //register
+        <div class="modal fade" id="register" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff7b0a;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Đăng ký</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form dialog-book-quick">
+                      <form action="{{ route('home.register')}}" method="post">
+                        @csrf
+                        <div class="form-group">
+                          <p class="quote" style=" border: solid 1px #e4e2e2;padding: 10px;font-size: .8em;background-color: #edf9d2;font-style: italic;line-height: 18px;">
+                          Đăng ký tài khoản để được nhiều ưu đãi hơn khi đặt phòng<br>
+                          Hãy đăng ký ở dưới !!!.<br>
+                          </p  
+                        </div>
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Tên<i style="color:red">*</i></label>
+                          <input type="text"  name="name" class="form-control" id="txtEmail_divBookQuick" value="{{ old('name', '') }}" required>
+                          @if($errors->has('name'))
+                            <p style="color:red">{{$errors->first('name')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Email<i style="color:red">*</i></label>
+                            <input type="email"  name="email" class="form-control" id="txtEmail_divBookQuick" value="{{ old('email', '') }}" required>
+                              @if($errors->has('email'))
+                                <p style="color:red">{{$errors->first('email')}}</p>
+                              @endif
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Mật khẩu<i style="color:red">*</i></label>
+                            <input type="password" name="password" class="form-control" id="txtMobile_divBookQuick" required>
+                            @if($errors->has('password'))
+                              <p style="color:red">{{$errors->first('password')}}</p>
+                            @endif
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Điện thoại<i style="color:red">*</i></label>
+                            <input type="text"  name="phone" class="form-control" id="txtEmail_divBookQuick" value="{{ old('phone', '') }}" required>
+                            @if($errors->has('phone'))
+                              <p style="color:red">{{$errors->first('phone')}}</p>
+                            @endif
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Địa chỉ<i style="color:red">*</i></label>
+                            <input type="text" name="address" class="form-control" id="txtMobile_divBookQuick" value="{{ old('address', '') }}" required>
+                            @if($errors->has('address'))
+                              <p style="color:red">{{$errors->first('address')}}</p>
+                            @endif
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <input type="submit" class="btn btn-primary" style="background-color: #ff7b0a;padding: left 40px;" value="Đăng ký" ></input>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <p>Bạn đã có tài khoản hãy đăng nhập tại đây<span>→</span> <a class="w3_play_icon1" href="#" data-toggle="modal" data-target="#login">Đăng nhập</a></p>
+                    <div class="clear"></div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+<script>
+  @if( $errors->has('email')|| $errors->has('password') || $errors->has('phone'))
+    $('#register').modal('show');
+  @endif
+</script> 
+<script >
+  @if(session()->has('error'))
+    $('#login').modal('show');
+  @endif
+</script>          
+           
 
 
 <script type="text/javascript">
@@ -746,4 +923,21 @@
     }
     showContent('Hotels');
 </script>
+
+
+//slider
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
+<script src='https://sachinchoolur.github.io/lightslider/dist/js/lightslider.js'></script>
+<script>
+    $('#lightSlider').lightSlider({
+        gallery: true,
+        item: 1,
+        loop: true,
+        slideMargin: 0,
+        thumbItem: 5
+    });
+</script>
+
+
+
 </html>

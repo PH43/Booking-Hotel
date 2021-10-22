@@ -142,8 +142,10 @@
                                     Đang chờ thanh toán
                                 @elseif($booking->payment_status == '1')
                                     Đã thanh toán
-                                @else
+                                @elseif($booking->payment_status == '2')
                                    Thanh toán trực tuyến
+                                @else
+                                    Không có
                                 @endif
                             </p>
                         </div>
