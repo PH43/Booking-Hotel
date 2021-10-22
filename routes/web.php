@@ -82,6 +82,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['check.adm
 // login home
 Route::get('/login','App\Http\Controllers\Home\UserController@showlogin')->name('home.showlogin');
 Route::post('/login','App\Http\Controllers\Home\UserController@login')->name('home.login');
+// Route::post('/login','App\Http\Controllers\Home\UserController@loginthanhtoan')->name('thanhtoan.login');
 //logout home
 Route::get('/logout','App\Http\Controllers\Home\UserController@logout')->name('home.logout');
 //register home
@@ -103,7 +104,8 @@ Route::get('/','App\Http\Controllers\HomeController@index')->name('home.index');
 
 Route::any('/search','App\Http\Controllers\HomeController@searchhotel')->name('search.hotel');
 Route::get('/city/{id}','App\Http\Controllers\HomeController@searchwithcity')->name('searchwithcity');
-// Route::get('/city/{id}','App\Http\Controllers\HomeController@searchbycondition')->name('searchbycondition');
+Route::get('/dat-phong','App\Http\Controllers\HomeController@booking')->name('booking');
+Route::get('/thanh-toan','App\Http\Controllers\HomeController@thanhtoan')->name('thanhtoan');
 
 
-Route::get('/room/{id}/booking','App\Http\Controllers\BookingController@show')->name('home.booking');
+// Route::get('/room/{id}/booking','App\Http\Controllers\BookingController@show')->name('home.booking');

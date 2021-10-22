@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 use App\Models\Room;
 use App\Models\City;
-use App\Models\Hotel;
-use App\Models\HotelRate;
+use App\Models\Coupon;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use DB, Session, Auth;
+use Session, Auth;
+use Illuminate\Support\Facades\DB;
+
 
 class HomeController extends Controller
 {
@@ -171,5 +173,43 @@ class HomeController extends Controller
 
         return view('searchhotel', compact('hotels','id', 'namecity', 'startDate', 'endDate', 'days', 'sohotels'));
     }
+    public function booking(Request $request){
+        $roomid = $request -> input('roomid');
+        $qty = $request-> input('qty');
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+        $code = $request->input('code');
+        $days= floor((strtotime($endDate) - strtotime($startDate))/(60*60*24));
+        $code_id = Coupon::where('code', 'like' , $code)->pluck('id');
+        foreach ($code_id as $id ) {
+               $code_id = $id;
+        }
+        
+        if(Auth::check()){
+            $user_id = Auth::user()->id;
+            $name = Auth::user()->name;
+            $phone = Auth::user()->phone;
+            $email = Auth::user()->email;
+            //  dd($user_id);
 
+            DB::insert("insert into bookings (user_id, coupon_id) values ($user_id,  $code_id )");
+            return view('bookinginfor', compact('name', 'phone', 'email','code', 'startDate', 'endDate', 'days'));
+        }
+        else{
+            // dd('chưa đăng nhập');
+            $user_id ='null';
+            DB::insert("insert into bookings (user_id, coupon_id) values ($user_id,  $code_id )");
+            return view('bookinginfor', compact('code', 'startDate', 'endDate', 'days'));
+        }
+
+        
+       
+
+    }
+    public function thanhtoan(Request $request){
+        
+        
+       
+
+    }
 }

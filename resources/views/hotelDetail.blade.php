@@ -248,11 +248,15 @@
             justify-content:space-between;
             line-height:16px;
             text-align:center;
+            z-index: 1001;
             font-size: 16px;
             margin-left: -110px;
         }
         .footer{
             border-top: 5px solid #f38e11;
+        }
+        .datehidden{
+            display: none;
         }
     </style>
 @stop
@@ -546,9 +550,14 @@
                     <div style="margin: 0 auto;display: flex;max-width: 1180px;align-items: center;justify-content: space-between;">
                         <div style="font-size: 20px;margin-top: 32px;font-weight: 600;line-height: 23px;">Chọn phòng</div>
                     </div>
-                    <form action="" style="display: flex;">
-                        <div style="width:85%;">
+                    
+                        <div style="width:100%;">
                             @foreach($rooms as $hotel)
+                            <form action="{{ route('booking') }}" style="display: flex;" method="GET">
+                                 {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
+                                 <input class="datehidden" type="date"  name="startDate" value="{{ $startDate }}">
+                                <input class="datehidden" type="text"  name="code" value="{{$codes->first()-> code}}">
+                                 <input class="datehidden" type="date"  name="endDate" value="{{ $endDate }}">
                                 <div style="display: flex;width:100%; background: white; margin-bottom: 10px;border: 1px solid rgb(243 142 17);border-radius: 8px;">
                                     <div style="width:24%">
                                         <div style="position: unset; margin: 15px;">
@@ -615,8 +624,10 @@
                                     </div>
                                     <div style="width:8%;border-left: 1px solid rgba(224, 224, 224, 1);">
                                         <div class="" style="display: flex;padding: 24px 37px 0 27px;align-items: center;white-space: nowrap;flex-direction: column;">
+                                            <input type="hidden" name="roomid" value="{{$hotel->id}}">
                                             <label for="qty">Số phòng</label>
-                                            <select name="qty" id="">
+                                            <select name="qty" id=""> 
+                                                <option value="0">0</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                             </select>
@@ -637,7 +648,9 @@
                                                 <div  style="align-items: center;">
                                                     <p style="font-weight: 400; display: flex; font-size: 14px; align-items: center; line-height: 16px;">
                                                         <span style="white-space: nowrap;">Nhập mã:&nbsp;</span>
-                                                        <span class="" style="    color: #00B6F3;display: flex;font-size: 14px;align-items: center;font-weight: 600;line-height: 16px;">STAY</span>
+                                                        {{-- @foreach ($codes as $code) --}}
+                                                            <span class="" style="color: #00B6F3;display: flex;font-size: 14px;align-items: center;font-weight: 600;line-height: 16px;">{{$codes->first()-> code}}</span>
+                                                        {{-- @endforeach --}}
                                                         <span class="" style="color: #ffffff;display: flex;padding: 1px 3px;font-size: 14px;background: #00B6F3;align-items: center;font-weight: 600;line-height: 16px;margin-left: 4px;border-radius: 3px;">
                                                             <span style="padding-right: 4px;">-</span>15%
                                                         </span>
@@ -646,6 +659,9 @@
                                                         <span class="" style="font-size: 14px;font-weight: 400;line-height: 16px;margin-left: 2px;">/đêm</span>
                                                     </p>
                                                 </div>
+                                            </div>
+                                            <div style="margin: 0px 10px 10px 10px;">
+                                                <input style="    color: rgb(253, 253, 253);width: 100%;border: none;height: 44px;margin: 7px;padding: 6px 8px;font-size: 16px;min-height: 20px;font-weight: 600;border-radius: 8px;text-transform: none;background-color: rgb(243 142 17);" class="" type="submit" value="Đặt Phòng">
                                             </div>
                                             <div class="chitietgia__hover">Chi tiết giá
                                                 <div class="chitietgia" style="color: black">
@@ -670,12 +686,11 @@
                                         </div>
                                     </div>
                                 </div>
+                            </form>
                             @endforeach
                         </div>
-                        <div style="width:15%;background: white;margin: 0px 10px 10px 10px;border: 1px solid rgb(243 142 17);border-radius: 8px;">
-                             <input style="    color: rgb(253, 253, 253);width: 90%;border: none;height: 44px;margin: 7px;padding: 6px 8px;font-size: 16px;min-height: 20px;font-weight: 600;border-radius: 8px;text-transform: none;background-color: rgb(243 142 17);" class="" type="submit" value="Đặt Phòng">
-                        </div>
-                    </form>
+                        
+                   
             </div>
                 
     

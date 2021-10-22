@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Hotel;
 use App\Models\Role;
 use App\Models\Room;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 use Session, Auth;
 
@@ -57,10 +58,11 @@ class HotelController extends Controller
         //  DB::enableQueryLog();
          if ($request->isMethod('GET')) {
             
-            $rooms = Room::leftjoin('room_types', 'room_types.id', '=', 'rooms.roomtype_id')
+            $rooms = Room::leftjoin('room_types','rooms.roomtype_id', '=',  'room_types.id' )
             ->leftjoin('hotels', 'hotels.id', '=', 'rooms.hotel_id')
             ->leftjoin('cities', 'cities.id', '=', 'hotels.city_id')
             ->leftjoin('categories', 'categories.id', '=', 'hotels.category_id')
+            ->select('room_types.*', 'hotels.*', 'cities.*', 'categories.*','rooms.*') 
             ->with('bookingRooms')->whereHas('bookingRooms', function ($q) use ($startDate, $endDate) {
                 $q->where(function ($q2) use ($startDate, $endDate) {
                     $q2->where('startDate', '>=', $endDate)
@@ -77,9 +79,9 @@ class HotelController extends Controller
         } else {
             $rooms = null;
         }
-
-
-        return view('hotelDetail', compact('rooms', 'hotels', 'startDate', 'endDate', 'days'));
+        $codes = Coupon::all();
+        // dd($code_id);
+        return view('hotelDetail', compact('rooms', 'hotels', 'startDate', 'endDate', 'days', 'codes'));
 
         
     }
