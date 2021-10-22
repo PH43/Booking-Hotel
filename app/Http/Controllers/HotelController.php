@@ -52,13 +52,15 @@ class HotelController extends Controller
         
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
-
+         $days= floor((strtotime($endDate) - strtotime($startDate))/(60*60*24));
 
         //  DB::enableQueryLog();
          if ($request->isMethod('GET')) {
             
             $rooms = Room::leftjoin('room_types', 'room_types.id', '=', 'rooms.roomtype_id')
             ->leftjoin('hotels', 'hotels.id', '=', 'rooms.hotel_id')
+            ->leftjoin('cities', 'cities.id', '=', 'hotels.city_id')
+            ->leftjoin('categories', 'categories.id', '=', 'hotels.category_id')
             ->with('bookingRooms')->whereHas('bookingRooms', function ($q) use ($startDate, $endDate) {
                 $q->where(function ($q2) use ($startDate, $endDate) {
                     $q2->where('startDate', '>=', $endDate)
@@ -71,14 +73,13 @@ class HotelController extends Controller
             
             $temp = array_unique(array_column($hotels, 'hotel_id'));
             $hotels = array_intersect_key($hotels, $temp);
-           
+            // dd(array_values($hotels)[0]);
         } else {
             $rooms = null;
         }
 
-        
 
-        return view('hotelDetail', compact('rooms', 'hotels'));
+        return view('hotelDetail', compact('rooms', 'hotels', 'startDate', 'endDate', 'days'));
 
         
     }

@@ -19,6 +19,10 @@ class CreateRoomsTable extends Migration
             $table->tinyInteger('status')->default(0);
             $table->integer('room_number');
             $table->string('description');
+            $table->integer('qty');
+            $table->integer('discount');
+            $table->integer('area');
+            $table->string('view');
             $table->unsignedBigInteger('hotel_id');
             $table->unsignedBigInteger('roomtype_id');
             $table->timestamps();

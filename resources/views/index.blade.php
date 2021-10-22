@@ -107,7 +107,8 @@
           <span class="tab__link">Homes</span>
         </div>
 
-        <form class="booking_details tab__content" id="Hotels" action="{{ route('search.hotel') }}" method="POST" >
+        <form class="booking_details tab__content" id="Hotels" action="{{ route('search.hotel') }}" method="GET" >
+          
           <div class="item">
              <i class="fa fa-search"></i>
              <input required class="timkiem" type="text" name="city" placeholder="Enter a destination" style="border: none;padding-left: 4px;">
@@ -129,7 +130,8 @@
 
           <div class="item">
             <div class="cta active">
-              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+              <input type="hidden" name="orderBy" value="DEFAULT">
+              {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
               <input class="cta active" type="submit" value="Tìm">
             </div>
           </div>
@@ -428,7 +430,7 @@
                   </span>
                 </a>
                 <h3 class="mrgt1x mrgb05 padl1x padr1x" style="padding: 30px 0 30px 10px;">
-                  <a class="title-promotion " href="{{ route('searchwithcity', $city->id) }}?city={{ $city->city }}"  style="font-weight: 500;">{{ $city->city }}</a>
+                  <a class="title-promotion " href="{{ route('searchwithcity', $city->id) }}?city={{ $city->city }}&orderBy=DEFAULT"  style="font-weight: 500;">{{ $city->city }}</a>
                 </h3>
               </div>
             </div>
