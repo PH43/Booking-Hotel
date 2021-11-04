@@ -17,6 +17,7 @@ class CreateRoomTypesTable extends Migration
             $table->bigIncrements('id');
             $table->string('type');
             $table->integer('bed');
+            $table->string('size');
             $table->integer('capactity');
             $table->timestamps();
             $table->softDeletes();

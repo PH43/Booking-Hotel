@@ -15,16 +15,14 @@ class CityTableSeeder extends Seeder
     public function run()
     {
         $data = [
-            ['city'=>'Hà Nội'],
-            ['city'=>'Quảng Bình'],
-            ['city'=>'Quảng Trị'],
-            ['city'=>'Đà Nẵng'],           
-            ['city'=>'Huế'],            
-            ['city'=>'Quảng Nam'],           
-            ['city'=>'Quảng Ngãi'],
-            ['city'=>'Bình Định '],           
-            ['city'=>'Phú Yên'],
-            ['city'=>'Hồ Chí Minh'],
+            ['city'=>'Hà Nội', 'img'=>'HN.jpg'],
+            ['city'=>'Quảng Bình', 'img'=>'QB.png'],
+            ['city'=>'Quảng Trị', 'img'=>'QT.jpg'],
+            ['city'=>'Đà Nẵng', 'img'=>'ĐN.jpg'],           
+            ['city'=>'Huế', 'img'=>'Hue.jpg'],            
+            ['city'=>'Quảng Nam', 'img'=>'QNam.jpg'],           
+            ['city'=>'Bình Định ', 'img'=>'BDinh.jpg'],           
+            ['city'=>'Hồ Chí Minh', 'img'=>'TPHCM.jpg'],
         ];
         City::insert($data);
     }

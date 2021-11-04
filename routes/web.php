@@ -54,6 +54,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['check.adm
     // Rooms
     Route::delete('rooms/destroy', 'App\Http\Controllers\Admin\RoomsController@massDestroy')->name('rooms.massDestroy');
     Route::resource('rooms', 'App\Http\Controllers\Admin\RoomsController');
+    Route::get('changeStatus','App\Http\Controllers\Admin\RoomsController@changeStatus')->name('changeStatus');
 
     // Bookings
     Route::put('bookings/update-status/{id}','App\Http\Controllers\Admin\BookingsController@bookingStatus')->name('update.status');
@@ -75,14 +76,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['check.adm
     // Image
     Route::resource('advise', 'App\Http\Controllers\Admin\AdviseController');
 
-   
+    Route::get('searchroom', 'App\Http\Controllers\Admin\RoomsController@searchRoom')->name('searchRoom');
+    Route::post('searchroom', 'App\Http\Controllers\Admin\RoomsController@searchRoom')->name('searchRoom');
+    
     
 });
+
+
 
 // login home
 Route::get('/login','App\Http\Controllers\Home\UserController@showlogin')->name('home.showlogin');
 Route::post('/login','App\Http\Controllers\Home\UserController@login')->name('home.login');
-// Route::post('/login','App\Http\Controllers\Home\UserController@loginthanhtoan')->name('thanhtoan.login');
+Route::post('/loginthanhtoan','App\Http\Controllers\Home\UserController@loginthanhtoan')->name('thanhtoan.login');
 //logout home
 Route::get('/logout','App\Http\Controllers\Home\UserController@logout')->name('home.logout');
 //register home
@@ -93,19 +98,18 @@ Route::post('/register','App\Http\Controllers\Home\UserController@register')->na
 //home
 Route::get('/','App\Http\Controllers\HomeController@index')->name('home.index');
 Route::post('/advise','App\Http\Controllers\HomeController@storeAdvise')->name('Store.advise');
-//room
-// Route::get('/room/{id}','App\Http\Controllers\RoomController@show')->name('room.detail');
-//comment
-// Route::post('/commnets/{id}','App\Http\Controllers\CommentsController@storeComment')->name('room.comment');
-//hotel
+
 Route::get('/hotel/{id}','App\Http\Controllers\HotelController@show')->name('hotel.detail');
 
 Route::get('/','App\Http\Controllers\HomeController@index')->name('home.index');
 
 Route::any('/search','App\Http\Controllers\HomeController@searchhotel')->name('search.hotel');
 Route::get('/city/{id}','App\Http\Controllers\HomeController@searchwithcity')->name('searchwithcity');
+Route::any('/searchhotel','App\Http\Controllers\HomeController@searchhotelform')->name('search.hotel.form');
 Route::get('/dat-phong','App\Http\Controllers\HomeController@booking')->name('booking');
 Route::get('/thanh-toan','App\Http\Controllers\HomeController@thanhtoan')->name('thanhtoan');
 
 
+
 // Route::get('/room/{id}/booking','App\Http\Controllers\BookingController@show')->name('home.booking');
+// Route::post('/commnets/{id}','App\Http\Controllers\HotelReateController@storeComment')->name('hotel.comment');

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Tìm kiếm')
+@section('title', $namecity)
 
 @section('styles')
 
@@ -15,6 +15,7 @@
             line-height: 50px;
             border-bottom: solid 1px #babbbc;
             margin-bottom: 16px;
+            justify-content: space-between;
         }
         .MuiBox-root-item{
             color: #1A202C;
@@ -226,6 +227,40 @@
                 -webkit-line-clamp: 2;
                 margin-left: 5px;
         }
+        .datehidden{
+            display: none;
+        }
+        .list_price li{
+            list-style: none;
+        }
+        .list_price li a{
+            text-decoration: none;
+        }
+        .list_price li a:hover{
+            text-decoration: none;
+            color: #f38e11;
+        }
+        .list_price li a::before {
+            content: " ";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50px;
+            background-color: #f38e11;
+            margin-right: 5px;
+        }
+        .show{
+            display: flex;
+        }
+        .activept{
+            background-color: #f38e11;
+        }
+        .defau{
+            background-color: #00B6F3;
+        }
+        .defau:hover{
+            background-color: #1c6780;
+        }
     </style>
 @stop
 
@@ -285,12 +320,12 @@
 
                                 <div class="myAccount nav__pc">
                                 <div class="ctaGroup">
-                                    @if(Auth::check())
+                                     @if(Auth::check())
                                     <b>Xin chào:&nbsp;</b> <p class="nav__mobile-link" style="margin: 0px"> {{ Auth::user()->name}}</p>
                                     <p style="margin: 0px ;"><a href="{{ route('home.logout')}}" style="text-decoration:none">&nbsp;| Đăng xuất</a></p>
                                     @else
-                                    <div class="cta"><a href="{{ route('home.login')}}" style="color: black">Sign In</a></div>
-                                    <div class="cta active"><a style="color: white" href="{{ route('home.register')}}">Register</a></div> 
+                                    <div class="cta"><a href="#" style="color: black"  data-toggle="modal" data-target="#login">Sign In</a></div>
+                                    <div class="cta active"><a style="color: white" href="#" data-toggle="modal" data-target="#register">Register</a></div> 
                                     @endif
                                 </div>
                             </div>
@@ -363,7 +398,7 @@
 
                         </div>
                         
-                        {{-- <div class="booking_info mobile">
+                        <div class="booking_info mobile">
 
                             <div class="opt">
                             <span class="tab__link_mobile active">Hotels</span>
@@ -421,7 +456,7 @@
 
                             </div>
 
-                        </div> --}}
+                        </div> 
 
                     </div>
 
@@ -442,51 +477,103 @@
                             <h3 style="font-size: 20px;font-family: sans-serif;font-weight: bold;"> {{ $sohotels }} Khách sạn tại {{ $namecity }}</h3>
                         </div>
                     </div>
-                    <div  style="width: 100%;min-height: 500px;">
-                        <div class="fillter"  style="    min-height: 500px;float: left;width: 25%;">
-                            <div class="filter" style="border-radius: 8px;background-color: white;margin-right: 10px;">
-                                <form action="{{ route('searchwithcity', $id) }}" id="form_price" method="get">
-                                    <div class="clearfix"></div>
-                                    <div class="" style="width: 100%;height: 1px;background: #EDF2F7;"></div>
-                                    <div>
-                                        <p class="">Khoảng giá (1 đêm)</p>
-                                        <ul class="gia">
-                                            <li><a class="{{ Request::get('price') == 1 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '1']) }}">Dưới 500.000</a></li>
-                                            <li><a class="{{ Request::get('price') == 2 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '2']) }}">500.000 - 1.000.000</a></li>
-                                            <li><a class="{{ Request::get('price') == 3 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '3']) }}">1.000.000 - 3.000.000</a></li>
-                                            <li><a class="{{ Request::get('price') == 4 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '4']) }}">3.000.000 - 5.000.000</a></li>
-                                            <li><a class="{{ Request::get('price') == 5 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '5']) }}">5.000.000 - 7.000.000</a></li>
-                                            <li><a class="{{ Request::get('price') == 6 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '6']) }}">7.000.000 - 10.000.000</a></li>
-                                            <li><a class="{{ Request::get('price') == 7 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '7']) }}">>10.000.000</a></li>
-                                        </ul>
-                                        <div class="" style="width:100%;padding-right:14px">
-                                            <span class="MuiSlider-root jss143 MuiSlider-colorPrimary">
-                                                <span class="MuiSlider-rail jss148"></span>
-                                                <span class="MuiSlider-track jss147" style="left: 0%; width: 100%;"></span>
-                                                <input type="hidden" value="0,5000000">
-                                                <span class="" tabindex="0" role="slider" style="left:0%" data-index="0" aria-orientation="horizontal" aria-valuemax="5000000" aria-valuemin="0" aria-valuenow="0"></span>
-                                                <span class="" tabindex="0" role="slider" style="left: 100%;" data-index="1" aria-orientation="horizontal" aria-valuemax="5000000" aria-valuemin="0" aria-valuenow="5000000"></span>
-                                            </span>
+                    <div  style="width: 100%;min-height: 400px;">
+                        <div class="fillter"  style="    min-height: 400px;float: left;width: 25%;">
+                            <div class="filter" style="border-radius: 8px;background-color: white;margin-right: 10px;padding-left: 20px;padding-right: 20px;">
+                                <div class="MuiBox-root jss139 jss133" style="font-size: 16px;">Bộ lọc
+                                    <a href="{{ route('searchwithcity', $city) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&orderBy=DEFAULT&price=0&page=1" style="text-decoration: none;">
+                                        <p class="" style="">Xóa tất cả lọc</p>
+                                    </a>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div style="border-bottom: 1px solid #c2c3c4;">
+                                    <p class="">Khoảng giá (1 đêm)</p>
+                                    <ul class="list_price">
+                                            <li><a class="{{ Request::get('price') == 0 || Request::get('price') == '' ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => 0]) }}" >Tất cả</a></li>  
+                                            <li><a class="{{ Request::get('price') == 1 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => 1]) }}">Dưới 500.000</a></li>
+                                            <li><a class="{{ Request::get('price') == 2 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => 2]) }}">500.000 - 1.000.000</a></li>
+                                            <li><a class="{{ Request::get('price') == 3 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => 3]) }}">1.000.000 - 3.000.000</a></li>
+                                            <li><a class="{{ Request::get('price') == 4 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => 4]) }}">3.000.000 - 5.000.000</a></li>
+                                            <li><a class="{{ Request::get('price') == 5 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => 5]) }}">5.000.000 - 7.000.000</a></li>
+                                            <li><a class="{{ Request::get('price') == 6 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => 6]) }}">7.000.000 - 10.000.000</a></li>
+                                            <li><a class="{{ Request::get('price') == 7 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => 7]) }}">>10.000.000</a></li>
+                                    </ul>
+                                </div>
+                                
+                                {{-- <form action="{{ route('searchwithcity', $city) }}" id="form_price" method="get"> --}}
+                                    <div class="" style="margin-top: 20px;">
+                                        <div class="" style="display: flex;align-items: center;justify-content: space-between;">
+                                            <p class="" style="font-size: 14px;font-weight: 600;line-height: 17px;">Hạng khách sạn</p>
                                         </div>
-
-                                    </div>
-                                </form>
+                                        <div class="container__star">
+                                            
+                                            <div class="form-check">
+                                                {{-- <a class="{{ Request::get('star') == 5 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['star' => 5]) }}"> --}}
+                                                    <input class="form-check-input" {{ Request::get('star') == 5 ? 'checked' : ''}} type="checkbox" value="5" id="star" name="star[]" >
+                                                    <div class="form-check-label" for="star">
+                                                        @for ($i=0; $i < 5; $i++)
+                                                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" viewBox="0 0 576 512" style="height: 12px;"><path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" style="color: #f38e11;"/></svg>
+                                                        @endfor
+                                                    </div>
+                                                {{-- </a> --}}
+                                            </div>
+                                            
+                                            <div class="form-check">
+                                                <input class="form-check-input" {{ Request::get('star') == 4 ? 'checked' : ''}} type="checkbox" value="4" id="star" name="star[]">
+                                                <label class="form-check-label" for="star">
+                                                     @for ($i=0; $i < 4; $i++)
+                                                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" viewBox="0 0 576 512" style="height: 12px;"><path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" style="color: #f38e11;"/></svg>
+                                                    @endfor
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" {{ Request::get('star') == 3 ? 'checked' : ''}} type="checkbox" value="3" id="star" name="star[]">
+                                                <label class="form-check-label" for="star">
+                                                    @for ($i=0; $i < 3; $i++)
+                                                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" viewBox="0 0 576 512" style="height: 12px;"><path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" style="color: #f38e11;"/></svg>
+                                                    @endfor
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="2" id="star" name="star">
+                                                <label class="form-check-label" for="star">
+                                                    @for ($i=0; $i < 2; $i++)
+                                                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" viewBox="0 0 576 512" style="height: 12px;"><path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" style="color: #f38e11;"/></svg>
+                                                    @endfor
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="1" id="star" name="star">
+                                                <label class="form-check-label" for="star">
+                                                
+                                                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" viewBox="0 0 576 512" style="height: 12px;"><path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" style="color: #f38e11;"/></svg>
+                                                   
+                                                </label>
+                                            </div>
+                                             {{-- <input type="button" id="btn" value="Xem kết quả"/> --}}
+                                        </div>
+                                    </div>   
+                                           
+                                        
+                                       
+                                {{-- </form> --}}
                             </div>
                         </div>
-                        <div class="hotels"  style="width: 75%;float: right;min-height: 500px;">
+                        <div class="hotels"  style="width: 75%;float: right;min-height: 400px;">
+                            @if($sohotels != 0)
                             <div class="title" style="width: 100%;height: 50px; margin-bottom: 10px; font-family: sans-serif;">
                                 <div class="MuiBox-root">
                                     <div class="MuiBox-root-item">
-                                        <a class="{{ Request::get('orderBy') == 'DEFAULT' ? 'active' : ''}}" href="{{ route('searchwithcity', $id) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=price&orderBy=DEFAULT&price=1">BKHT đề xuất</a>
+                                        <a  class="{{ Request::get('orderBy') == 'DEFAULT' ? 'active' : ''}}" href="{{ route('searchwithcity', $city) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=price&orderBy=DEFAULT&price=0&page=1">BKHT đề xuất</a>
                                     </div>
                                     <div class="MuiBox-root-item">
-                                        <a class="{{ Request::get('orderBy') == 'ASC' ? 'active' : ''}}" href="{{ route('searchwithcity', $id) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=price&orderBy=ASC&price=1">Giá tăng dần</a>
+                                        <a class="{{ Request::get('orderBy') == 'ASC' ? 'active' : ''}}" href="{{ route('searchwithcity', $city) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=price&orderBy=ASC&price=0&page=1">Giá tăng dần</a>
                                     </div>
                                     <div class="MuiBox-root-item">
-                                        <a class="{{ Request::get('orderBy') == 'DESC' ? 'active' : ''}}" href="{{ route('searchwithcity', $id) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=price&orderBy=DESC&price=1">Giá giảm dần</a>
+                                        <a class="{{ Request::get('orderBy') == 'DESC' ? 'active' : ''}}" href="{{ route('searchwithcity', $city) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=price&orderBy=DESC&price=0&page=1">Giá giảm dần</a>
                                     </div>
                                     <div class="MuiBox-root-item">
-                                        <a class="{{ Request::get('orderBy') == 'STARDEFAULT' ? 'active' : ''}}" href="{{ route('searchwithcity', $id) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=star&orderBy=STARDEFAULT&price=1">Sao khách sạn</a>
+                                        <a class="{{ Request::get('orderBy') == 'STARDEFAULT' ? 'active' : ''}}" href="{{ route('searchwithcity', $city ) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=star&orderBy=STARDEFAULT&price=0&page=1">Sao khách sạn</a>
                                     </div>
                                     <div class="MuiBox-root-item">Đánh giá cao nhất</div>
                                 </div>
@@ -494,9 +581,9 @@
                             @foreach($hotels as $hotel)
                             <div class="ht" style="border-radius: 8px;width: 100%;height: 200px;display: flex;flex-direction: row;justify-content: flex-end;align-content: space-around; padding: 10px;margin-bottom: 10px; background-color: white;">
                                 <div class="image" style="width: 30%; float:left;">
-                                    <img src="data:image/jpeg;base64,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" class="" style="border-radius: 8px;width: 240px;height: 180px;">
+                                    <img src="{{ Request::get('price') != null  ? '../' : ''}}../resources/images/hotels/{{$hotel['image']}}" class="" style="border-radius: 8px;width: 100%;height: 100%;">
                                 </div>
-                                <div class="name"  style="width: 40%; float:left;margin-left: 100px;">
+                                <div class="name"  style="width: 40%; float:left;margin-left: 10px;">
                                     <div style="font-weight: 600;display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;font-size: 18px;line-height: 21px;">
                                         <a href="{{ route('hotel.detail', $hotel["hotel_id"]) }}?startDate={{ $startDate }}&endDate={{ $endDate }}">{{ $hotel["name"] }}</a>
                                     </div>
@@ -519,24 +606,111 @@
                                     </div>
                                     <div class="address">
                                         <svg width="16" height="16" fill="none"><path d="M8.467 3.8V2a1 1 0 00-1-1h-.8a1 1 0 00-1 1v1.8" stroke="#1A202C" stroke-linecap="round" stroke-linejoin="round"></path><path d="M1 7.467a1 1 0 001 1h9.838a1 1 0 00.64-.232l1.6-1.333a1 1 0 000-1.537l-1.6-1.333a1 1 0 00-.64-.232H2a1 1 0 00-1 1v2.667zM5.667 10.333V14a1 1 0 001 1h.8a1 1 0 001-1v-3.667" stroke="#1A202C" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                                        <p>{{ $hotel["type"] }}</p>
+                                        <p>{{ $hotel['room_type']['type'] }}</p>
                                     </div>
                                 </div>
-                                <div class="price"  style="width: 30%; float:right; display: flex; justify-content: flex-end;align-items: flex-end;">{{ $hotel["price"] }}
+                                <div class="price"  style="width: 30%; float:right; display: flex; justify-content: flex-end;align-items: flex-end;">
+                                    <div class="" style="color: #1a202c;width: 100%;display: flex;padding: 15px 15px 0 0;font-size: 12px;align-items: flex-end; padding-left: 16px;flex-direction: column;">
+                                            <div class="" style="color: #ffffff;width: 42px;display: flex;position: relative;font-size: 12px;background: #f38e11;margin-top: 12px;min-height: 18px;align-items: center;font-weight: 600;line-height: 14px;border-radius: 3px 3px 0px 3px;justify-content: center;">
+                                                <div style="    padding: 2px 4px;font-size: 14px;font-weight: 600;line-height: 16px;">-{{$hotel['discount']}}%</div>
+                                                <div style="right: 0; width: 0;bottom: -4px;height: 0;position: absolute;border-color: transparent #f38e11 transparent transparent;border-style: solid;border-width: 0px 5px 5px 0;"></div>
+                                            </div>
+                                            <span class="" style="color: #4A5568;margin: 6px 0 0 0;font-size: 14px;line-height: 16px;text-decoration-line: line-through;">{{number_format($hotel['price'])}}đ /đêm</span>
+                                            
+                                            <span class="" style="font-size: 20px;margin-top: 2px;font-weight: 600;line-height: 23px;">{{  number_format($hotel['price']-($hotel["price"]*$hotel["discount"]/100)) }}
+                                                <span class="" style="font-size: 14px; line-height: 16px; font-weight: 400;"> /đêm</span>
+                                            </span>
+                                            <div style="border: 1px dashed #cbd5e0;display: flex;margin-top: 8px;align-items: center;border-radius: 8px;padding: 10px;flex-direction: column;">
+                                                <div  style="align-items: center;">
+                                                    <p style="font-weight: 400; display: flex; font-size: 14px; align-items: center; line-height: 16px;">
+                                                        <span style="white-space: nowrap;">Nhập mã:&nbsp;</span>
+                                                        {{-- @foreach ($codes as $code) --}}
+                                                            <span class="" style="color: #00B6F3;display: flex;font-size: 14px;align-items: center;font-weight: 600;line-height: 16px;">{{$codes->first()-> code}}</span>
+                                                        {{-- @endforeach --}}
+                                                        <span class="" style="color: #ffffff;display: flex;padding: 1px 3px;font-size: 14px;background: #00B6F3;align-items: center;font-weight: 600;line-height: 16px;margin-left: 4px;border-radius: 3px;">
+                                                            <span style="padding-right: 4px;">-</span>{{$codes->first()->reduction}}%
+                                                        </span>
+                                                        
+                                                    </p>
+                                                    <p class="" style="width: 100%;font-size: 20px;margin-top: 3px;text-align: right;word-break: break-word;font-weight: 600;line-height: 23px;color: #f38e11;">{{  number_format(($hotel['price']-($hotel["price"]*$hotel["discount"]/100))-(($hotel["price"]*$hotel["discount"]/100)-(($hotel["price"]*$hotel["discount"]/100)*$codes->first()-> reduction/100))) }}đ
+                                                        <span class="" style="font-size: 14px;font-weight: 400;line-height: 16px;margin-left: 2px;">/đêm</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
                             @endforeach
+                            
+                            <div class="phantrang" style="width: 100%;height: 150px;display: flex;justify-content: center;align-items: center;">
+                                <div class="phantrang_container" style="width: 100%;">
+                                    @if($sohotels/2 != null)
+                                    <ul style="display: flex; justify-content: center;">
+                                        <div><a href="{{ request()->fullUrlWithQuery(['page' => 1]) }}"><svg style="stroke: #1A202C;transform: rotate(90deg);" width="14" height="8" fill="none" class="svgFillAll jss11675"><path d="M13 1L7 7 1 1" stroke="#4A5568" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></a></div>
+                                         @for ($i=0; $i < $sohotels/2; $i++)
+                                        <li class="{{ Request::get('page') == ($i+1) ? 'activept' : 'defau'}}" style="list-style: none;color: #FFF;width: 32px;height: 32px;font-size: 14px;font-weight: 600;display: flex;line-height: 16px;border-radius: 100px;margin: 0px 10px;align-items: center;justify-content: center;;"><a style="color: white;text-decoration: none;" href="{{ request()->fullUrlWithQuery(['page' => ($i+1)]) }}">{{ ($i+1) }}</a></li>
+                                         @endfor
+                                         <div><a href="{{ request()->fullUrlWithQuery(['page' =>round($sohotels/2) ]) }}"><svg style="stroke: #1A202C;transform: rotate(270deg);" width="14" height="8" fill="none" class="svgFillAll jss11675"><path d="M13 1L7 7 1 1" stroke="#4A5568" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></a></div>
+                                    </ul>
+                                    {{-- @else --}}
+                                    
+                                    @endif
+                                </div>
+                            </div>
+                            @else
+                                <div style="display: flex;margin-top: 155px;align-items: center;flex-direction: column;justify-content: center;">
+                                    <div class="MuiBox-root jss7352">
+                                        <div class="jss124 jss7350">
+                                            <div class="jss125 jss128" style="border-radius: 0px;"></div>
+                                            <div class="lazyload-wrapper ">
+                                                <img style="background: #f38e11;border-radius: 100%;" src="https://storage.googleapis.com/tripi-assets/mytour/icons/icon_no_result_search_listing.svg" class="jss127 jss7350" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p style="font-size: 14px;margin-top: 16px;font-weight: 400;line-height: 19px;font-family: cursive;">Không tìm thấy kết quả nào với các tiêu chí tìm kiếm của bạn.</p>
+                                    <p style="font-family: serif;">Vui lòng thay đổi tiêu chí tìm kiếm</p>
+                                    
+                                </div>
+                            @endif
                         </div>
+                        
                     </div>
                 </div>
                 
-    
+                
             
             
             <div class="clearfix"></div>
             
         </div>
         <div class="clearfix"></div>
+        <div class="themchoco" style="width: 100%;min-height: 100px;background-color: white;margin: 20px 0px;padding: 20px 0px">
+            <div class="near container {{ $sohotels != 0 ? 'datehidden' : ''}}" >
+                 {{-- @if($sohotels != 0) --}}
+                <div style="font-size: 20px;font-family: sans-serif;font-weight: bold;">Một số khách sạn ở {{$namecity}}</div>
+                <div style="display: flex;flex-direction: row;justify-content: space-between;margin-top: 20px;">
+                    @foreach($hotelsnear as $hotel)
+                            <div class="" style="display: flex;width: 18%;flex-direction: column;justify-content: space-between;">
+                                <div class="image" style="height: 140px;">
+                                    <img src="../../resources/images/hotels/{{$hotel['image']}}" class="" style="border-radius: 8px;width: 100%;height: 100%;">
+                                </div>
+                                <div class="name"  style="">
+                                    <div style="    font-size: 14px;font-family: -apple-system,BlinkMacSystemFont,sans-serif;font-weight: 600;line-height: 16px;margin-top: 10px;">
+                                        <a style="color: #0d96ff;" href="{{ route('hotel.detail', $hotel["id"]) }}?startDate={{ $startDate }}&endDate={{ $endDate }}">{{ $hotel["name"] }}</a>
+                                    </div>
+                                    <div title="Số sao đánh giá này do bạn Dũng tự điền, phản ánh sự hư cấu cũng như sự không có thật của các hotel.">
+                                        @for ($i=0; $i < $hotel["star"]; $i++)
+                                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" viewBox="0 0 576 512" style="height: 12px;"><path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" style="color: #f38e11;"/></svg>
+                                        @endfor
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+                            @endforeach
+                </div>
+            </div>
+        </div>
     </div>
 @stop
 
@@ -566,11 +740,38 @@
     </script>
     <script type="text/javascript">
         $(function(){
-            $('.gia').change(function(){
+            $('.container__star').change(function(){
                 $("#form_price").submit();
             })
         })
     </script>
+
+    
+    <script>
+  @if( $errors->has('email')|| $errors->has('password') || $errors->has('phone'))
+    $('#register').modal('show');
+  @endif
+</script> 
+<script >
+  @if(session()->has('error'))
+    $('#login').modal('show');
+  @endif
+</script>          
+           
+
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
+<script src='https://sachinchoolur.github.io/lightslider/dist/js/lightslider.js'></script>
+<script>
+    $('#lightSlider').lightSlider({
+        gallery: true,
+        item: 1,
+        loop: true,
+        slideMargin: 0,
+        thumbItem: 5
+    });
+</script>
+
 @stop
 
     

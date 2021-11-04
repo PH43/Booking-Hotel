@@ -11,8 +11,13 @@
             @csrf
             <div class="form-group">
                 <label class="required" for="path">Image<i style="color:red"> *</i></label>
-                <input class="form-control hidden" type="file" name="path" id="path" value="{{ old('path', '') }}" required>
+                <input class="form-control" type="file" name="path" id="path" value="{{ old('path', '') }}" required>
             </div>
+            <!-- Image -->
+            <!-- <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div> -->
             <div class="form-group">
                 <label class="required" for="room_id">Room Number</label>
                 <select class="form-control" name="room_id" id="room_id">

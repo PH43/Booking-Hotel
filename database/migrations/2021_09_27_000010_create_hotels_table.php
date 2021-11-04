@@ -22,11 +22,13 @@ class CreateHotelsTable extends Migration
             $table->string('website');
             $table->string('description');
             $table->integer('star');
+            $table->text('map');
+            $table->string('image');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('city_id')->references('id')->on('cities');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

@@ -6,8 +6,12 @@ use App\Models\Hotel;
 use App\Models\Role;
 use App\Models\Room;
 use App\Models\Coupon;
+use App\Models\Image;
+use App\Models\HotelRate;
+use App\Models\BookingRoom;
 use Illuminate\Http\Request;
-use Session, Auth;
+use DB, Session, Auth;
+
 
 class HotelController extends Controller
 {
@@ -50,40 +54,35 @@ class HotelController extends Controller
      */
     public function show(Request $request, $id)
     {   
-        
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
-         $days= floor((strtotime($endDate) - strtotime($startDate))/(60*60*24));
-
-        //  DB::enableQueryLog();
+        $days= floor((strtotime($endDate) - strtotime($startDate))/(60*60*24));
          if ($request->isMethod('GET')) {
             
-            $rooms = Room::leftjoin('room_types','rooms.roomtype_id', '=',  'room_types.id' )
-            ->leftjoin('hotels', 'hotels.id', '=', 'rooms.hotel_id')
-            ->leftjoin('cities', 'cities.id', '=', 'hotels.city_id')
-            ->leftjoin('categories', 'categories.id', '=', 'hotels.category_id')
-            ->select('room_types.*', 'hotels.*', 'cities.*', 'categories.*','rooms.*') 
-            ->with('bookingRooms')->whereHas('bookingRooms', function ($q) use ($startDate, $endDate) {
-                $q->where(function ($q2) use ($startDate, $endDate) {
-                    $q2->where('startDate', '>=', $endDate)
-                       ->orWhere('endDate', '<=', $startDate);
-                });
-    
-            })->orWhereDoesntHave('bookingRooms')->where('hotel_id', '=', $id)->orderBy('price')->get();
-            
-           $hotels = $rooms->toArray();
-            
-            $temp = array_unique(array_column($hotels, 'hotel_id'));
-            $hotels = array_intersect_key($hotels, $temp);
-            // dd(array_values($hotels)[0]);
-        } else {
+            $availableRoom = BookingRoom::join('rooms','rooms.id','=','booking_rooms.room_id')
+                            ->where('hotel_id', '=', $id)
+                            ->select("room_id", "qty",  DB::raw('(sum(qty_total)) as total_qty'))
+                        ->where(function ($q) use ($startDate, $endDate) {
+                            $q->where('startDate', '<',$endDate)
+                            ->orWhere('endDate', '>', $startDate);})
+                            ->groupBy(DB::raw('room_id'), 'qty')
+                            ->havingRaw('(sum(qty_total)) < qty')
+                            ->pluck('room_id');
+            $availableRoom = Room::with('roomType','bookingRooms', 'images')
+                        ->whereDoesntHave('bookingRooms', function ($q) use ($startDate, $endDate) {
+                            $q->where('startDate', '<',$endDate)
+                            ->orWhere('endDate', '>', $startDate);})
+                            ->orWhereIn('id', $availableRoom)->get();        
+            $rooms = $availableRoom->where('hotel_id', '=', $id);
+        }else{
             $rooms = null;
         }
-        $codes = Coupon::all();
-        // dd($code_id);
-        return view('hotelDetail', compact('rooms', 'hotels', 'startDate', 'endDate', 'days', 'codes'));
-
-        
+            //  $rooms = $rooms->toArray();
+            $hotel= Hotel::where('id', '=', $id)->with('city', 'category', 'hotelRates','img_nearloca')->get();
+            // $hotel = $hotel->toArray();
+            // dd($rooms);
+            $codes = Coupon::all();
+        return view('hotelDetail', compact('rooms', 'hotel', 'startDate', 'endDate', 'days', 'codes'));
     }
 
     /**

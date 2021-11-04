@@ -77,7 +77,197 @@
         </div>
 
 
-        <div class="modal fade" id="xemchitiet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="ant-modal-body"><div class="roomDetail"><div class="roomDetail__slide"><div class="image-gallery image-gallery-using-mouse" aria-live="polite"><div class="image-gallery-content bottom"><div class="image-gallery-slide-wrapper bottom"><button type="button" class="image-gallery-icon image-gallery-left-nav" aria-label="Previous Slide"><svg class="image-gallery-svg" xmlns="http://www.w3.org/2000/svg" viewBox="6 0 12 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button><button type="button" class="image-gallery-icon image-gallery-right-nav" aria-label="Next Slide"><svg class="image-gallery-svg" xmlns="http://www.w3.org/2000/svg" viewBox="6 0 12 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button><div class="image-gallery-swipe"><div class="image-gallery-slides"><div aria-label="Go to Slide 1" tabindex="-1" class="image-gallery-slide  center " role="button" style="display: inherit; transform: translate3d(0%, 0px, 0px);"><img class="image-gallery-image" src="https://statics.vntrip.vn/data-v2/hotels/9636/img_max/9636_1516353592__duy3564_(copy).jpg" alt="" srcset="" height="" width="" sizes="" title=""></div><div aria-label="Go to Slide 2" tabindex="-1" class="image-gallery-slide  right " role="button" style="display: inherit; transform: translate3d(100%, 0px, 0px);"><img class="image-gallery-image" src="https://statics.vntrip.vn/data-v2/hotels/9636/img_max/9636_1516353653__duy3565_(copy).jpg" alt="" srcset="" height="" width="" sizes="" title=""></div><div aria-label="Go to Slide 3" tabindex="-1" class="image-gallery-slide  " role="button" style="display: inherit; transform: translate3d(200%, 0px, 0px);"><div style="height: 100%;"></div></div><div aria-label="Go to Slide 4" tabindex="-1" class="image-gallery-slide  " role="button" style="display: inherit; transform: translate3d(300%, 0px, 0px);"><div style="height: 100%;"></div></div><div aria-label="Go to Slide 5" tabindex="-1" class="image-gallery-slide  " role="button" style="display: inherit; transform: translate3d(400%, 0px, 0px);"><div style="height: 100%;"></div></div><div aria-label="Go to Slide 6" tabindex="-1" class="image-gallery-slide  " role="button" style="display: inherit; transform: translate3d(500%, 0px, 0px);"><div style="height: 100%;"></div></div><div aria-label="Go to Slide 7" tabindex="-1" class="image-gallery-slide  left " role="button" style="display: inherit; transform: translate3d(-100%, 0px, 0px);"><img class="image-gallery-image" src="https://statics.vntrip.vn/data-v2/hotels/9636/img_max/9636_1516353604__duy3563_(copy).jpg" alt="" srcset="" height="" width="" sizes="" title=""></div></div></div><button type="button" class="image-gallery-icon image-gallery-play-button" aria-label="Play or Pause Slideshow"><svg class="image-gallery-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></button><button type="button" class="image-gallery-icon image-gallery-fullscreen-button" aria-label="Open Fullscreen"><svg class="image-gallery-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button></div><div class="image-gallery-thumbnails-wrapper bottom thumbnails-swipe-horizontal"><div class="image-gallery-thumbnails"><div class="image-gallery-thumbnails-container" aria-label="Thumbnail Navigation" style="transform: translate3d(0px, 0px, 0px); transition: all 450ms ease-out 0s;"><button type="button" tabindex="0" aria-pressed="true" aria-label="Go to Slide 1" class="image-gallery-thumbnail active"><span class="image-gallery-thumbnail-inner"><img class="image-gallery-thumbnail-image" src="https://statics2.vntrip.vn/165x165/data-v2/hotels/9636/img_max/9636_1516353592__duy3564_(copy).jpg"></span></button><button type="button" tabindex="0" aria-pressed="false" aria-label="Go to Slide 2" class="image-gallery-thumbnail"><span class="image-gallery-thumbnail-inner"><img class="image-gallery-thumbnail-image" src="https://statics2.vntrip.vn/165x165/data-v2/hotels/9636/img_max/9636_1516353653__duy3565_(copy).jpg"></span></button><button type="button" tabindex="0" aria-pressed="false" aria-label="Go to Slide 3" class="image-gallery-thumbnail"><span class="image-gallery-thumbnail-inner"><img class="image-gallery-thumbnail-image" src="https://statics2.vntrip.vn/165x165/data-v2/hotels/9636/img_max/9636_1516353659__duy3108_(copy).jpg"></span></button><button type="button" tabindex="0" aria-pressed="false" aria-label="Go to Slide 4" class="image-gallery-thumbnail"><span class="image-gallery-thumbnail-inner"><img class="image-gallery-thumbnail-image" src="https://statics2.vntrip.vn/165x165/data-v2/hotels/9636/img_max/9636_1516353675__duy3566_(copy).jpg"></span></button><button type="button" tabindex="0" aria-pressed="false" aria-label="Go to Slide 5" class="image-gallery-thumbnail"><span class="image-gallery-thumbnail-inner"><img class="image-gallery-thumbnail-image" src="https://statics2.vntrip.vn/165x165/data-v2/hotels/9636/img_max/9636_1516353647__duy3568_(copy).jpg"></span></button><button type="button" tabindex="0" aria-pressed="false" aria-label="Go to Slide 6" class="image-gallery-thumbnail"><span class="image-gallery-thumbnail-inner"><img class="image-gallery-thumbnail-image" src="https://statics2.vntrip.vn/165x165/data-v2/hotels/9636/img_max/9636_1516353692__duy3569_(copy).jpg"></span></button><button type="button" tabindex="0" aria-pressed="false" aria-label="Go to Slide 7" class="image-gallery-thumbnail"><span class="image-gallery-thumbnail-inner"><img class="image-gallery-thumbnail-image" src="https://statics2.vntrip.vn/165x165/data-v2/hotels/9636/img_max/9636_1516353604__duy3563_(copy).jpg"></span></button></div></div></div></div></div></div><div class="roomDetail__text"><p class="medium">Mô tả phòng:</p><div><p>Phòng Deluxe King với size giường cực lớn 2M4 phù hợp cho gia đình với phòng cách thiết kế sang trọng, view biển</p>
-          </div><p>• Diện tích:&nbsp;32.0 m2</p><p>• Điều hòa:&nbsp;Có</p><p>• Hút thuốc:&nbsp;Có</p><p>• Bể bơi:&nbsp;Không</p><p>• Bồn tắm:&nbsp;Có</p><p>• Truyền hình cáp:&nbsp;Không</p><p>• Tivi mmàn hình phẳng:&nbsp;Có</p><p>• Minibar:&nbsp;Không</p><p class="medium">Tiện ích phòng</p><p>Điều hòa, Giá treo quần áo, Sàn gỗ, Bồn tắm, Két sắt, Tủ quần áo, Phòng không hút thuốc, Phòng tắm của khách, Bồn tắm, Áo choàng tắm, Đồ dùng nhà tắm miễn phí, Máy sấy tóc, Dép đi trong nhà, Nhà vệ sinh , Khăn tắm, Đồ dùng nhà tắm, Truyền hình cáp, Màn hình phẳng, Truy cập Internet (miễn phí), Các kênh truyền hình TV, Điện thoại, Tủ lạnh, Hướng biển</p></div></div></div>
+
+
+
+        {{-- //login --}}
+        <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff7b0a;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Đăng nhập</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form dialog-book-quick">
+                      <form action="{{ route('home.login')}}" method="post">
+                        @csrf
+                        @if(session()->has('error'))
+                          <p style="color:red">{{session()->get('error')}}</p>
+                        @endif
+                       
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Email</label>
+                          <input type="email"  name="email" class="form-control" id="txtEmail_divBookQuick" value="{{ old('email', '') }}" required>
+                          @if($errors->has('email'))
+                            <p style="color:red">{{$errors->first('email')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Password</label>
+                          <input type="password" name="password" class="form-control" id="txtMobile_divBookQuick" required>
+                          @if($errors->has('password'))
+                            <p style="color:red">{{$errors->first('password')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-group">
+                          <input type="checkbox" id="brand1" value="">
+                          <label for="brand1"><span></span>Remember me</label>
+                          <a href="#">Forgot password?</a><br>              
+                        </div>
+                        <div class="form-group">
+                          <input type="submit" class="btn btn-primary" style="background-color: #ff7b0a;padding: left 40px;" value="Đăng nhập" ></input>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <p>Nếu chưa có tài khoản hãy đăng ký tại đây<span>→</span> <a class="w3_play_icon1" href="#" data-toggle="modal" data-target="#register">Đăng ký</a></p>
+                    <div class="clear"></div>
+                </div>
+              </div>
+          </div>
         </div>
+
+         {{-- loginthanhtoan --}}
+        <div class="modal fade" id="loginthanhtoan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff7b0a;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Đăng nhập</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form dialog-book-quick">
+                      <form action="{{ route('thanhtoan.login')}}" method="post">
+                        @csrf
+                        @if(session()->has('error'))
+                          <p style="color:red">{{session()->get('error')}}</p>
+                        @endif
+                       
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Email</label>
+                          <input type="email"  name="email" class="form-control" id="txtEmail_divBookQuick" value="{{ old('email', '') }}" required>
+                          @if($errors->has('email'))
+                            <p style="color:red">{{$errors->first('email')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Password</label>
+                          <input type="password" name="password" class="form-control" id="txtMobile_divBookQuick" required>
+                          @if($errors->has('password'))
+                            <p style="color:red">{{$errors->first('password')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-group">
+                          <input type="checkbox" id="brand1" value="">
+                          <label for="brand1"><span></span>Remember me</label>
+                          <a href="#">Forgot password?</a><br>              
+                        </div>
+                        <div class="form-group">
+                          <input type="submit" class="btn btn-primary" style="background-color: #ff7b0a;padding: left 40px;" value="Đăng nhập" >
+                        </div>
+                      </form>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <p>Nếu chưa có tài khoản hãy đăng ký tại đây<span>→</span> <a class="w3_play_icon1" href="#" data-toggle="modal" data-target="#register">Đăng ký</a></p>
+                    <div class="clear"></div>
+                </div>
+              </div>
+          </div>
+        </div>
+        
+
+        {{-- register --}}
+        <div class="modal fade" id="register" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff7b0a;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Đăng ký</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form dialog-book-quick">
+                      <form action="{{ route('home.register')}}" method="post">
+                        @csrf
+                        <div class="form-group">
+                          <p class="quote" style=" border: solid 1px #e4e2e2;padding: 10px;font-size: .8em;background-color: #edf9d2;font-style: italic;line-height: 18px;">
+                          Đăng ký tài khoản để được nhiều ưu đãi hơn khi đặt phòng<br>
+                          Hãy đăng ký ở dưới !!!.<br>
+                          </p>
+                        </div>
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Tên<i style="color:red">*</i></label>
+                          <input type="text"  name="name" class="form-control" id="txtEmail_divBookQuick" value="{{ old('name', '') }}" required>
+                          @if($errors->has('name'))
+                            <p style="color:red">{{$errors->first('name')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Email<i style="color:red">*</i></label>
+                            <input type="email"  name="email" class="form-control" id="txtEmail_divBookQuick" value="{{ old('email', '') }}" required>
+                              @if($errors->has('email'))
+                                <p style="color:red">{{$errors->first('email')}}</p>
+                              @endif
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Mật khẩu<i style="color:red">*</i></label>
+                            <input type="password" name="password" class="form-control" id="txtMobile_divBookQuick" required>
+                            @if($errors->has('password'))
+                              <p style="color:red">{{$errors->first('password')}}</p>
+                            @endif
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Điện thoại<i style="color:red">*</i></label>
+                            <input type="text"  name="phone" class="form-control" id="txtEmail_divBookQuick" value="{{ old('phone', '') }}" required>
+                            @if($errors->has('phone'))
+                              <p style="color:red">{{$errors->first('phone')}}</p>
+                            @endif
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Địa chỉ<i style="color:red">*</i></label>
+                            <input type="text" name="address" class="form-control" id="txtMobile_divBookQuick" value="{{ old('address', '') }}" required>
+                            @if($errors->has('address'))
+                              <p style="color:red">{{$errors->first('address')}}</p>
+                            @endif
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <input type="submit" class="btn btn-primary" style="background-color: #ff7b0a;padding: left 40px;" value="Đăng ký" ></input>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <p>Bạn đã có tài khoản hãy đăng nhập tại đây<span>→</span> <a class="w3_play_icon1" href="#" data-toggle="modal" data-target="#login">Đăng nhập</a></p>
+                    <div class="clear"></div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        {{-- <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+            <div id="liveToast" class="toast {{ Auth::check() ? 'show' : 'hide'}}" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+                <div class="toast-header">
+                <img src="..." class="rounded mr-2" alt="...">
+                <strong class="mr-auto">Bootstrap</strong>
+                <small>11 mins ago</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="toast-body">
+                Hello, world! This is a toast message.
+                </div>
+            </div>
+        </div>  --}}

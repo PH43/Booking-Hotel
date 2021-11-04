@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,8 +14,8 @@ class Booking extends Model
     public $table = 'bookings';
 
     protected $dates = [
-        'updated_at',
         'created_at',
+        'updated_at',
         'deleted_at',
         
         
@@ -24,7 +23,6 @@ class Booking extends Model
 
     protected $fillable = [
         'user_id',
-        'booking_date',
         'qty_room', 
         'status',
         'cancel_reason',
@@ -37,8 +35,8 @@ class Booking extends Model
 
 
 
-    public function customer(){
-        return $this->belongsTo('App\Models\Customer');
+    public function user(){
+        return $this->belongsTo('App\Models\User');
     }
     public function rooms(){
         return $this->belongsToMany('App\Models\Room', 'booking_rooms', 'booking_id', 'room_id');
@@ -51,8 +49,8 @@ class Booking extends Model
         return $this->hasMany('App\Models\BookingRoom', 'booking_id');
         
     }
-    public function bookingInfo(){
-        return $this->belongsTo('App\Models\BookingInfo');
+    public function bookingInfos(){
+        return $this->hasOne('App\Models\BookingInfo');
     }
 
 }

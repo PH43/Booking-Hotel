@@ -16,8 +16,8 @@ class BookingInfo extends Model
         'address',
         'booking_id',
     ];
-    public function bookings(){
-        return $this->hasMany('App\Models\Booking');
+    public function booking(){
+        return $this->belongsTo('App\Models\Booking');
         
     }
 

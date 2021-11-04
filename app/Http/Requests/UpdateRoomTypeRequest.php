@@ -21,6 +21,7 @@ class UpdateRoomTypeRequest extends FormRequest
         return [
             'type' => [
                 'required',
+                'unique:room_types',
             ],
         ];
     }

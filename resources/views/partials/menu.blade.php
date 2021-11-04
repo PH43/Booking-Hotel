@@ -103,7 +103,7 @@
              @endcan 
              @can('image_access')
                 <li class="nav-item">
-                    <a href="{{ route("admin.images.index") }}" class="nav-link {{ request()->is('admin/coupons') || request()->is('admin/coupons/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.images.index") }}" class="nav-link {{ request()->is('admin/images') || request()->is('admin/images/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa fa-file-image-o nav-icon"></i>
                         {{ trans('cruds.image.title') }}
                     </a>
@@ -111,12 +111,20 @@
              @endcan 
              @can('advise_access')
                 <li class="nav-item">
-                    <a href="{{ route("admin.advise.index") }}" class="nav-link {{ request()->is('admin/coupons') || request()->is('admin/coupons/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.advise.index") }}" class="nav-link {{ request()->is('admin/advises') || request()->is('admin/advises/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa fa-phone-square nav-icon"></i>
                         Quick advice
                     </a>
                 </li>
              @endcan 
+            @can('searchRoom')
+                <li class="nav-item">
+                    <a href="{{ route("admin.searchRoom") }}" class="nav-link {{ request()->is('admin/coupons') || request()->is('admin/coupons/*') ? 'active' : '' }}">
+                        <i class="fa-fw fas fa fa-search nav-icon"></i>
+                        Search Room
+                    </a>
+                </li>
+            @endcan
             <li class="nav-item">
                 <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                     <i class="nav-icon fas fa-fw fa-sign-out-alt">

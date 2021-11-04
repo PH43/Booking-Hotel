@@ -13,6 +13,23 @@ class BookingRoom extends Model
 
     public $table = 'booking_rooms';
 
+    
+    
+    protected $fillable = [
+        'booking_id ',
+        'room_id',
+        'startDate', 
+        'endDate',
+        'qty',
+        'subtotal',
+        'reduction',
+        'total',
+        'num_days',
+        'note',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
     public function booking(){
         return $this->belongsTo('App\Models\Booking');
     }

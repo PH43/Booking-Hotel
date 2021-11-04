@@ -19,11 +19,11 @@ class CreateBookingInfosTable extends Migration
             $table->string('email');
             $table->string('phone');
             $table->string('address')->nullable();
-            $table->unsignedBigInteger('booking_id')->onDelete('cascade');
+            $table->unsignedBigInteger('booking_id');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('booking_id')->references('id')->on('bookings');
+            $table->foreign('booking_id')->references('id')->on('bookings')->onDelete('cascade');
         });
     }
 
@@ -37,6 +37,6 @@ class CreateBookingInfosTable extends Migration
         Schema::table('booking_infos', function (Blueprint $table) {
             $table->dropForeign('booking_infos_booking_id_foreign');
         });
-        Schema::dropIfExists('booking_info');
+        Schema::dropIfExists('booking_infos');
     }
 }

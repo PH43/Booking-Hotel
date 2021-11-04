@@ -18,11 +18,6 @@
                 @endif  
             </div>
             <div class="form-group">
-                <label class="required" for="status">Status</label>
-                <input class="form-control" type="text" name="status" id="status" value="{{ old('status', $room->status) }}" required>
-                
-            </div>
-            <div class="form-group">
                 <label class="required" for="room_number">Room Number</label>
                 <input class="form-control" type="text" name="room_number" id="room_number" value="{{ old('room_number', $room->room_number) }}" required>
                 @if($errors->has('room_number'))
@@ -69,7 +64,13 @@
                     {{ trans('global.save') }}
                 </button>
             </div>
+
         </form>
+        <div class="form-group">
+            <a class="btn btn-default" href="{{ route('admin.rooms.index') }}">
+                {{ trans('global.back_to_list') }}
+            </a>
+        </div>
     </div>
 </div>
 

@@ -28,8 +28,6 @@ class BookingFactory extends Factory
 
             return [
                     'user_id'=>$this->faker->randomElement($user),
-                    'booking_date'=> date(now()) ,
-                    'qty_room'=> rand(1,4),
                     'coupon_id'=>$this->faker->randomElement($coupon),
                     'created_at' => now(),
                     'updated_at' => now(),

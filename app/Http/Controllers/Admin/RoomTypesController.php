@@ -33,7 +33,7 @@ class RoomTypesController extends Controller
     {
         $roomType = RoomType::create($request->all());
 
-        return redirect()->route('admin.room-types.index');
+        return redirect()->route('admin.room-types.index')->with(['success'=>'create room type success']);
     }
 
     public function edit(RoomType $roomType)
@@ -47,7 +47,7 @@ class RoomTypesController extends Controller
     {
         $roomType->update($request->all());
 
-        return redirect()->route('admin.room-types.index');
+        return redirect()->route('admin.room-types.index')->with(['success'=>'update room type success']);
     }
 
     public function show(RoomType $roomType)
@@ -65,7 +65,7 @@ class RoomTypesController extends Controller
 
         $roomType->delete();
 
-        return back();
+        return back()->with(['success'=>'delete room type success']);
     }
 
     public function massDestroy(MassDestroyRoomTypeRequest $request)

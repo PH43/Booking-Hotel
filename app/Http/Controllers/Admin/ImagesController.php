@@ -74,9 +74,11 @@ class ImagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Image $image)
     {
-        //
+        abort_if(Gate::denies('image_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $rooms = Room::all()->pluck('room_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        return view('admin.images.edit', compact('image','rooms'));
     }
 
     /**
@@ -86,9 +88,20 @@ class ImagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Image $image)
     {
-        //
+        $image->room_id = $request->room_id;
+        $file = $request->file('path');
+        if($file)
+        {
+            $file_name= $file->getClientOriginalName();
+            $file->move(public_path('../resources/images/rooms'),$file_name);//insert file vào thư mục
+            $room_id = $request->only('room_id');  
+            $image->path = $file_name;
+            $image->update();
+        }        
+        $image->update();       
+        return redirect()->route('admin.images.index')->with(['success'=>'update image room success']);
     }
 
     /**
@@ -97,8 +110,12 @@ class ImagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Image $image)
     {
-        //
+        abort_if(Gate::denies('image_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $image->delete();
+
+        return back()->with(['success'=>'delete booking success']);
     }
 }

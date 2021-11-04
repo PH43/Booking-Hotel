@@ -1,6 +1,14 @@
 
 @extends('layouts.admin')
+
+@section('styles')
+    <link rel="stylesheet" href="../../resources/css/status.css" />
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+@stop
+
 @section('content')
+
+
 @can('room_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
@@ -18,7 +26,7 @@
         <div class="alert alert-success">{{session()->get('success')}}</div> 
     @endif
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Room">
+        <table class=" table table-bordered table-striped table-hover datatable datatable-Room" width="1189">
             <thead>
                 <tr>
                     <th width="10">
@@ -46,7 +54,7 @@
             </thead>
             <tbody>
                 @foreach($rooms as $room)
-                <tr>
+                <tr data-entry-id="{{ $room->id }}">
                     <td></td>
                     <td>
                         {{ $room->id}}
@@ -61,7 +69,7 @@
                         {{ $room->roomType->name }}
                     </td>
                     <td>
-                        <input type="checkbox" data-toggle="toggle" data-on="Enabled" data-off="Disabled">
+                    <input type="checkbox" class="toggle-class" data-onstyle="success" data-id="{{ $room->id }}" data-toggle="toggle" data-style="slow" data-on="Enabled" data-off="Disabled" {{ $room->status == true ? 'checked' : ''}} >
                     </td>
                     <td>
                     @can('room_show')
@@ -94,18 +102,19 @@
 @endsection
 @section('scripts')
 @parent
+
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('room_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  @can('room_delete')
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.rooms.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -127,32 +136,22 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.rooms.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'name', name: 'name' },
-{ data: 'hotel_name', name: 'hotel.name' },
-{ data: 'room_type_name', name: 'room_type.name' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  $('.datatable-Room').DataTable(dtOverrideGlobals);
+  });
+  $('.datatable-Room:not(.ajaxTable)').DataTable({ buttons: dtButtons })
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
         $($.fn.dataTable.tables(true)).DataTable()
             .columns.adjust();
     });
-});
+})
 
 </script>
+
+//status
+
+@push('scripts')
 
 <script>
   $(function() {
@@ -162,4 +161,30 @@
     });
   })
 </script>
+
+
+<script>
+    $('.toggle-class').on('change', function() {
+        var status = $(this).prop('checked') == true ? 1 : 0;
+        var id = $(this).data('id');
+        $.ajax({
+            type: 'GET',
+            dataType: 'JSON',
+            url: '{{ route('admin.changeStatus') }}',
+            data: {
+                'status': status,
+                'id': id
+            },
+            success:function(data) {
+                $('#notifDiv').fadeIn();
+                $('#notifDiv').css('background', 'green');
+                $('#notifDiv').text('Status Updated Successfully');
+                setTimeout(() => {
+                    $('#notifDiv').fadeOut();
+                }, 3000);
+            }
+        });
+    });
+</script>
+@endpush
 @endsection

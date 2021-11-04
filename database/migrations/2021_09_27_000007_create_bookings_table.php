@@ -16,8 +16,6 @@ class CreateBookingsTable extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->date('booking_date');
-            $table->integer('qty_room');
             $table->unsignedBigInteger('coupon_id')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->string('cancel_reason')->nullable();
@@ -25,8 +23,8 @@ class CreateBookingsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('coupon_id')->references('id')->on('coupons');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('coupon_id')->references('id')->on('coupons')->onDelete('cascade');
         });
     }
 

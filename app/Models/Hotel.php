@@ -28,6 +28,10 @@ class Hotel extends Model
     {
         return $this->hasMany('App\Models\Room', 'hotel_id', 'id');
     }
+    public function img_nearloca()
+    {
+        return $this->hasMany('App\Models\Img_nearloca', 'hotel_id', 'id');
+    }
     public function hotelRates()
     {
         return $this->hasMany('App\Models\HotelRate', 'hotel_id', 'id');

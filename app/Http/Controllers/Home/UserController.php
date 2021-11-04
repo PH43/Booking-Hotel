@@ -19,10 +19,9 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $this->validate($request,[
-            'email' =>'required',
-            'password'=>'required|min:3|max:30'
+            'password'=>'min:3|max:30'
         ],[
-            'email.required' => 'bạn chưa nhập email',
+            
             'password.required' => 'bạn chưa nhập pass',
             'password.min' =>'pass không dc nhỏ hơn 3 ký tự',
             'password.max' =>'pass không được lớn hơn 30 ký tự'
@@ -30,7 +29,7 @@ class UserController extends Controller
         $data = $request->only('email', 'password');
         if(Auth::attempt($data))
         {
-            return redirect('');
+            return redirect()->back()->with(['success'=>'đăng nhập thành công']);
         }
         else
         {
@@ -52,22 +51,24 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $this->validate($request,[
-            'name' => 'required',
-            'email' =>'required|unique:users',
-            'password'=>'required|min:3|max:30',
-            'phone' =>'required|unique:users|numeric',
-            'address' =>'required'
+            'email' =>['unique:users', 'email', 'max:255'], 
+            'password'=>['min:8|max:30', 'string', 'comfirmed'], 
+            'phone' =>['unique:users|numeric', 'min:9', 'max:11']
         ],[
-            'name.required' => 'bạn chưa nhập name',
-            'email.required' => 'bạn chưa nhập email',
+            // 'email.required' => 'email không được để trống',
             'email.unique' => 'email này đã được sử dụng',
-            'password.required' => 'bạn chưa nhập pass',
-            'password.min' =>'pass không dc nhỏ hơn 3 ký tự',
+            'email.email' => 'email không hợp lệ',
+            'email.max' => 'email không được quá 255 kí tự',
+            
+
+            'password.min' =>'pass không dc nhỏ hơn 8 ký tự',
             'password.max' =>'pass không được lớn hơn 30 ký tự',
-            'phone.required' => 'bạn chưa nhập phone',
-            'phone.unique' => 'phone này đã được sử dụng',
-            'phone.numeric' => 'phone phải là 1 số',
-            'address.required' => 'bạn chưa nhập address',
+            // 'password.required' =>'pass không được để trống',
+            'password.comfirmed' =>'pass không hợp lệ', 
+
+            'phone.unique' => 'số điện thoại này đã được sử dụng',
+            'phone.numeric' => 'số điện thoại phải là dạng số',
+            'phone.min' => 'số điện thoại phải lớn hơn 9 kí tự',
 
         ]);
         $data = $request->all();
@@ -76,5 +77,29 @@ class UserController extends Controller
         $this->guard()->login($user);//sau khi đk xog  bỏ qua bước login chỉ tới trang home
         return redirect('');
     }
+    public function loginthanhtoan(Request $request)
+    {
+        $this->validate($request,[
+            'email' =>['email', 'max:255'], 
+            'password'=>'min:3|max:30'
+        ],[
+            'email.email' => 'email không hợp lệ',
+            'email.max' => 'email không được quá 255 kí tự',
+            'password.required' => 'bạn chưa nhập pass',
+            'password.min' =>'pass không dc nhỏ hơn 3 ký tự',
+            'password.max' =>'pass không được lớn hơn 30 ký tự'
+        ]);
+        $data = $request->only('email', 'password');
+        if(Auth::attempt($data))
+        {
+            return redirect()->back()->with(['success'=>'đăng nhập thành công']);
 
+        }
+        else
+        {
+            // return redirect('admin.showlogin')->with('thongbao','đăng nhập thất bại');
+            return redirect()->back()->with(['error'=>'đăng nhập thất bại']);
+        }
+        
+    }
 }

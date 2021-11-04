@@ -22,8 +22,8 @@ class CreateHotelRatesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('hotel_id')->references('id')->on('hotels');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

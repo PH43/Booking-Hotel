@@ -21,6 +21,7 @@ class StoreRoomTypeRequest extends FormRequest
         return [
             'type' => [
                 'required',
+                'unique:room_types',
             ],
         ];
     }
