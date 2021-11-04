@@ -24,8 +24,7 @@ class Booking extends Model
 
     protected $fillable = [
         'user_id',
-        'booking_date',
-        'qty_room', 
+        'total_money',
         'status',
         'cancel_reason',
         'payment_status',
@@ -52,7 +51,7 @@ class Booking extends Model
         
     }
     public function bookingInfo(){
-        return $this->belongsTo('App\Models\BookingInfo');
+        return $this->hasOne('App\Models\BookingInfo');
     }
 
 }

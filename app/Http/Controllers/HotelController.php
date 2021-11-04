@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hotel;
+use App\Models\HotelRate;
 use App\Models\Role;
 use App\Models\Room;
 use Illuminate\Http\Request;
@@ -49,7 +50,13 @@ class HotelController extends Controller
      */
     public function show(Request $request, $id)
     {   
-        
+        $hotelRates = HotelRate::where('hotel_id', $id)->orderBy('created_at','desc')->get();
+        // if($hotelRates->toArray() ==NULL) {
+        //     dd('không có cmt');
+        // }
+        $rating = HotelRate::where('hotel_id',$id)->avg('rate');
+        $rating = round($rating*2,1);
+        $numbers_review = HotelRate::all()->count('user_id');
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
          $days= floor((strtotime($endDate) - strtotime($startDate))/(60*60*24));
@@ -79,7 +86,7 @@ class HotelController extends Controller
         }
 
 
-        return view('hotelDetail', compact('rooms', 'hotels', 'startDate', 'endDate', 'days'));
+        return view('hotelDetail', compact('rooms', 'hotels', 'startDate', 'endDate', 'days','hotelRates','rating','numbers_review'));
 
         
     }

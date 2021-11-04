@@ -50,11 +50,11 @@ class RoomTypesController extends Controller
         return redirect()->route('admin.room-types.index')->with(['success'=>'update room type success']);
     }
 
-    public function show(RoomType $roomType)
+    public function show($id)
     {
         abort_if(Gate::denies('room_type_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $roomType->load('roomTypeRooms');
+        $roomType= RoomType::findOrFail($id);
 
         return view('admin.roomTypes.show', compact('roomType'));
     }

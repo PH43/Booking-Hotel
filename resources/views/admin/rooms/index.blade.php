@@ -39,14 +39,17 @@
                         Price
                     </th>
                     <th>
-                        Room Number
+                       Quantity
+                    </th>
+                    <th>
+                        Discount
                     </th>
                     <th>
                         Room Type
                     </th>
-                    <th>
+                    <!-- <th>
                         Status
-                    </th>
+                    </th>                    -->
                     <th>
                         &nbsp;
                     </th>
@@ -63,14 +66,17 @@
                        {{ number_format($room->price)}}đ
                     </td>
                     <td>
-                        {{ $room->room_number}}
+                       {{$room->qty}}
                     </td>
                     <td>
-                        {{ $room->roomType->name }}
+                        {{ $room->discount}}
                     </td>
                     <td>
+                        {{ $room->roomType->type }}
+                    </td>
+                    <!-- <td>
                     <input type="checkbox" class="toggle-class" data-onstyle="success" data-id="{{ $room->id }}" data-toggle="toggle" data-style="slow" data-on="Enabled" data-off="Disabled" {{ $room->status == true ? 'checked' : ''}} >
-                    </td>
+                    </td> -->
                     <td>
                     @can('room_show')
                         <a class="btn btn-xs btn-primary" href="{{ route('admin.rooms.show', $room->id) }}">
@@ -163,7 +169,7 @@
 </script>
 
 
-<script>
+<!-- <script>
     $('.toggle-class').on('change', function() {
         var status = $(this).prop('checked') == true ? 1 : 0;
         var id = $(this).data('id');
@@ -185,6 +191,6 @@
             }
         });
     });
-</script>
+</script> -->
 @endpush
 @endsection

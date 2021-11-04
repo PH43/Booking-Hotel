@@ -31,6 +31,12 @@
                             {{ trans('cruds.roomType.fields.name') }}
                         </th>
                         <th>
+                            Quantity Bed
+                        </th>
+                        <th>
+                            Capactity
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -42,17 +48,23 @@
 
                             </td>
                             <td>
-                                {{ $roomType->id ?? '' }}
+                                {{ $roomType->id  }}
                             </td>
                             <td>
-                                {{ $roomType->type ?? '' }}
+                                {{ $roomType->type  }}
                             </td>
                             <td>
-                                @can('room_type_show')
+                                {{ $roomType->bed  }}
+                            </td>
+                            <td>
+                                {{ $roomType->capactity  }}
+                            </td>
+                            <td>
+                                <!-- @can('room_type_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.room-types.show', $roomType->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
-                                @endcan
+                                @endcan -->
 
                                 @can('room_type_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.room-types.edit', $roomType->id) }}">

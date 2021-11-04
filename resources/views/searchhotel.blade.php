@@ -289,8 +289,8 @@
                                     <b>Xin chào:&nbsp;</b> <p class="nav__mobile-link" style="margin: 0px"> {{ Auth::user()->name}}</p>
                                     <p style="margin: 0px ;"><a href="{{ route('home.logout')}}" style="text-decoration:none">&nbsp;| Đăng xuất</a></p>
                                     @else
-                                    <div class="cta"><a href="{{ route('home.login')}}" style="color: black">Sign In</a></div>
-                                    <div class="cta active"><a style="color: white" href="{{ route('home.register')}}">Register</a></div> 
+                                    <div class="cta"><a href="#" style="color: black" data-toggle="modal" data-target="#login">Sign In</a></div>
+                                    <div class="cta active"><a style="color: white" href="{{ route('home.register')}}" data-toggle="modal" data-target="#register">Register</a></div> 
                                     @endif
                                 </div>
                             </div>
@@ -445,19 +445,22 @@
                     <div  style="width: 100%;min-height: 500px;">
                         <div class="fillter"  style="    min-height: 500px;float: left;width: 25%;">
                             <div class="filter" style="border-radius: 8px;background-color: white;margin-right: 10px;">
-                                <form action="{{ route('searchwithcity', $id) }}" id="form_price" method="get">
+                                <form action="{{ route('searchwithcity', $city->first()) }}" id="form_price" method="get">
                                     <div class="clearfix"></div>
                                     <div class="" style="width: 100%;height: 1px;background: #EDF2F7;"></div>
                                     <div>
-                                        <p class="">Khoảng giá (1 đêm)</p>
-                                        <ul class="gia">
-                                            <li><a class="{{ Request::get('price') == 1 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '1']) }}">Dưới 500.000</a></li>
-                                            <li><a class="{{ Request::get('price') == 2 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '2']) }}">500.000 - 1.000.000</a></li>
-                                            <li><a class="{{ Request::get('price') == 3 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '3']) }}">1.000.000 - 3.000.000</a></li>
-                                            <li><a class="{{ Request::get('price') == 4 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '4']) }}">3.000.000 - 5.000.000</a></li>
-                                            <li><a class="{{ Request::get('price') == 5 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '5']) }}">5.000.000 - 7.000.000</a></li>
-                                            <li><a class="{{ Request::get('price') == 6 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '6']) }}">7.000.000 - 10.000.000</a></li>
-                                            <li><a class="{{ Request::get('price') == 7 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '7']) }}">>10.000.000</a></li>
+                                        <h5 class="blockquote text-center"><b>Chọn lọc theo</b></h5>
+                                        <hr>
+
+                                        <b>Khoảng giá (1 đêm)</b>    
+                                        <ul class="gia" style="list-style-type: none;padding-left:15px">
+                                            <li><a class="{{ Request::get('price') == 1 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '1']) }}">Dưới 500.000đ</a></li>
+                                            <li><a class="{{ Request::get('price') == 2 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '2']) }}">500.000đ - 1.000.000đ</a></li>
+                                            <li><a class="{{ Request::get('price') == 3 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '3']) }}">1.000.000đ - 3.000.000đ</a></li>
+                                            <li><a class="{{ Request::get('price') == 4 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '4']) }}">3.000.000đ - 5.000.000đ</a></li>
+                                            <li><a class="{{ Request::get('price') == 5 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '5']) }}">5.000.000đ - 7.000.000đ</a></li>
+                                            <li><a class="{{ Request::get('price') == 6 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '6']) }}">7.000.000đ - 10.000.000đ</a></li>
+                                            <li><a class="{{ Request::get('price') == 7 ? 'active' : ''}}" href="{{ request()->fullUrlWithQuery(['price' => '7']) }}">Trên 10.000.000</a></li>
                                         </ul>
                                         <div class="" style="width:100%;padding-right:14px">
                                             <span class="MuiSlider-root jss143 MuiSlider-colorPrimary">
@@ -467,8 +470,19 @@
                                                 <span class="" tabindex="0" role="slider" style="left:0%" data-index="0" aria-orientation="horizontal" aria-valuemax="5000000" aria-valuemin="0" aria-valuenow="0"></span>
                                                 <span class="" tabindex="0" role="slider" style="left: 100%;" data-index="1" aria-orientation="horizontal" aria-valuemax="5000000" aria-valuemin="0" aria-valuenow="5000000"></span>
                                             </span>
-                                        </div>
-
+                                        </div>                                       
+                                        <hr>
+                                        <b>Loại khách sạn</b> 
+                                        <ul class="gia" style="list-style-type: none;padding-left:15px">
+                                            @foreach($categories as $category)
+                                           <li>
+                                               <lable class="checkbox-inline">
+                                                   <input type="checkbox" name="category-filter" class="form-control-checkbox" id="category-filter" data-filter="category" value="{{$category->id}}"/>
+                                                   {{$category->category}}
+                                                </lable>
+                                            </li>
+                                            @endforeach
+                                        </ul>
                                     </div>
                                 </form>
                             </div>
@@ -477,16 +491,16 @@
                             <div class="title" style="width: 100%;height: 50px; margin-bottom: 10px; font-family: sans-serif;">
                                 <div class="MuiBox-root">
                                     <div class="MuiBox-root-item">
-                                        <a class="{{ Request::get('orderBy') == 'DEFAULT' ? 'active' : ''}}" href="{{ route('searchwithcity', $id) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=price&orderBy=DEFAULT&price=1">BKHT đề xuất</a>
+                                        <a class="{{ Request::get('orderBy') == 'DEFAULT' ? 'active' : ''}}" href="{{ route('searchwithcity', $city->first()) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=price&orderBy=DEFAULT&price=1">BKHT đề xuất</a>
                                     </div>
                                     <div class="MuiBox-root-item">
-                                        <a class="{{ Request::get('orderBy') == 'ASC' ? 'active' : ''}}" href="{{ route('searchwithcity', $id) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=price&orderBy=ASC&price=1">Giá tăng dần</a>
+                                        <a class="{{ Request::get('orderBy') == 'ASC' ? 'active' : ''}}" href="{{ route('searchwithcity', $city->first()) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=price&orderBy=ASC&price=1">Giá tăng dần</a>
                                     </div>
                                     <div class="MuiBox-root-item">
-                                        <a class="{{ Request::get('orderBy') == 'DESC' ? 'active' : ''}}" href="{{ route('searchwithcity', $id) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=price&orderBy=DESC&price=1">Giá giảm dần</a>
+                                        <a class="{{ Request::get('orderBy') == 'DESC' ? 'active' : ''}}" href="{{ route('searchwithcity', $city->first()) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=price&orderBy=DESC&price=1">Giá giảm dần</a>
                                     </div>
                                     <div class="MuiBox-root-item">
-                                        <a class="{{ Request::get('orderBy') == 'STARDEFAULT' ? 'active' : ''}}" href="{{ route('searchwithcity', $id) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=star&orderBy=STARDEFAULT&price=1">Sao khách sạn</a>
+                                        <a class="{{ Request::get('orderBy') == 'STARDEFAULT' ? 'active' : ''}}" href="{{ route('searchwithcity', $city->first()) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=star&orderBy=STARDEFAULT&price=1">Sao khách sạn</a>
                                     </div>
                                     <div class="MuiBox-root-item">Đánh giá cao nhất</div>
                                 </div>
@@ -519,7 +533,7 @@
                                     </div>
                                     <div class="address">
                                         <svg width="16" height="16" fill="none"><path d="M8.467 3.8V2a1 1 0 00-1-1h-.8a1 1 0 00-1 1v1.8" stroke="#1A202C" stroke-linecap="round" stroke-linejoin="round"></path><path d="M1 7.467a1 1 0 001 1h9.838a1 1 0 00.64-.232l1.6-1.333a1 1 0 000-1.537l-1.6-1.333a1 1 0 00-.64-.232H2a1 1 0 00-1 1v2.667zM5.667 10.333V14a1 1 0 001 1h.8a1 1 0 001-1v-3.667" stroke="#1A202C" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                                        <p>{{ $hotel["type"] }}</p>
+                                        <p></p>
                                     </div>
                                 </div>
                                 <div class="price"  style="width: 30%; float:right; display: flex; justify-content: flex-end;align-items: flex-end;">{{ $hotel["price"] }}
@@ -530,7 +544,7 @@
                     </div>
                 </div>
                 
-    
+                                
             
             
             <div class="clearfix"></div>
@@ -538,6 +552,129 @@
         </div>
         <div class="clearfix"></div>
     </div>
+    <!-- //modal login -->
+        <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff7b0a;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Đăng nhập</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form dialog-book-quick">
+                      <form action="{{ route('home.login')}}" method="post">
+                        @csrf
+                        @if(session()->has('error'))
+                          <p style="color:red">{{session()->get('error')}}</p>
+                        @endif
+                       
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Email</label>
+                          <input type="email"  name="email" class="form-control" id="txtEmail_divBookQuick" value="{{ old('email', '') }}" required>
+                          @if($errors->has('email'))
+                            <p style="color:red">{{$errors->first('email')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Password</label>
+                          <input type="password" name="password" class="form-control" id="txtMobile_divBookQuick" required>
+                          @if($errors->has('password'))
+                            <p style="color:red">{{$errors->first('password')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-group">
+                          <input type="checkbox" id="brand1" value="">
+                          <label for="brand1"><span></span>Remember me</label>
+                          <a href="#">Forgot password?</a><br>              
+                        </div>
+                        <div class="form-group">
+                          <input type="submit" class="btn btn-primary" style="background-color: #ff7b0a;padding: left 40px;" value="Đăng nhập" ></input>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <p>Nếu chưa có tài khoản hãy đăng ký tại đây<span>→</span> <a class="w3_play_icon1" href="#" data-toggle="modal" data-target="#register">Đăng ký</a></p>
+                    <div class="clear"></div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        //register
+        <div class="modal fade" id="register" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff7b0a;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Đăng ký</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form dialog-book-quick">
+                      <form action="{{ route('home.register')}}" method="post">
+                        @csrf
+                        <div class="form-group">
+                          <p class="quote" style=" border: solid 1px #e4e2e2;padding: 10px;font-size: .8em;background-color: #edf9d2;font-style: italic;line-height: 18px;">
+                          Đăng ký tài khoản để được nhiều ưu đãi hơn khi đặt phòng<br>
+                          Hãy đăng ký ở dưới !!!.<br>
+                          </p  
+                        </div>
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Tên<i style="color:red">*</i></label>
+                          <input type="text"  name="name" class="form-control" id="txtEmail_divBookQuick" value="{{ old('name', '') }}" required>
+                          @if($errors->has('name'))
+                            <p style="color:red">{{$errors->first('name')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Email<i style="color:red">*</i></label>
+                            <input type="email"  name="email" class="form-control" id="txtEmail_divBookQuick" value="{{ old('email', '') }}" required>
+                              @if($errors->has('email'))
+                                <p style="color:red">{{$errors->first('email')}}</p>
+                              @endif
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Mật khẩu<i style="color:red">*</i></label>
+                            <input type="password" name="password" class="form-control" id="txtMobile_divBookQuick" required>
+                            @if($errors->has('password'))
+                              <p style="color:red">{{$errors->first('password')}}</p>
+                            @endif
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Điện thoại<i style="color:red">*</i></label>
+                            <input type="text"  name="phone" class="form-control" id="txtEmail_divBookQuick" value="{{ old('phone', '') }}" required>
+                            @if($errors->has('phone'))
+                              <p style="color:red">{{$errors->first('phone')}}</p>
+                            @endif
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Địa chỉ<i style="color:red">*</i></label>
+                            <input type="text" name="address" class="form-control" id="txtMobile_divBookQuick" value="{{ old('address', '') }}" required>
+                            @if($errors->has('address'))
+                              <p style="color:red">{{$errors->first('address')}}</p>
+                            @endif
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <input type="submit" class="btn btn-primary" style="background-color: #ff7b0a;padding: left 40px;" value="Đăng ký" ></input>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <p>Bạn đã có tài khoản hãy đăng nhập tại đây<span>→</span> <a class="w3_play_icon1" href="#" data-toggle="modal" data-target="#login">Đăng nhập</a></p>
+                    <div class="clear"></div>
+                </div>
+              </div>
+          </div>
+        </div>
 @stop
 
 
@@ -564,12 +701,39 @@
         }
         showContent('Hotels');
     </script>
+
     <script type="text/javascript">
         $(function(){
             $('.gia').change(function(){
                 $("#form_price").submit();
             })
         })
+    </script>
+    <!-- <script>
+        $('#category-filter').click(function(){
+            var category = [], tempArray = [];
+            $.each($("[data-filters = 'category']:checked"),function(){
+                tempArray.push($(this).val());               
+            });
+            tempArray.reverse();
+            if(tempArray.length !== 0){
+                category+= '?cate=' +tempArray.toString();
+            }
+            window.location.href = category
+        })
+    </script> -->
+
+     <!-- login -->
+     <script>
+        @if( $errors->has('email')|| $errors->has('password') || $errors->has('phone'))
+            $('#register').modal('show');
+        @endif
+    </script> 
+    <!-- register -->
+    <script >
+        @if(session()->has('error'))
+            $('#login').modal('show');
+        @endif
     </script>
 @stop
 

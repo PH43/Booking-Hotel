@@ -49,10 +49,34 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.room.fields.hotel') }}
+                            Quantity
                         </th>
                         <td>
-                            {{ $room->hotel->name ?? '' }}
+                            {{ $room->qty }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            DisCount
+                        </th>
+                        <td>
+                            {{ $room->discount}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Area
+                        </th>
+                        <td>
+                            {{ $room->area}} 
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            View
+                        </th>
+                        <td>
+                            {{ $room->view}}
                         </td>
                     </tr>
                     <tr>
@@ -60,7 +84,7 @@
                             {{ trans('cruds.room.fields.room_type') }}
                         </th>
                         <td>
-                            {{ $room->roomType->name  }}
+                            {{ $room->roomType->type }}
                         </td>
                     </tr>
                 </tbody>
@@ -103,7 +127,7 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="room_bookings">
-            @includeIf('admin.rooms.relationships.roomBookings', ['bookings' => $room->roomBookings])
+            <!-- @includeIf('admin.rooms.relationships.roomBookings', ['bookings' => $room->roomBookings]) -->lllll
         </div>
     </div>
 </div>

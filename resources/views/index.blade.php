@@ -116,7 +116,7 @@
 
           <div class="item">
             <p style="margin: 0px;">Thời gian đến:</p>
-            <input type="date"  name="startDate" value="{{ $dtnow }}">
+            <input type="date"  name="startDate" value="{{ $dtnow }}" min="{{$dtnow}}">
           </div>
 
           <div class="item">
@@ -296,7 +296,7 @@
                   <div  class="thumb-info-wrapper zoom" style="" onmousemove="zoom(event)" ontouchmove="zoom(event)">
                     {{-- background:url(../resources/images/rooms/{{$room->images->first()->path}}) --}}
                   @if($room->images != NULL)
-                  <img class="img" width="266px" height="232px" title=" " src="https://du-lich.chudu24.com/f/m/1907/30/melia-ho-tram-6701-1632578.jpg?w=266&amp;h=232">
+                  <img class="img" width="266px" height="232px" title="" src="https://du-lich.chudu24.com/f/m/1907/30/melia-ho-tram-6701-1632578.jpg?w=266&amp;h=232">
                   @endif
                 </div>                     
                   <span class="table-see-all" >

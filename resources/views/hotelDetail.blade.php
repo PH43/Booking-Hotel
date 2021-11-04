@@ -254,6 +254,125 @@
         .footer{
             border-top: 5px solid #f38e11;
         }
+        //comment
+        .no-box-shadow {
+            box-shadow: none
+        }
+
+        .no-box-shadow:focus {
+            box-shadow: none
+        }
+        .day {
+            font-size: 15px;
+        }
+        .star {
+            padding-left: 5px;
+            padding-top:2px;
+        }
+        .star li{
+            color:#ffcc00;
+            font-size:20px;
+            padding-right:5px
+        }
+        .heart {
+            border: 1px soild green !important;
+            border-color: green !important;
+            border-radius: 22px
+        }
+
+        .heart-icon {
+            color: green
+        }
+
+        .comment-text {
+            font-size: 20px;
+            padding-left:55px;
+        }
+
+        .delete {
+            font-size: 13px;
+            cursor: pointer
+        }
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            padding: 20px;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border-radius: 6px;
+            -moz-box-shadow: 0px 0px 5px 0px rgba(212, 182, 212, 1)
+        }
+
+        .comment-box {
+            padding: 5px
+        }
+
+        .comment-area textarea {
+            resize: none;
+            border: 1px solid #ad9f9f
+        }
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #ffffff;
+            outline: 0;
+            box-shadow: 0 0 0 1px rgb(255, 0, 0) !important
+        }
+
+        .send {
+            color: #fff;
+            background-color: #ff0000;
+            border-color: #ff0000
+        }
+
+        .send:hover {
+            color: #fff;
+            background-color: #f50202;
+            border-color: #f50202
+        }
+
+        .rating {
+            display: flex;
+            margin-top: -10px;
+            flex-direction: row-reverse;
+            margin-left: -4px;
+            float: left
+        }
+
+        .rating>input {
+            display: none
+        }
+
+        .rating>label {
+            position: relative;
+            width: 19px;
+            font-size: 25px;
+            color: #ffcc00;
+            cursor: pointer
+        }
+
+        .rating>label::before {
+            content: "\2605";
+            position: absolute;
+            opacity: 0
+        }
+
+        .rating>label:hover:before,
+        .rating>label:hover~label:before {
+            opacity: 1 !important
+        }
+
+        .rating>input:checked~label:before {
+            opacity: 1
+        }
+
+        .rating:hover>input:checked~label:before {
+            opacity: 0.4
+        }
     </style>
 @stop
 
@@ -316,8 +435,8 @@
                                     <b>Xin chào:&nbsp;</b> <p class="nav__mobile-link" style="margin: 0px"> {{ Auth::user()->name}}</p>
                                     <p style="margin: 0px ;"><a href="{{ route('home.logout')}}" style="text-decoration:none">&nbsp;| Đăng xuất</a></p>
                                     @else
-                                    <div class="cta"><a href="{{ route('home.login')}}" style="color: black">Sign In</a></div>
-                                    <div class="cta active"><a style="color: white" href="{{ route('home.register')}}">Register</a></div> 
+                                    <div class="cta"><a href="" style="color: black"  data-toggle="modal" data-target="#login">Sign In</a></div>
+                                    <div class="cta active"><a style="color: white" href=""  data-toggle="modal" data-target="#register">Register</a></div> 
                                     @endif
                                 </div>
                             </div>
@@ -493,10 +612,20 @@
                             </div>
                             <div class="rate">
                                 <p>
-                                    <span class="avgrate" data-selected="true" data-label-id="0">8.4</span>
-                                        <span>rất tốt</span>
+                                    <span class="avgrate" data-selected="true" data-label-id="0">{{$rating}}</span>
+                                        
+                                            @if($rating<=3.0)
+                                                <span>Tệ</span>
+                                            @elseif($rating<=5.0)
+                                                <span>Trung bình</span>
+                                            @elseif($rating<=8.0)
+                                                <span>Tốt</span>
+                                            @else
+                                                <span>Rất tốt</span>
+                                            @endif
+                                        </span>
                                         <div style="width: 1px;height: 14px;margin: 0 8px;background: #cdc1c1;;"></div>
-                                    <span class="" style="margin-left: 4px;">(238 đánh giá)</span>
+                                    <span class="" style="margin-left: 4px;">({{$numbers_review}} đánh giá)</span>
                                 </p>
                             </div>
                             <div class="address">
@@ -677,16 +806,240 @@
                         </div>
                     </form>
                    <div class="clearfix">
-        kkkkkkkkkkkkk
+                        <div class="container mt-5 mb-5">
+                            @if(Auth::check())
+                            <form method="post" action="{{route('hotel.comments',$hotel->id)}}" class="well padding-bottom-10" ">
+                                @csrf
+                                <div class="card">
+                                    <div class="row">
+                                        <div class="col-1"> <img src="https://i.imgur.com/xELPaag.jpg" width="50" class="rounded-circle mt-2"> </div>
+                                        <div class="col-11">
+                                            <div class="comment-box ml-2">
+                                                <h4>Viết đánh giá của bạn</h4>
+                                                <div class="rating"> 
+                                                    <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
+                                                    <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+                                                    <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label> 
+                                                    <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> 
+                                                    <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label> 
+                                                </div>
+                                                <!-- <ul class="list-inline rating">
+                                                    
+                                                </ul> -->
+                                                <div class="comment-area"> <textarea class="form-control" placeholder="what is your view?" rows="2" name="comment"></textarea> </div>
+                                                <div class="comment-btns mt-2">
+                                                    
+                                                    <div class="pull-right"> 
+                                                        <input type="submit" value="Gửi" class="btn btn-primary">
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                       
+                                </div>
+                            </form>
+                            @else
+                                <div class="p-3 bg-white mt-2 rounded text-center">
+                                        <h5>Đăng nhập để bình luận</h5>
+                                        <a class="btn btn-success btn-sm px-3" href="" data-toggle="modal" data-target="#login">Đăng nhập</a>
+                                </div>
+                            @endif
+                            <div class="p-3 bg-white mt-2 rounded">
+                            
+                                @foreach($hotelRates as $rate)
+                                    @if($rate->comment != null)
+                                    <div class="d-flex justify-content-between">
+                                        <div class="d-flex flex-row user">
+                                            <img class="rounded-circle img-fluid img-responsive" src="https://i.imgur.com/xELPaag.jpg" width="50">
+                                            <div class="d-flex flex-column ml-2">
+                                                <span class="font-weight-bold">{{$rate->user->name}}</span>                                                                                      
+                                                <span class="star">
+                                                @for($i=0; $i < $rate["rate"]; $i++)
+                                                    <li title="đánh giá sao" class="rating">
+                                                    &#9733;
+                                                    </li>
+                                                @endfor
+                                                </span>                                            
+                                            </div>
+                                            <div class="d-flex flex-column ml-2">
+                                                
+                                            </div>
+                                        </div>                                        
+                                        <div class="d-flex align-items-center px-3 heart border">
+                                            <i class="fa fa-heart heart-icon"></i><span class="ml-2">35</span>
+                                            
+                                        </div>                                       
+                                    </div>                                                           
+                                    <div class="d-flex justify-content-between">
+                                        <div class="comment-text d-flex flex-row user">
+                                                {{$rate->comment}}
+                                        </div>
+                                        
+                                        <div class="d-flex align-items-center px-3 heart">
+                                            <i class="day">{{$rate->created_at}}</i>
+                                            
+                                        </div>                                       
+                                    </div> 
+                                    <hr>                                   
+                                    @else  
+                                        <p>Chưa có bình luận nào</p>
+                                    @endif
+                                @endforeach
+                            
+                               
+                            </div>                   
+                    </div>
 
-        </div>
+                </div>
             </div>
                             
         </div>
        
     </div>
-@stop
+    <!-- Modal cmt -->
+    <div class="modal fade" id="cmt" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color:#fa9442">Đánh giá hotel</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Gửi bình luận thành công !!!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    //register
+        <div class="modal fade" id="register" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff7b0a;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Đăng ký</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form dialog-book-quick">
+                      <form action="{{ route('home.register')}}" method="post">
+                        @csrf
+                        <div class="form-group">
+                          <p class="quote" style=" border: solid 1px #e4e2e2;padding: 10px;font-size: .8em;background-color: #edf9d2;font-style: italic;line-height: 18px;">
+                          Đăng ký tài khoản để được nhiều ưu đãi hơn khi đặt phòng<br>
+                          Hãy đăng ký ở dưới !!!.<br>
+                          </p  
+                        </div>
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Tên<i style="color:red">*</i></label>
+                          <input type="text"  name="name" class="form-control" id="txtEmail_divBookQuick" value="{{ old('name', '') }}" required>
+                          @if($errors->has('name'))
+                            <p style="color:red">{{$errors->first('name')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Email<i style="color:red">*</i></label>
+                            <input type="email"  name="email" class="form-control" id="txtEmail_divBookQuick" value="{{ old('email', '') }}" required>
+                              @if($errors->has('email'))
+                                <p style="color:red">{{$errors->first('email')}}</p>
+                              @endif
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Mật khẩu<i style="color:red">*</i></label>
+                            <input type="password" name="password" class="form-control" id="txtMobile_divBookQuick" required>
+                            @if($errors->has('password'))
+                              <p style="color:red">{{$errors->first('password')}}</p>
+                            @endif
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Điện thoại<i style="color:red">*</i></label>
+                            <input type="text"  name="phone" class="form-control" id="txtEmail_divBookQuick" value="{{ old('phone', '') }}" required>
+                            @if($errors->has('phone'))
+                              <p style="color:red">{{$errors->first('phone')}}</p>
+                            @endif
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Địa chỉ<i style="color:red">*</i></label>
+                            <input type="text" name="address" class="form-control" id="txtMobile_divBookQuick" value="{{ old('address', '') }}" required>
+                            @if($errors->has('address'))
+                              <p style="color:red">{{$errors->first('address')}}</p>
+                            @endif
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <input type="submit" class="btn btn-primary" style="background-color: #ff7b0a;padding: left 40px;" value="Đăng ký" ></input>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <p>Bạn đã có tài khoản hãy đăng nhập tại đây<span>→</span> <a class="w3_play_icon1" href="#" data-toggle="modal" data-target="#login">Đăng nhập</a></p>
+                    <div class="clear"></div>
+                </div>
+              </div>
+          </div>
+        </div>
+    <!-- //modal login -->
+    <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff7b0a;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Đăng nhập</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form dialog-book-quick">
+                      <form action="{{ route('home.login')}}" method="post">
+                        @csrf
+                        @if(session()->has('error'))
+                          <p style="color:red">{{session()->get('error')}}</p>
+                        @endif
+                       
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Email</label>
+                          <input type="email"  name="email" class="form-control" id="txtEmail_divBookQuick" value="{{ old('email', '') }}" required>
+                          @if($errors->has('email'))
+                            <p style="color:red">{{$errors->first('email')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Password</label>
+                          <input type="password" name="password" class="form-control" id="txtMobile_divBookQuick" required>
+                          @if($errors->has('password'))
+                            <p style="color:red">{{$errors->first('password')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-group">
+                          <input type="checkbox" id="brand1" value="">
+                          <label for="brand1"><span></span>Remember me</label>
+                          <a href="#">Forgot password?</a><br>              
+                        </div>
+                        <div class="form-group">
+                          <input type="submit" class="btn btn-primary" style="background-color: #ff7b0a;padding: left 40px;" value="Đăng nhập" ></input>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <p>Nếu chưa có tài khoản hãy đăng ký tại đây<span>→</span> <a class="w3_play_icon1" href="#" data-toggle="modal" data-target="#register">Đăng ký</a></p>
+                    <div class="clear"></div>
+                </div>
+              </div>
+          </div>
+        </div>
 
+@stop
 
 @section('scripts')
     <script type="text/javascript">
@@ -711,7 +1064,26 @@
     }
     showContent('Hotels');
     </script>
-
+    <!-- login -->
+    <script>
+        @if( $errors->has('email')|| $errors->has('password') || $errors->has('phone'))
+            $('#register').modal('show');
+        @endif
+    </script> 
+    <!-- register -->
+    <script >
+        @if(session()->has('error'))
+            $('#login').modal('show');
+        @endif
+    </script>          
+           
+    <!-- //Comment -->
+    <script >
+    @if(session()->has('message'))
+        $('#cmt').modal('show');
+    @endif
+    </script>          
+           
 @stop
 
     

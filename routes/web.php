@@ -79,6 +79,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['check.adm
     Route::get('searchroom', 'App\Http\Controllers\Admin\RoomsController@searchRoom')->name('searchRoom');
     Route::post('searchroom', 'App\Http\Controllers\Admin\RoomsController@searchRoom')->name('searchRoom');
     
+    Route::get('mail','App\Http\Controllers\Admin\BookingsController@sendmail')->name('mail');
     
 });
 
@@ -104,8 +105,10 @@ Route::get('/','App\Http\Controllers\HomeController@index')->name('home.index');
 
 Route::any('/search','App\Http\Controllers\HomeController@searchhotel')->name('search.hotel');
 Route::get('/city/{id}','App\Http\Controllers\HomeController@searchwithcity')->name('searchwithcity');
+// Route::get('/category/{id}','App\Http\Controllers\HomeController@searchCategory')->name('searchCategory');
 // Route::get('/city/{id}','App\Http\Controllers\HomeController@searchbycondition')->name('searchbycondition');
 
 
 Route::get('/room/{id}/booking','App\Http\Controllers\BookingController@show')->name('home.booking');
-Route::post('/commnets/{id}','App\Http\Controllers\HotelReateController@storeComment')->name('hotel.comment');
+//comments
+Route::post('/hotel/{id}/comments','App\Http\Controllers\HotelRateController@store')->name('hotel.comments');

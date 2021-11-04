@@ -17,10 +17,14 @@ class CreateBookingRoomsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('booking_id');
             $table->unsignedBigInteger('room_id');
+            $table->integer('qty');
+            $table->integer('subtotal');
             $table->date('startDate')->format('d-m-Y');
             $table->date('endDate')->format('d-m-Y');
             $table->integer('num_days');
-            $table->string('note');
+            $table->integer('reduction')->nullable();
+            $table->integer('total');
+            $table->string('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

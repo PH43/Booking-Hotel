@@ -31,11 +31,15 @@
                         Image
                     </th>
                     <th>
-                        Room Number
+                        Room ID
+                    </th>
+                    <th>
+                        Room Types
                     </th>
                     <th>
                         &nbsp;
                     </th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -49,8 +53,11 @@
                         <img height="80px" src="../../resources/images/rooms/{{$image->path}}" alt="">
                     </td>
                     <td>
+                        {{$image->room->id}}
+                    </td>
+                    <td>
                         @if($image->room !=NULL)                
-                        <a href="{{ route('admin.rooms.show',$image->room->id)}}">{{ $image->room->room_number }}</a>
+                        <a href="{{ route('admin.rooms.show',$image->room->id)}}">{{ $image->room->roomType->type }}</a>
                         @endif
                     </td>
                     
@@ -69,6 +76,7 @@
                             </form>
                         @endcan
                     </td>
+                    
                 </tr>
                 @endforeach
             </tbody>

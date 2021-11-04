@@ -12,6 +12,7 @@ use App\Http\Requests\UpdateBookingRequest;
 use App\Models\Room;
 use App\Models\Coupon;
 use Gate;
+use Mail;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -22,6 +23,7 @@ class BookingsController extends Controller
     {
     
         $bookings= Booking::with('user','coupon')->get();
+        
         return view('admin.bookings.index',compact('bookings'));
     }
 
@@ -39,6 +41,8 @@ class BookingsController extends Controller
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
         $days= floor((strtotime($endDate) - strtotime($startDate))/(60*60*24));
+        $subtotal = $request->qty  * $request->price;
+        $total = $subtotal * $days;
         $booking = new Booking();       
         $booking->status = "1";
         $booking->coupon_id = $request->coupon_id;
@@ -51,6 +55,9 @@ class BookingsController extends Controller
         $booking_room->endDate = $endDate;
         $booking_room->num_days = $days;
         $booking_room->note = $request->note;
+        $booking_room->qty_total = $request->qty;
+        $booking_room->subtotal = $subtotal;
+        $booking_room->total = $total;
         $booking_room->save();
         $booking_info = new BookingInfo();
         $booking_info->name = $request->name;
@@ -60,7 +67,10 @@ class BookingsController extends Controller
         $booking_info->booking_id = $booking->id;
         $booking_info->save();
 
-        return redirect()->route('admin.bookings.index')->with(['messages'=>'create booking success']);
+        $booking->total_money = $total;
+        $booking->save();
+
+        return redirect()->back()->with(['messages'=>'create booking success']);
     }
 
     public function edit(Booking $booking)
@@ -85,8 +95,8 @@ class BookingsController extends Controller
     {
         abort_if(Gate::denies('booking_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $booking = Booking::with('bookingRooms')->findOrFail($id);
-        
+        $booking = Booking::with('bookingRooms','bookingInfo')->findOrFail($id);
+
         return view('admin.bookings.show', compact('booking'));
     }
 
@@ -117,6 +127,14 @@ class BookingsController extends Controller
             }
             $booking->status = "1";
             $booking->update();
+            $data = [
+                'booking' => $booking,
+            ];
+            Mail::send('admin.mails.sendmail',$data,function($message){
+                $message->from('caohien0503@gmai.com','Hotel Đà Nẵng');
+                $message->to('thuhien14102000@gmail.com','Hiền');
+                $message->subject('Đặt phòng thành công');
+            });
             return redirect()->back()->with('status','Comfirmed success');
         }elseif($request->status == "2")
         {
@@ -124,7 +142,7 @@ class BookingsController extends Controller
             {
                 $booking->status = "2";
                 $booking->update();
-                return redirect()->back();
+                return redirect()->back()->with('error','Payment confirmation');
             }
             else
             {
@@ -144,7 +162,7 @@ class BookingsController extends Controller
         {          
             $booking->status = "3";
             $booking->update();
-            return redirect()->back();
+            return redirect()->back()->with('error','Please enter the why to cancel booking');
         }
     }
 
@@ -153,6 +171,14 @@ class BookingsController extends Controller
         $booking = Booking::find($id);
         $booking->cancel_reason = $request->cancel;
         $booking->update();
+        $data = [
+            'booking' => $booking,
+        ];
+        Mail::send('admin.mails.cancelmail',$data,function($message){
+            $message->from('caohien0503@gmai.com','Hotel Đà Nẵng');
+            $message->to('thuhien14102000@gmail.com','Hiền');
+            $message->subject('Hủy đặt phòng');
+        });
         return redirect()->back()->with('status','Cancel success');
     }
 
@@ -168,5 +194,7 @@ class BookingsController extends Controller
 
 
     }
+
+   
 
 }

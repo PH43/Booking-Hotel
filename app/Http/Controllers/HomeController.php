@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Room;
+use App\Models\Category;
 use App\Models\City;
 use App\Models\Hotel;
 use App\Models\HotelRate;
@@ -22,12 +23,12 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {   
+    {       
         $dtnow = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
         $dt = Carbon::now('Asia/Ho_Chi_Minh')->addDay()->toDateString();
         $cities = City::all()->take(8);
         $rooms = Room::with('hotel','roomType')->orderBy('price')->take(12)->get();
-        return view('index', compact('rooms','cities', 'dtnow', 'dt' ));
+        return view('index', compact('rooms','cities', 'dtnow', 'dt'));
     }
 
 
@@ -35,46 +36,39 @@ class HomeController extends Controller
     public function searchhotel(Request $request){
         $namecity = $request->input('city');
         $city = City::where('city', 'like' , $namecity)->pluck('id');
-        foreach ($city as $id ) {
-               $id = $id;
-        }
-        
+        // foreach ($city as $id ) {
+        //        $id = $id;
+        // }
+        // dd($city);
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
         $days= floor((strtotime($endDate) - strtotime($startDate))/(60*60*24));
 
-         if (isset($namecity)) {
-            
-            $rooms = Room::leftjoin('room_types', 'room_types.id', '=', 'rooms.roomtype_id')
-            ->leftjoin('hotels', 'hotels.id', '=', 'rooms.hotel_id')
-            ->leftjoin('cities', 'cities.id', '=', 'hotels.city_id')
-            ->with('bookingRooms')->whereHas('bookingRooms', function ($q) use ($startDate, $endDate) {
+         if (isset($namecity)) {   
+            $rooms = Room::with('roomType','bookingRooms')
+            ->join('hotels', 'hotels.id', '=', 'rooms.hotel_id')
+            ->join('cities', 'cities.id', '=', 'hotels.city_id')
+            ->whereHas('bookingRooms', function ($q) use ($startDate, $endDate) {
                 $q->where(function ($q2) use ($startDate, $endDate) {
                     $q2->where('startDate', '>=', $endDate)
                        ->orWhere('endDate', '<=', $startDate);
                 });
-            })->orWhereDoesntHave('bookingRooms')->where('city_id', '=', $id)->get();
+            })->orWhereDoesntHave('bookingRooms')->get();
+            // $rooms = $rooms->whereIn('city_id', $city);
         } else {
             $rooms = null;
         }
-
         $rooms = $rooms->toArray();
-        
+        // dd($rooms);
         $temp = array_unique(array_column($rooms, 'hotel_id'));
+        // dd($temp);
         $hotels = array_intersect_key($rooms, $temp);
+        // dd($hotels);
         $sohotels = count($hotels);
-
-        
-        
-          // $mode[1] =  current($hotels);
-        //      for($i= 1; $i <= 2;$i++){
-        //         $mode[$i] = next($hotels);
-        //     }
-        // for($i = $age; $i <= ( 2 * $age); $i++){
-        //             $test[$i] = $mode[$i];
-        //         }
-
-        return view('searchhotel', compact('hotels','id','namecity', 'startDate', 'endDate', 'days', 'sohotels'));
+        // dd($sohotels);
+        $categories = Category::all();
+        // dd($city->first());
+        return view('searchhotel', compact('hotels','city','namecity', 'startDate', 'endDate', 'days', 'sohotels','categories'));
     }
 
 
@@ -170,4 +164,5 @@ class HomeController extends Controller
         return view('searchhotel', compact('hotels','id', 'namecity', 'startDate', 'endDate', 'days', 'sohotels'));
     }
 
+    
 }

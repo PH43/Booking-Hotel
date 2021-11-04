@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Requests;
-
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCouponRequest extends FormRequest
@@ -13,7 +14,8 @@ class StoreCouponRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        abort_if(Gate::denies('coupon_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return true;
     }
 
     /**
@@ -24,7 +26,15 @@ class StoreCouponRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+           'remain'=>
+            [
+                'numeric',
+            ],
+            'code'=>
+            [
+                'unique:coupons',
+            ],
+           
         ];
     }
 }

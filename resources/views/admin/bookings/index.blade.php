@@ -32,11 +32,12 @@
                         <th>
                             Booking Date
                         </th>
-                        <th>
-                            Qty Room
-                        </th>
+                        
                         <th>
                             Coupon
+                        </th>
+                        <th>
+                            Total Money
                         </th>
                         <th>
                             Status
@@ -58,11 +59,12 @@
                         <td>
                             {{ $booking->created_at}}
                         </td>
-                        <td>
-                            {{ $booking->qty_room}}
-                        </td>
+                        
                         <td>
                             {{ $booking->coupon->reduction }}
+                        </td>
+                        <td>
+                            {{  number_format($booking->total_money)}}đ
                         </td>
                         <td>
                             @if($booking->status == '0')
@@ -103,64 +105,7 @@
 @endsection
 @section('scripts')
 @parent
-<!-- <script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('booking_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.bookings.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
-      });
 
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
-
-        return
-      }
-
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
-
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.bookings.index') }}",
-    columns: [
-        { data: 'placeholder', name: 'placeholder' },
-        { data: 'id', name: 'id' },
-        { data: 'room_name', name: 'room.name' },
-        { data: 'booking_date', name: 'booking_date' },
-        { data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
-    order: [[ 1, 'desc' ]],
-    pageLength: 100,
-  };
-  $('.datatable-Booking').DataTable(dtOverrideGlobals);
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-        $($.fn.dataTable.tables(true)).DataTable()
-            .columns.adjust();
-    });
-});
-
-</script> -->
 
 <script>
     $(function () {

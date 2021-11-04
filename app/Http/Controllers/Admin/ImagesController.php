@@ -32,7 +32,7 @@ class ImagesController extends Controller
     {
         abort_if(Gate::denies('booking_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $rooms = Room::all()->pluck('room_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $rooms = Room::all();
 
         return view('admin.images.create', compact('rooms'));
     }

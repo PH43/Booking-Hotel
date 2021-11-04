@@ -23,6 +23,14 @@ class StoreRoomTypeRequest extends FormRequest
                 'required',
                 'unique:room_types',
             ],
+            'bed' => [
+                'required',
+                'numeric',
+            ],
+            'capactity' => [
+                'required',
+                'numeric',
+            ],
         ];
     }
 }
