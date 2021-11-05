@@ -575,7 +575,9 @@
                                     <div class="MuiBox-root-item">
                                         <a class="{{ Request::get('orderBy') == 'STARDEFAULT' ? 'active' : ''}}" href="{{ route('searchwithcity', $city ) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&condition=star&orderBy=STARDEFAULT&price=0&page=1">Sao khách sạn</a>
                                     </div>
-                                    <div class="MuiBox-root-item">Đánh giá cao nhất</div>
+                                    <div class="MuiBox" style="width:25%">                                        
+                                        {{-- <a class="{{ Request::get('orderBy') == 'DEFAULT' ? 'active' : ''}}" href="{{ route('searchrate', $city ) }}?startDate={{ $startDate }}&endDate={{ $endDate }}&city={{ $namecity }}&orderBy=DEFAULT&price=0&page=1">Đánh giá cao nhất</a> --}}
+                                    </div>
                                 </div>
                             </div>
                             @foreach($hotels as $hotel)

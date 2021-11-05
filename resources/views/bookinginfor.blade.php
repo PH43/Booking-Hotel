@@ -165,51 +165,43 @@
                                 @endforeach
                                 @if(Auth::check())
                                 <div>
-                                    <p class="">Thông tin liên hệ</p>
-                                    <div  style="margin-top:0">
-                                        <label data-shrink="false">
-                                            <span style="font-size:16px;font-weight:400;line-height:19px;color:#718096">Họ tên
-                                                <span style="color:red">*</span>
-                                            </span>
+                                    <div class="inforcontact form" style="height: 250px;width: 100%;padding: 24px;background: white;margin-top: 12px;border-radius: 8px;">
+                                        <p class="">Thông tin liên hệ</p>
+                                        <div class="form-field">
+                                            <input type="text" name="name" class="form-input" placeholder=" " required value="{{$name}}">
+                                            <label for="name" class="form-label">Họ tên<span style="color:red">*</span></label>
+                                        </div>
+                                        <div class="form-field" style="width: 50%;padding-right: 5px;float: left;">
+                                            <input type="email" name="email" class="form-input" placeholder=" " required value="{{$email}}">
+                                            <label for="email" class="form-label">Email<span style="color:red">*</span></label>
+                                        </div>
+                                        <div class="form-field" style="width: 50%;float: right;padding-left: 5px;">
+                                            <input type="text" name="phone" class="form-input" placeholder=" " required value="{{$phone}}">
+                                            <label for="phone" class="form-label">Số điện thoại<span style="color:red">*</span></label>
+                                        </div>
+                                    </div>   
+                                    <div style="display: flex;flex-direction: column;width: 100%;padding: 24px;font-size: 14px;background: white;margin-top: 12px;line-height: 17px;border-radius: 8px;">
+                                        <label  data-shrink="false">
+                                            <span style="font-size: 18px;font-weight: 600;line-height: 21px;margin-bottom: 16px;">yêu cầu đặt biệt
                                         </label>
-                                        <div class="">
-                                        <input type="text" aria-invalid="" name="name" value="{{ $name }}" class="">
+                                        <div style="margin-top:0">
+                                            <textarea name="note" class="form-control" id="validationTextarea" placeholder="Yêu cầu hoặc lưu ý??!!" style="    font-size: inherit;"></textarea>
                                         </div>
                                     </div>
-                                    <div  style="width:49%">
-                                        <label  data-shrink="false">
-                                            <span style="font-size:16px;font-weight:400;line-height:19px;color:#718096">Số điện thoại
-                                                <span style="color:red">*</span>
-                                            </span>
-                                        </label>
-                                        <div class="">
-                                            <input type="text" aria-invalid="" name="phone" value="{{ $phone }}" class="">
-                                        </div>
-                                    </div>
-                                    <div style="width:49%;margin-left:2%">
-                                        <label  data-shrink="false">
-                                            <span style="font-size:16px;font-weight:400;line-height:19px;color:#718096">Email
-                                                <span style="color:red">*</span>
-                                            </span>
-                                        </label>
-                                        <div class="">
-                                            <input type="email" aria-invalid="" name="email" value="{{ $email }}" class="">
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label  data-shrink="false">
-                                            <span style="font-size:16px;font-weight:400;line-height:19px;color:#718096">yêu cầu dặt biệt
-                                        </label>
-                                        <input type="text" value="yêu cầu đặt biệt hoặc lưu ý?">
-                                    </div>
-                                    <div>
+                                    <div style="width: 100%;background: white;margin-top: 12px;border-radius: 8px;padding: 24px;">
                                         <label  data-shrink="false">
                                             <span style="font-size:16px;font-weight:400;line-height:19px;color:#718096">code
                                         </label>
                                         <input type="text" aria-invalid="" name="code" value="{{ $code }}" class="">
                                     </div>
-                                    <div>
-                                        <input type="submit" value="Thanh Toán">
+                                    <div style="width: 100%;padding: 24px;background: white;margin-top: 12px;border-radius: 8px;">
+                                        <p style="color: #ED8936;padding: 12px;font-size: 14px;background: rgba(237, 137, 54, 0.1);line-height: 22px;border-radius: 8px; margin-bottom: 16px;">Chúng tôi sẽ chủ động liên hệ với quý khách trong vòng 30 phút để xác nhận phòng trống và hướng dẫn thanh toán.</p>
+                                        <div style="    display: flex;align-items: flex-end;flex-direction: column;">
+                                             <input type="submit" value="Gửi yêu cầu đặt phòng" style="border: none;height: 48px;margin: 0px;padding: 14px 40px;min-height: 20px;margin: 12px 0;width: auto;color: white;font-weight: 600;border-radius: 8px;background-color: rgb(243 142 17);">
+                                             <p  style=" margin-bottom: 0;    font-size: 14px;">Bằng cách nhấn nút Thanh toán, bạn đồng ý với</p>
+                                             <p style=" margin-bottom: 0;    font-size: 14px;"><a href="/news/135157-dieu-kien-va-dieu-khoan.html" style="color:#00B6F3" target="_blank">Điều kiện và điều khoản</a> <!-- -->của chúng tôi</p>
+                                        </div>
+                                       
                                     </div>
                                 </div>
                                 @else
@@ -256,15 +248,15 @@
                                             </div>
                                         </div> --}}
                                         <div class="form-field">
-                                            <input type="text" name="name" class="form-input" placeholder=" ">
+                                            <input type="text" name="name" class="form-input" placeholder=" " required>
                                             <label for="name" class="form-label">Họ tên<span style="color:red">*</span></label>
                                         </div>
                                         <div class="form-field" style="width: 50%;padding-right: 5px;float: left;">
-                                            <input type="email" name="email" class="form-input" placeholder=" ">
+                                            <input type="email" name="email" class="form-input" placeholder=" " required>
                                             <label for="email" class="form-label">Email<span style="color:red">*</span></label>
                                         </div>
                                         <div class="form-field" style="width: 50%;float: right;padding-left: 5px;">
-                                            <input type="text" name="phone" class="form-input" placeholder=" ">
+                                            <input type="text" name="phone" class="form-input" placeholder=" " required>
                                             <label for="phone" class="form-label">Số điện thoại<span style="color:red">*</span></label>
                                         </div>
                                     </div>

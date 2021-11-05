@@ -51,9 +51,9 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $this->validate($request,[
-            'email' =>['unique:users', 'email', 'max:255'], 
-            'password'=>['min:8|max:30', 'string', 'comfirmed'], 
-            'phone' =>['unique:users|numeric', 'min:9', 'max:11']
+            'email' =>'unique:users', 'email', 'max:255', 
+            'password'=>'min:8|max:30|string', 
+            'phone' =>'unique:users|numeric|min:9', 'max:11',
         ],[
             // 'email.required' => 'email không được để trống',
             'email.unique' => 'email này đã được sử dụng',
@@ -64,11 +64,13 @@ class UserController extends Controller
             'password.min' =>'pass không dc nhỏ hơn 8 ký tự',
             'password.max' =>'pass không được lớn hơn 30 ký tự',
             // 'password.required' =>'pass không được để trống',
-            'password.comfirmed' =>'pass không hợp lệ', 
+            // 'password.comfirmed' =>'pass không hợp lệ', 
 
             'phone.unique' => 'số điện thoại này đã được sử dụng',
             'phone.numeric' => 'số điện thoại phải là dạng số',
             'phone.min' => 'số điện thoại phải lớn hơn 9 kí tự',
+            'phone.max' => 'số điện thoại phải không quá 11 kí tự',
+            
 
         ]);
         $data = $request->all();

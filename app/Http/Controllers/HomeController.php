@@ -5,6 +5,7 @@ use App\Models\Room;
 use App\Models\BookingRoom;
 use App\Models\City;
 use App\Models\Hotel;
+use App\Models\HotelRate;
 use App\Models\Category;
 use App\Models\Coupon;
 use App\Models\Booking;
@@ -245,11 +246,12 @@ class HomeController extends Controller
         $totalqty =  $subtotal * $qty*$days;
         $code_id = Coupon::where('code', 'like' , $code)->pluck('id');
         //
+            $rooms = Room::where('id', '=',$roomid )->with('hotel','roomType', 'images')->get();
             foreach ($code_id as $id ) {
                 $code_id = $id;
             }
         //
-        $total = $totalqty - ($totalqty*10/100);
+        $total = $totalqty - ($totalqty*$reduction/100);
         if(Auth::check()){
             $user_id = Auth::user()->id;
 
@@ -293,11 +295,25 @@ class HomeController extends Controller
         $booking_info->phone = $phone;
         $booking_info->email = $email;
         $booking_info->save();
-
-        return view('bill', compact('days'));
+        // dd($rooms);
+        return view('bill', compact('rooms','startDate', 'endDate', 'qty','days','subtotal','total', 'reduction'));
     }
 
-
+    // public function searchrate(Request $request, $city){
+        
+    //     $rateavg = Hotel::join('hotel_rates', 'hotel_rates.hotel_id', '=', 'hotels.id')
+    //                         ->where('city_id', '=', $city)
+    //                         ->select( "hotels.id", "hotels.name","hotels.star","hotels.address","hotels.image", DB::raw('(avg(rate)) as rateavg'),DB::raw('(count(rate)) as qtyrate') )
+    //                         ->groupBy(DB::raw('hotels.id'),"hotels.name","hotels.star","hotels.address","hotels.image")
+    //                         ->with('rooms')
+    //                         ->orderBy('rateavg', 'ASC')
+    //                         ->get();
+                            
+       
+    //                         dd($rateavg);
+        
+    //     //  return view('searchhotel', compact('hotels','city', 'namecity', 'startDate', 'endDate', 'days', 'sohotels', 'codes','hotelsnear'));
+    // }
 
     public function arrayPaginator($hotels, $request) {
         $page = $request->input('page', 1);

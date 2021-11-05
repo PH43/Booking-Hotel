@@ -105,6 +105,7 @@ Route::get('/','App\Http\Controllers\HomeController@index')->name('home.index');
 
 Route::any('/search','App\Http\Controllers\HomeController@searchhotel')->name('search.hotel');
 Route::get('/city/{id}','App\Http\Controllers\HomeController@searchwithcity')->name('searchwithcity');
+// Route::get('/searchrate/{id}','App\Http\Controllers\HomeController@searchrate')->name('searchrate');
 Route::any('/searchhotel','App\Http\Controllers\HomeController@searchhotelform')->name('search.hotel.form');
 Route::get('/dat-phong','App\Http\Controllers\HomeController@booking')->name('booking');
 Route::get('/thanh-toan','App\Http\Controllers\HomeController@thanhtoan')->name('thanhtoan');
