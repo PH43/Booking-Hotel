@@ -32,9 +32,19 @@ class UpdateRoomRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'status'=>[
+
+            'qty' => [
                 'required',
-            ]
+                'numeric',
+            ],
+            'discount' => [
+                'required',
+                'numeric',
+            ],
+            'area' => [
+                'required',
+                'numeric',
+            ],
         ];
     }
 }

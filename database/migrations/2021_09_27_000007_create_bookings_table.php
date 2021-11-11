@@ -17,9 +17,10 @@ class CreateBookingsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('coupon_id')->nullable();
+            $table->integer('total_money');
             $table->tinyInteger('status')->default(0);
             $table->string('cancel_reason')->nullable();
-            $table->tinyInteger('payment_status')->nullable();
+            $table->tinyInteger('payment_status')->default(0);
             $table->timestamps();
             $table->softDeletes();
 

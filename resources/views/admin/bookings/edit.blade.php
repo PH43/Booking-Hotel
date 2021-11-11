@@ -15,12 +15,12 @@
                 <input class="form-control" type="text" name="user_id" id="user_id" value="{{ old('user_id', $booking->user->name) }}" required>
             </div>
             <div class="form-group">
-                <label class="required" for="booking_date">Booking Date <i style="color:red"> *</i></label>
-                <input class="form-control" type="date" name="booking_date" id="booking_date" value="{{ old('booking_date', $booking->booking_date) }}" required>
-            </div>
-            <div class="form-group">
                 <label class="required" for="qty_room">Qty Room <i style="color:red"> *</i></label>
                 <input class="form-control" type="number" name="qty_room" id="qty_room" value="{{ old('qty_room', $booking->qty_room) }}" required>
+            </div>
+            <div class="form-group">
+                <label class="required" for="total_money">Total Money<i style="color:red"> *</i></label>
+                <input class="form-control" type="number" name="total_money" id="total_money" value="{{ old('total_money', $booking->total_money) }}" required>
             </div>
             <div class="form-group">
                 <label class="required" for="coupon_id">Coupon</label>

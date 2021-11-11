@@ -116,7 +116,7 @@
 
           <div class="item">
             <p style="margin: 0px;">Thời gian đến:</p>
-            <input type="date"  name="startDate" value="{{ $dtnow }}">
+            <input type="date"  name="startDate" value="{{ $dtnow }}" min="{{$dtnow}}">
           </div>
 
           <div class="item">

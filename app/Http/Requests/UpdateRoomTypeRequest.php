@@ -21,7 +21,14 @@ class UpdateRoomTypeRequest extends FormRequest
         return [
             'type' => [
                 'required',
-                'unique:room_types',
+            ],
+            'bed' => [
+                'required',
+                'numeric',
+            ],
+            'capactity' => [
+                'required',
+                'numeric',
             ],
         ];
     }

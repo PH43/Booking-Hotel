@@ -23,6 +23,7 @@ class CommentsController extends Controller
 
     public function storeComment($id,Request $request)
     {
+        dd('hi');
         // $idRoom = $id;
         // // $room = Room::find($id);
         // $comment = new Comment;

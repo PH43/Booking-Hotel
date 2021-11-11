@@ -56,4 +56,8 @@ class User extends Authenticatable
     public function comments(){
         return $this->hasMany('App\Models\Comment');
     }
+    public function hotelRates()
+    {
+        return $this->hasMany('App\Models\HotelRate', 'user_id', 'id');
+    }
 }

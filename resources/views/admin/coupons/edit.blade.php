@@ -16,7 +16,12 @@
             </div>
             <div class="form-group">
                 <label class="required" for="remain">Remain <i style="color:red"> *</i></label>
-                <input class="form-control" type="text" name="remain" id="remain" value="{{ old('remain', $coupon->remain) }}" required>
+                <input class="form-control {{ $errors->has('remain') ? 'is-invalid' : '' }}" type="text" name="remain" id="remain" value="{{ old('remain', $coupon->remain) }}" required>
+                @if($errors->has('remain'))
+                    <div class="invalid-feedback">
+                        {{$errors->first('remain')}}
+                    </div>
+                @endif
             </div>
             <div class="form-group">
                 <label class="required" for="reduction">Reduction<i style="color:red"> *</i></label>

@@ -11,6 +11,8 @@ use App\Models\Room;
 use App\Models\Booking;
 use App\Models\Coupon;
 use App\Models\RoomType;
+use App\Models\BookingRoom;
+use DB;
 use Gate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,7 +24,14 @@ class RoomsController extends Controller
     public function index(Request $request)
     {
         
-        $rooms = Room::with('hotel','roomType')->get();
+        $rooms = Room::with('hotel','roomType','bookingRooms')->get();
+        // dd($rooms->toArray());
+        // foreach($rooms as $room){
+        //     if($room->bookingRooms != null){
+        //         dd($room->bookingRooms->toArray());
+        //     }
+            
+        // }
         return view('admin.rooms.index',compact('rooms'));
     }
 
@@ -60,11 +69,14 @@ class RoomsController extends Controller
     {
         $room = new Room;
         $arr['price'] = $request->price;
-        $arr['status'] = $request->status;
         $arr['room_number'] = $request->room_number;
         $arr['description'] = $request->description;
         $arr['hotel_id'] = $request->hotel_id;
         $arr['roomtype_id'] = $request->roomtype_id;
+        $arr['qty'] = $request->qty;
+        $arr['discount'] = $request->discount;
+        $arr['area'] = $request->area;
+        $arr['view'] = $request->view;
         $room::where('id',$id)->update($arr);
         return redirect()->route('admin.rooms.index')->with(['success'=>'update room success']);
     }
@@ -103,28 +115,46 @@ class RoomsController extends Controller
 
     public function searchRoom(Request $request)
     {
-        // $booking = Booking::with('bookingRooms');
-        $coupons = Coupon::all()->pluck('reduction', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $roomTypes = RoomType::all()->pluck('type', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $coupons = Coupon::all()->pluck('reduction', 'id');
+        $roomTypes = RoomType::all()->pluck('type', 'id');
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
+        $query = $request->input('room_type');
+        $dtnow = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+        
+
          if ($request->isMethod('POST')) {
-            
-            $rooms = Room::filters()->with('roomType')
-            ->with('bookingRooms')->whereHas('bookingRooms', function ($q) use ($startDate, $endDate) {
-                $q->where(function ($q2) use ($startDate, $endDate) {
-                    $q2->where('startDate', '>=', $endDate)
-                       ->orWhere('endDate', '<=', $startDate);
-                });
+
+            $availableRoom = BookingRoom::join('rooms','rooms.id','=','booking_rooms.room_id')
+                            ->select("room_id", "qty",  DB::raw('(sum(qty_total)) as total_qty'))
+                            ->where(function ($q) use ($startDate, $endDate) {
+                            $q->where('startDate', '<',$endDate)
+                            ->Where('endDate', '>', $startDate);})
+                            ->groupBy(DB::raw('room_id'), 'qty')
+                            ->havingRaw('(sum(qty_total)) < qty')
+                            ->pluck('room_id');
+
+            if(isset($query)){
                 
-            })->orWhereDoesntHave('bookingRooms')->get();
-           
-           
+                $rooms = Room::with('roomType','bookingRooms', 'images')
+                                ->whereDoesntHave('bookingRooms', function ($q) use ($startDate, $endDate) {
+                                $q->where('startDate', '<',$endDate)
+                                ->Where('endDate', '>', $startDate);})
+                                ->orWhereIn('id', $availableRoom)->get();   
+                                
+                $rooms = $rooms->where('roomtype_id','=',$query);
+            }else{   
+                $rooms = Room::with('roomType','bookingRooms', 'images')
+                                ->whereDoesntHave('bookingRooms', function ($q) use ($startDate, $endDate) {
+                                $q->where('startDate', '<',$endDate)
+                                ->Where('endDate', '>', $startDate);})
+                                ->orWhereIn('id', $availableRoom)->get(); 
+            }                     
         } else {
             $rooms = null;
         }
-       
+           
 
-        return view('admin.searchrooms.index', compact('rooms','roomTypes','coupons'));
+        return view('admin.searchrooms.index', compact('rooms','roomTypes','coupons','dtnow'));
     }
 }

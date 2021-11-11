@@ -32,7 +32,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {   
+    {       
         $dtnow = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
         $dt = Carbon::now('Asia/Ho_Chi_Minh')->addDay()->toDateString();
         $cities = City::all()->take(8);
@@ -53,11 +53,11 @@ class HomeController extends Controller
         $endDate = $request->input('endDate');
         
         $days= floor((strtotime($endDate) - strtotime($startDate))/(60*60*24));
-        
+        //
             foreach($city as $id){
                 $city = $id;
             }
-        
+        //
         if (isset($namecity)) {   
             $rooms = Room::with('roomType','bookingRooms')
             ->join('hotels', 'hotels.id', '=', 'rooms.hotel_id')
@@ -73,14 +73,18 @@ class HomeController extends Controller
         } else {
             $rooms = null;
         }
+        
+          
         $rooms = $rooms->toArray();
         
         $temp = array_unique(array_column($rooms, 'hotel_id'));
-        $hotels = array_intersect_key($rooms, $temp);
-        // dd($hotels);
+        $hotels = array_intersect_key($rooms,$temp);
+        // dd($rooms);
         $sohotels = count($hotels);
+        
 
         $hotels = $this->arrayPaginator($hotels, $request);
+        
         $categories = Category::all();
         $codes = Coupon::all();
         $hotelsnear = Hotel::where('city_id','=', $city)->get();
@@ -195,6 +199,9 @@ class HomeController extends Controller
         $roomid = $request -> input('roomid');
         $hotelid = $request -> input('hotelid');
         $qty = $request-> input('qty');
+        if($qty == 0){
+            return redirect()->back(); 
+        }
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
         $days= floor((strtotime($endDate) - strtotime($startDate))/(60*60*24));

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hotel;
+use App\Models\HotelRate;
 use App\Models\Role;
 use App\Models\Room;
 use App\Models\Coupon;
 use App\Models\Image;
-use App\Models\HotelRate;
 use App\Models\BookingRoom;
 use Illuminate\Http\Request;
 use DB, Session, Auth;
@@ -77,12 +77,22 @@ class HotelController extends Controller
         }else{
             $rooms = null;
         }
-            //  $rooms = $rooms->toArray();
+           
             $hotel= Hotel::where('id', '=', $id)->with('city', 'category', 'hotelRates','img_nearloca')->get();
             // $hotel = $hotel->toArray();
-            // dd($rooms);
+            // dd($hotel);
             $codes = Coupon::all();
-        return view('hotelDetail', compact('rooms', 'hotel', 'startDate', 'endDate', 'days', 'codes'));
+
+            $hotelRates = HotelRate::where('hotel_id', '=',$id)->orderBy('created_at','desc')->get();
+        
+      
+        $rating = HotelRate::all()->where('hotel_id', '=',$id)->sum("rate");
+        $numbers_review = HotelRate::all()->where('hotel_id', '=',$id)->count();
+       
+
+        return view('hotelDetail', compact('rooms', 'codes','hotel', 'startDate', 'endDate', 'days','hotelRates','rating','numbers_review'));
+
+        
     }
 
     /**

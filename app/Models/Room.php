@@ -19,14 +19,19 @@ class Room extends Model
 
     protected $fillable = [
         'price',
-        'status',
         'room_number',
         'description', 
+        'qty',
+        'discount',
+        'area',
+        'view',
+        'roomtype_id',
+        'service',
         'hotel_id',
         'created_at',
         'updated_at',
         'deleted_at',
-        'roomtype_id',
+        
     ];
 
     public function scopeFilters($query)

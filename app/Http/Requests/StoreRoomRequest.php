@@ -34,11 +34,22 @@ class StoreRoomRequest extends FormRequest
             ],
             'roomtype_id' => [
                 'required',
+                'unique:rooms',
                 'integer',
             ],
-            'status'=>[
+            'qty' => [
                 'required',
-            ]
+                'numeric',
+            ],
+            'discount' => [
+                'required',
+                'numeric',
+            ],
+            'area' => [
+                'required',
+                'numeric',
+            ],
+            
         ];
     }
 }

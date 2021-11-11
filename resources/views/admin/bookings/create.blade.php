@@ -14,10 +14,6 @@
                 <input class="form-control" type="text" name="user_id" id="user_id" value="{{ old('user_id', '') }}" required>
             </div>
             <div class="form-group">
-                <label class="required" for="booking_date">Booking Date <i style="color:red"> *</i></label>
-                <input class="form-control" type="date" name="booking_date" id="booking_date" value="{{ old('booking_date','') }}" required>
-            </div>
-            <div class="form-group">
                 <label class="required" for="qty_room">Qty Room <i style="color:red"> *</i></label>
                 <input class="form-control" type="number" name="qty_room" id="qty_room" value="{{ old('qty_room', '') }}" required>
             </div>

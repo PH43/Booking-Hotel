@@ -11,24 +11,78 @@
             @method('PUT')
             @csrf
             <div class="form-group">
+                <label class="required" for="roomtype_id">{{ trans('cruds.room.fields.room_type') }}</label>
+                <select class="form-control select2 {{ $errors->has('room_type') ? 'is-invalid' : '' }}" name="roomtype_id" id="roomtype_id" required>
+                    @foreach($room_types as $id => $room_type)
+                        <option value="{{ $id }}" {{ ($room->roomType ? $room->roomType->id : old('roomtype_id')) == $id ? 'selected' : '' }}>{{ $room_type }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('roomtype_id'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('roomtype_id') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.room.fields.room_type_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="price">Price</label>
-                <input class="form-control" type="text" name="price" id="price" value="{{ old('price', $room->price) }}" required>
+                <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" type="text" name="price" id="price" value="{{ old('price', $room->price) }}" required>
                 @if($errors->has('price'))
-                    <p style="color:red">{{$errors->first('price')}}</p>
+                    <div class="invalid-feedback">
+                        {{$errors->first('price')}}
+                    </div>
                 @endif  
             </div>
             <div class="form-group">
                 <label class="required" for="room_number">Room Number</label>
-                <input class="form-control" type="text" name="room_number" id="room_number" value="{{ old('room_number', $room->room_number) }}" required>
+                <input class="form-control  {{ $errors->has('room_number') ? 'is-invalid' : '' }}" type="text" name="room_number" id="room_number" value="{{ old('room_number', $room->room_number) }}" required>
                 @if($errors->has('room_number'))
-                    <p style="color:red">{{$errors->first('room_number')}}</p>
+                    <div class="invalid-feedback">
+                        {{$errors->first('room_number')}}
+                    <div>
                 @endif 
             </div>
             <div class="form-group">
                 <label class="required" for="description">Description</label>
-                <input class="form-control" type="text" name="description" id="description" value="{{ old('description', $room->description) }}" required>
+                <input class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" type="text" name="description" id="description" value="{{ old('description', $room->description) }}" required>
                 @if($errors->has('description'))
                     <p style="color:red">{{$errors->first('description')}}</p>
+                @endif 
+            </div>
+            <div class="form-group">
+                <label class="required" for="qty">Quantity<i style="color:red">*</i></label>
+                <input class="form-control {{ $errors->has('qty') ? 'is-invalid' : '' }}" type="text" name="qty" id="qty" value="{{ old('qty', $room->qty) }}" required>
+                @if($errors->has('qty'))
+                    <div class="invalid-feedback">
+                        {{$errors->first('qty')}}
+                    </div>
+                @endif 
+            </div>
+            <div class="form-group">
+                <label class="required" for="discount">Discount<i style="color:red">*</i></label>
+                <input class="form-control {{ $errors->has('discount') ? 'is-invalid' : '' }}" type="text" name="discount" id="discount" value="{{ old('discount', $room->discount) }}" required>
+                @if($errors->has('discount'))
+                    <div class="invalid-feedback">
+                        {{$errors->first('discount')}}
+                    </div>
+                @endif 
+            </div>
+            <div class="form-group">
+                <label class="required" for="area">Area<i style="color:red">*</i></label>
+                <input class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}" type="text" name="area" id="area" value="{{ old('area', $room->area) }}" required>
+                @if($errors->has('area'))
+                    <div class="invalid-feedback">
+                        {{$errors->first('area')}}
+                    </div>
+                @endif 
+            </div>
+            <div class="form-group">
+                <label class="required" for="view">View</label>
+                <input class="form-control {{ $errors->has('view') ? 'is-invalid' : '' }}" type="text" name="view" id="view" value="{{ old('view', $room->view) }}"></input>
+                @if($errors->has('view'))
+                    <div class="invalid-feedback">
+                        {{$errors->first('view')}}
+                    </div>
                 @endif 
             </div>
             <div class="form-group">
@@ -45,20 +99,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.room.fields.hotel_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label class="required" for="roomtype_id">{{ trans('cruds.room.fields.room_type') }}</label>
-                <select class="form-control select2 {{ $errors->has('room_type') ? 'is-invalid' : '' }}" name="roomtype_id" id="roomtype_id" required>
-                    @foreach($room_types as $id => $room_type)
-                        <option value="{{ $id }}" {{ ($room->roomType ? $room->roomType->id : old('roomtype_id')) == $id ? 'selected' : '' }}>{{ $room_type }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('roomtype_id'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('roomtype_id') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.room.fields.room_type_helper') }}</span>
-            </div>
+            
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

@@ -18,6 +18,8 @@ class BookingRoom extends Model
     protected $fillable = [
         'booking_id ',
         'room_id',
+        'qty_total',
+        'subtotal',
         'startDate', 
         'endDate',
         'qty',
@@ -25,6 +27,8 @@ class BookingRoom extends Model
         'reduction',
         'total',
         'num_days',
+        'reduction',
+        'total',
         'note',
         'created_at',
         'updated_at',

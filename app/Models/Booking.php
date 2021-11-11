@@ -24,6 +24,7 @@ class Booking extends Model
     protected $fillable = [
         'user_id',
         'qty_room', 
+        'total_money',
         'status',
         'cancel_reason',
         'payment_status',

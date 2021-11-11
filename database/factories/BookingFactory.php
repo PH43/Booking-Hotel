@@ -23,14 +23,15 @@ class BookingFactory extends Factory
      */
     public function definition()
     {
-        $user = User::pluck('id');
-        $coupon = Coupon::pluck('id');
+        // $user = User::pluck('id');
+        // $coupon = Coupon::pluck('id');
 
-            return [
-                    'user_id'=>$this->faker->randomElement($user),
-                    'coupon_id'=>$this->faker->randomElement($coupon),
-                    'created_at' => now(),
-                    'updated_at' => now(),
-            ];
+        //     return [
+        //             'user_id'=>$this->faker->randomElement($user),
+        //             'total_money'=> rand(100000,1000000),
+        //             'coupon_id'=>$this->faker->randomElement($coupon),
+        //             'created_at' => now(),
+        //             'updated_at' => now(),
+        //     ];
     }
 }

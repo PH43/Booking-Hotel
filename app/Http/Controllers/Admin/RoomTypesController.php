@@ -15,7 +15,7 @@ class RoomTypesController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('room_type_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('room_type_access'), Response::HTTP_FORBIDDEN, 'xin lỗi nhưng bạn không đủ tuổi, à nhầm...là không đủ quyền!!');
 
         $roomTypes = RoomType::all();
 
@@ -24,7 +24,7 @@ class RoomTypesController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('room_type_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('room_type_create'), Response::HTTP_FORBIDDEN, 'xin lỗi nhưng bạn không đủ tuổi, à nhầm...là không đủ quyền!!');
 
         return view('admin.roomTypes.create');
     }
@@ -38,7 +38,7 @@ class RoomTypesController extends Controller
 
     public function edit(RoomType $roomType)
     {
-        abort_if(Gate::denies('room_type_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('room_type_edit'), Response::HTTP_FORBIDDEN, 'xin lỗi nhưng bạn không đủ tuổi, à nhầm...là không đủ quyền!!');
 
         return view('admin.roomTypes.edit', compact('roomType'));
     }
@@ -50,18 +50,18 @@ class RoomTypesController extends Controller
         return redirect()->route('admin.room-types.index')->with(['success'=>'update room type success']);
     }
 
-    public function show(RoomType $roomType)
+    public function show($id)
     {
-        abort_if(Gate::denies('room_type_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('room_type_show'), Response::HTTP_FORBIDDEN, 'xin lỗi nhưng bạn không đủ tuổi, à nhầm...là không đủ quyền!!');
 
-        $roomType->load('roomTypeRooms');
+        $roomType= RoomType::findOrFail($id);
 
         return view('admin.roomTypes.show', compact('roomType'));
     }
 
     public function destroy(RoomType $roomType)
     {
-        abort_if(Gate::denies('room_type_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('room_type_delete'), Response::HTTP_FORBIDDEN, 'xin lỗi nhưng bạn không đủ tuổi, à nhầm...là không đủ quyền!!');
 
         $roomType->delete();
 

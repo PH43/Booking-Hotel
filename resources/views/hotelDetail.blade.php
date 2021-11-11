@@ -260,6 +260,124 @@
         }
         .show{
             display: flex;
+        //comment
+        .no-box-shadow {
+            box-shadow: none
+        }
+
+        .no-box-shadow:focus {
+            box-shadow: none
+        }
+        .day {
+            font-size: 15px;
+        }
+        .star {
+            padding-left: 5px;
+            padding-top:2px;
+        }
+        .star li{
+            color:#ffcc00;
+            font-size:20px;
+            padding-right:5px
+        }
+        .heart {
+            border: 1px soild green !important;
+            border-color: green !important;
+            border-radius: 22px
+        }
+
+        .heart-icon {
+            color: green
+        }
+
+        .comment-text {
+            font-size: 20px;
+            padding-left:55px;
+        }
+
+        .delete {
+            font-size: 13px;
+            cursor: pointer
+        }
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            padding: 20px;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border-radius: 6px;
+            -moz-box-shadow: 0px 0px 5px 0px rgba(212, 182, 212, 1)
+        }
+
+        .comment-box {
+            padding: 5px
+        }
+
+        .comment-area textarea {
+            resize: none;
+            border: 1px solid #ad9f9f
+        }
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #ffffff;
+            outline: 0;
+            box-shadow: 0 0 0 1px rgb(255, 0, 0) !important
+        }
+
+        .send {
+            color: #fff;
+            background-color: #ff0000;
+            border-color: #ff0000
+        }
+
+        .send:hover {
+            color: #fff;
+            background-color: #f50202;
+            border-color: #f50202
+        }
+
+        .rating {
+            display: flex;
+            margin-top: -10px;
+            flex-direction: row-reverse;
+            margin-left: -4px;
+            float: left
+        }
+
+        .rating>input {
+            display: none
+        }
+
+        .rating>label {
+            position: relative;
+            width: 19px;
+            font-size: 25px;
+            color: #ffcc00;
+            cursor: pointer
+        }
+
+        .rating>label::before {
+            content: "\2605";
+            position: absolute;
+            opacity: 0
+        }
+
+        .rating>label:hover:before,
+        .rating>label:hover~label:before {
+            opacity: 1 !important
+        }
+
+        .rating>input:checked~label:before {
+            opacity: 1
+        }
+
+        .rating:hover>input:checked~label:before {
+            opacity: 0.4
         }
     </style>
 @stop
@@ -501,10 +619,20 @@
                             </div>
                             <div class="rate">
                                 <p>
-                                    <span class="avgrate" data-selected="true" data-label-id="0">8.4</span>
-                                        <span>rất tốt</span>
+                                    <span class="avgrate" data-selected="true" data-label-id="0">{{$rating/$numbers_review}}</span>
+                                        
+                                             @if($rating/$numbers_review >=9 )
+                                                        Tuyệt vời
+                                                        @elseif($rating/$numbers_review >=7 &&  $rating/$numbers_review <= 8)
+                                                        Tốt
+                                                        @elseif($rating/$numbers_review >=5 && $rating/$numbers_review <= 7)
+                                                        Tạm
+                                                        @else
+                                                        Tệ
+                                            @endif
+                                        </span>
                                         <div style="width: 1px;height: 14px;margin: 0 8px;background: #cdc1c1;;"></div>
-                                    <span class="" style="margin-left: 4px;">(238 đánh giá)</span>
+                                    <span class="" style="margin-left: 4px;">({{$numbers_review}} đánh giá)</span>
                                 </p>
                             </div>
                             <div class="address">
@@ -956,7 +1084,7 @@
                                             <input type="hidden" name="roomid" value="{{$hotel->id}}">
                                             
                                             
-                                            <label for="qty">Số phòng</label>
+                                            <label for="qty">Số lượng</label>
                                             <select name="qty" id="" class="qty"> 
                                                 @for ($i=0; $i <= $hotel["qty"]; $i++)
                                                 <option value="{{$i}}">{{$i}}</option>
@@ -1023,10 +1151,10 @@
                         </div>
                         <div class="border" style="width: 100%;height: 4px;margin: 24px 0;background: #a4a4a4;"></div>
                         <div style="font-size: 20px;margin-top: 32px;font-weight: 600;line-height: 23px;">Địa điểm nổi bật gần đây</div>
-                        <div style="margin: 0 auto;display: flex;max-width: 1180px;align-items: center;justify-content: space-between;padding-bottom: 10px;">
+                        <div style="margin: 0 auto;display: flex;max-width: 1180px;align-items: center;padding-bottom: 10px;justify-content: center;">
                             
                             <div class="" id="bando" data-spy="scroll" data-target="#nutxembando" data-offset="0">
-                                <div>
+                                {{-- <div>
                                     <div>
                                         <div class="MuiBox-root jss826 jss418">
                                             <div class="MuiBox-root jss827 jss419">
@@ -1095,25 +1223,431 @@
                                         </button>
                                     
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div> 
                                     {{-- @foreach ($hotel as $ht) --}}
-                                    
-                                             
-                                    <iframe src="" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3804.469725429416!2d106.59483921470536!3d17.532808987991594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x314759407c5b9e15%3A0xf08afa12fa35582e!2sSeastar%20(Sao%20Bi%E1%BB%83n)!5e0!3m2!1svi!2s!4v1636141901589!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                             {{-- <iframe src="" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> --}}
+                                    {{-- <iframe src="{{$hotel ->first()->map}}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> --}}
                                     {{-- @endforeach --}}
                                 </div>
                             </div>
                         </div>
 
 
+                    </form>
+                   <div class="clearfix">
+                        <div class="container mt-5 mb-5">
+                            <div class="MuiBox-root jss321 jss318" style="color: #1a202c;font-size: 20px;font-weight: 600;line-height: 23px;padding-bottom: 8px;">Đánh giá</div>
+                            <div style="    display: flex;justify-content: center;background-color: white;margin-bottom: 10px;align-items: center;padding: 20px;border-radius: 8px;">
+                                <div class="MuiBox-root jss612">
+                                    <div class="MuiBox-root jss2342" style="position: relative; width: 169px; height: 169px;">
+                                        <svg class="rc-progress-circle" viewBox="0 0 100 100" style="width: 169px;"><path class="rc-progress-circle-trail" d="M 50,50 m 0,-47a 47,47 0 1 1 0,94a 47,47 0 1 1 0,-94" stroke="#E2E8F0" stroke-linecap="round" stroke-width="6" fill-opacity="0" style="stroke: rgb(226, 232, 240); stroke-dasharray: 295.31px, 295.31px; stroke-dashoffset: 0px; transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s, stroke 0.3s ease 0s, stroke-width 0.06s ease 0.3s, opacity 0.3s ease 0s;"></path><path class="rc-progress-circle-path" d="M 50,50 m 0,-47a 47,47 0 1 1 0,94 a 47,47 0 1 1 0,-94" stroke="" stroke-linecap="round" stroke-width="6" opacity="1" fill-opacity="0" style=" stroke-dasharray: 283.497px, 295.31px; stroke-dashoffset: 0px; transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s, stroke 0.3s ease 0s, stroke-width 0.06s ease 0.3s, opacity ease 0s;"></path></svg>
+                                        <div class="MuiBox-root jss2343" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                                            <div class="MuiTypography-root MuiTypography-caption" style="font-weight: 600; font-size: 52px; line-height: 62px; color: rgb(243 142 17);;">{{$rating/$numbers_review}}</div>
+                                            <div class="MuiTypography-root MuiTypography-caption" style="font-size: 16px; line-height: 19px; color: rgb(26, 32, 44);">
+                                                @if($rating/$numbers_review >=9 )
+                                                        Tuyệt vời
+                                                        @elseif($rating/$numbers_review >=7 &&  $rating/$numbers_review <= 8)
+                                                        Tốt
+                                                        @elseif($rating/$numbers_review >=5 && $rating/$numbers_review <= 7)
+                                                        Tạm
+                                                        @else
+                                                        Tệ
+                                                        @endif
+                                            </div>
+                                             
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @if(Auth::check())
+                            <form method="post" action="{{route('hotel.comments',$hotel->first()->id)}}" class="well padding-bottom-10" >
+                                @csrf
+                                <div class="card">
+                                    <div class="row" style="    margin: 20px;">
+                                        <div class="Default" style="color: #00B6F3;width: 64px;height: 64px;display: flex;font-size: 24px;background: #E5F8FE;font-weight: 600;line-height: 28px;overflow: hidden;position: relative;font-size: 1.4285714285714286rem;align-items: center;flex-shrink: 0;font-family: -apple-system,BlinkMacSystemFont,sans-serif;line-height: 1;user-select: none;border-radius: 50%;justify-content: center;">
+                                                <svg style="width: 75%; height: 75%;fill: currentColor; width: 1em;height: 1em;display: inline-block;font-size: 1.7142857142857142rem;transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;flex-shrink: 0;user-select: none;" class="MuiSvgIcon-root MuiAvatar-fallback" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+                                        </div>
+                                        {{-- <div class="col-1"> <img src="https://i.imgur.com/xELPaag.jpg" width="50" class="rounded-circle mt-2"> </div> --}}
+                                        <div class="col-11">
+                                            <div class="comment-box ml-2">
+                                                {{-- <h4>Viết đánh giá của bạn</h4> --}}
+                                                <div style="    font-size: 16px;
+    font-family: -apple-system,BlinkMacSystemFont,sans-serif;
+    font-weight: 600;
+    line-height: 20px;    margin-bottom: 10px;">{{ Auth::user()->name}}</div>
+                                                <div class="rating">  
+                                                    @for ($i=1; $i <11;$i++)
+                                                    <input type="radio" name="rating" value="{{$i}}" id="{{$i}}"><label for="{{$i}}">{{$i}}</label> 
+                                                    @endfor
+                                                </div>
+                                                <!-- <ul class="list-inline rating">
+                                                
+                                                </ul> -->
+                                                <div class="comment-area"> <textarea class="form-control" placeholder="what is your view?" rows="2" name="comment"></textarea> </div>
+                                                <div class="comment-btns mt-2">
+                                                    
+                                                    <div class="pull-right"> 
+                                                        <input type="submit" value="Gửi" class="btn btn-primary">
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                       
+                                </div>
+                            </form>
+                            @else
+                                <div class="p-3 bg-white mt-2 rounded text-center">
+                                        <h5>Đăng nhập để bình luận</h5>
+                                        <a class="btn btn-success btn-sm px-3" href="" data-toggle="modal" data-target="#login">Đăng nhập</a>
+                                </div>
+                            @endif
+                            <div class="p-3 bg-white mt-2 rounded" >
+                            
+                                @foreach($hotelRates as $rate)
+                                    @if($rate->comment != null)
+                                    <div class="" style="display: flex;">                                        
+                                        <div class="" style="width: 30%;">
+                                            <div class="" style="display: flex;">
+                                                <div class="Default" style="color: #00B6F3;width: 64px;height: 64px;display: flex;font-size: 24px;background: #E5F8FE;font-weight: 600;line-height: 28px;overflow: hidden;position: relative;font-size: 1.4285714285714286rem;align-items: center;flex-shrink: 0;font-family: -apple-system,BlinkMacSystemFont,sans-serif;line-height: 1;user-select: none;border-radius: 50%;justify-content: center;">
+                                                <svg style="width: 75%; height: 75%;fill: currentColor; width: 1em;height: 1em;display: inline-block;font-size: 1.7142857142857142rem;transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;flex-shrink: 0;user-select: none;" class="MuiSvgIcon-root MuiAvatar-fallback" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+                                                </div>
+                                                <div class="MuiBox-root jss693 jss673" style="    margin-left: 12px;">
+                                                    <h6 style="font-size: 16px;font-family: -apple-system,BlinkMacSystemFont,sans-serif;font-weight: 600;line-height: 20px;">{{$rate->user->name}}</h6>
+                                                    <div class="MuiBox-root jss694" style="    display: flex;flex-direction: column;">
+                                                        <div class="MuiBox-root jss695 jss674" style="    color: #4A5568;display: flex;font-size: 12px;align-items: center;line-height: 14px;padding-top: 8px;">
+                                                            <svg width="16" height="16" fill="none" style="margin-right: 8px;"><path d="M2.667 13.333h2.666l7-7a1.886 1.886 0 00-2.667-2.666l-7 7v2.666zM9 4.333L11.667 7" stroke="#4A5568" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                                            <span class="MuiBox-root jss696">{{$rate->created_at}}</span>
+                                                        </div>
+                                                        {{-- <div class="MuiBox-root jss697 jss674"><svg width="16" height="16" fill="none" style="margin-right: 8px;"><path d="M12 3.333H4c-.737 0-1.333.597-1.333 1.334v8C2.667 13.403 3.263 14 4 14h8c.736 0 1.333-.597 1.333-1.333v-8c0-.737-.597-1.334-1.333-1.334zM10.666 2v2.667M5.333 2v2.667M2.667 7.333h10.666" stroke="#4A5568" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="MuiBox-root jss698">1 đêm</span><svg width="3" height="3" fill="none" style="margin: 2px 4px 0px;"><rect width="3" height="3" rx="1.5" fill="#A0AEC0"></rect></svg><span class="MuiBox-root jss699">Tháng 04/2021</span></div><div class="MuiBox-root jss700 jss674"><svg width="16" height="16" fill="none" style="margin-right: 8px;"><path d="M12.667 4.667H3.333C2.597 4.667 2 5.264 2 6v6c0 .736.597 1.333 1.333 1.333h9.334c.736 0 1.333-.597 1.333-1.333V6c0-.736-.597-1.333-1.333-1.333zM5.333 4.667V3.333A1.333 1.333 0 016.668 2h2.667a1.333 1.333 0 011.333 1.333v1.334M8 8v.007M2 8.667a13.333 13.333 0 0012 0" stroke="#4A5568" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="MuiBox-root jss701">Cặp đôi</span></div> --}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       <div style="width: 70%;display: flex;justify-content: space-between;">
+                                            <div class="MuiBox-root jss702 jss675">
+                                                {{-- <h6 class="">Vượt ngoài mong đợi!</h6> --}}
+                                                <div class="">
+                                                    <div>{{$rate->comment}}. </div>
+                                                </div>
+                                                {{-- <div class="MuiBox-root jss704 jss680"><img src="https://tripi.vn/cdn-cgi/image/width=100,height=100/https://www.googleapis.com/download/storage/v1/b/tourcdn/o/photos%2Fthumb_FIM1MC9MUP_photo0jpg%20(1).jpg?generation=1623320614581995&amp;alt=media" alt="" style="width: 96px; height: 96px; object-fit: cover; border-radius: 8px; margin: 0px 6px; cursor: pointer;"></div> --}}
+                                                
+                                            </div>          
+
+                                            <div class="MuiBox-root jss709 jss690" style="padding-left: 30px;">
+                                                <div class="MuiBox-root jss710 jss677" style="color: #00B6F3;width: 88px;font-size: 24px;background: #F2FBFE;text-align: center;font-weight: 600;line-height: 28px;margin-left: 30px;border-radius: 8px;">
+                                                <div class="MuiBox-root jss711 jss678" style="width: fit-content; margin: 0 auto;display: flex;padding: 9px 0 0 0;align-items: center;">{{$rate["rate"]}}</div>
+                                                    <div class="MuiBox-root jss712 jss679" style="color: #1a202c;font-size: 14px;font-weight: 400;line-height: 16px;white-space: nowrap;padding-bottom: 9px;">
+                                                        @if($rate["rate"] >=9 )
+                                                        Tuyệt vời
+                                                        @elseif($rate["rate"] >=7 &&  $rate["rate"] <= 8)
+                                                        Tốt
+                                                        @elseif($rate["rate"] >=5 &&  $rate["rate"] <= 6)
+                                                        Tạm
+                                                        @else
+                                                        Tệ
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                       </div>
+
+                                    </div>                                                           
+                            
+                                        
+                                        
+                                        
+                                    <hr>                                   
+                                    @else  
+                                        <p>Chưa có bình luận nào</p>
+                                    @endif
+                                @endforeach
+                            
+                               
+                            </div>   
+                            <div class="MuiBox-root jss430 jss3" style="    width: 100%;
+    height: 4px;
+    margin: 24px 0;
+    background: #EDF2F7;"></div>
+                            <div style="    padding: 20px;
+    background-color: white;">
+                                <div class="MuiBox-root jss451" id="hotel_policy">
+                                    <div class="MuiBox-root jss452 jss450" style=" margin-top: 12px;font-size: 20px;font-weight: 600;line-height: 24px;padding-bottom: 24px;">
+                                        <div class="MuiBox-root jss453 jss441" >Chính sách khách sạn</div>
+                                    </div>
+                                    <div class="MuiBox-root jss454 jss431" style="display: flex;" >
+                                        <div class="MuiBox-root jss455 jss432" style="color: #1a202c;width: 168px;display: flex;background: #EDF2F7;border-radius: 8px;margin-bottom: 12px;justify-content: space-around;">
+                                            <div class="MuiBox-root jss456 jss434" style="    color: #4A5568;
+    font-size: 14px;
+    text-align: center;
+    display: flex;
+    font-weight: normal;
+    line-height: 17px;
+    flex-direction: column;
+    justify-content: center;">
+                                                <div class="MuiBox-root jss457 jss437">Nhận phòng</div>
+                                                <h6 style="color: #1a202c;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 21px;
+    padding-bottom: 16px;">Từ 14:00</h6>
+                                            </div>
+                                        </div>
+                                        <div class="MuiBox-root jss458 jss432 jss433" style="margin-left: 10px;color: #1a202c;width: 168px;display: flex;background: #EDF2F7;border-radius: 8px;margin-bottom: 12px;justify-content: space-around;">
+                                            <div class="MuiBox-root jss459 jss434">
+                                                <div class="MuiBox-root jss460 jss437">Trả phòng</div>
+                                                <h6 style="color: #1a202c;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 21px;
+    padding-bottom: 16px;">Trước 12:00</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="MuiBox-root jss461 jss438">
+                                    <div class="MuiBox-root jss462">
+                                        <span class="MuiBox-root jss463" style="font-size: 14px;font-weight: 600;padding-bottom: 8px;">Chính sách chung</span>
+                                        <div class="MuiBox-root jss464 jss449">
+                                            <p>Không cho phép hút thuốc</p>
+                                            <p>Không cho phép thú cưng</p>
+                                            <p>Cho phép tổ chức tiệc / sự kiện</p>
+                                        </div>
+                                    </div>
+                                    <div class="MuiBox-root jss465">
+                                        <span class="MuiBox-root jss466" style="font-size: 14px;font-weight: 600;padding-bottom: 8px;">Chính sách trẻ em</span>
+                                        <div class="MuiBox-root jss467 jss449">
+                                            <p>Khách lớn hơn 12 tuổi sẽ được xem như người lớn</p>
+                                            <p>Trẻ em từ 0 tuổi đến 12 tuổi có thể lưu trú miễn phí</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        
+                        </div>                
+                    </div>
+
+                </div>
             </div>
                             
         </div>
+        <footer class="footer">
+    <div class="container_footer" style="margin: 0 auto; padding-inline: 100px; margin-top: 20px; background-color: #e7e7e7;">
+      <div class="footer__middle">
+        <div class="footer__nav">
+          <a href="/ve-vntrip">Về Bookinghotel.vn</a>
+          <a href="/lien-he">Liên hệ</a>
+          <a href="/dieu-khoan-su-dung">Điều khoản sử dụng</a>
+          <a href="/quy-che-hoat-dong">Quy chế hoạt động</a>
+          <a href="/chinh-sach-bao-mat">Chính sách bảo mật</a>
+          <a target="_blank" href="https://www.vntrip.vn/cam-nang" rel="noopener noreferrer">Blog du lịch</a>
+          <a target="_blank" href="http://hr.vntrip.vn/" rel="noopener noreferrer">Tuyển dụng</a>
+          <a target="_blank" href="https://policy.vntrip.vn/loyalty-vntrip" rel="noopener noreferrer">Hoàn tiền thành viên</a>
+          <a target="_blank" href="https://partner.vntrip.vn/" rel="noopener noreferrer">Hợp tác đại lý</a>
+        </div>
+        <div class="footer__contact">
+          <p class="semibold">CÔNG TY TNHH BOOKINGHOTEL.VN</p>
+          <p class="semibold">Tầng 1001 Tòa nhà chiến thắng</p>
+          <p>Số 92 Quang Trunh, Hải Châu, Đà Nẵng</p>
+          <p>Số tài khoản: 100120010000</p>
+          <p>Ngân hàng: demo</p>
+          <p>Chi nhánh: Thăng Long</p>
+          <p>Ngày cấp ĐKKD: 9/5/2016</p>
+          <p>Email:&nbsp;<a href="mailto:cs@vntrip.vn" class="semibold">cskh@vnbookinghotel.vn</a></p>
+          <p>Hotline:&nbsp;<span class="green-1 semibold"><a href="tel:096 326 6688" class="green-1">0123456789</a></span></p>
+        </div>
+        <div class="footer__form">
+          <p class="mb15"><strong>Du lịch thông minh!&nbsp;</strong>Đăng ký nhận tin để lên kế hoạch cho kỳ nghỉ tới ngay từ bây giờ:</p>
+          <form class="ant-form ant-form-horizontal d-flex mb15">
+            <div class="ant-row ant-form-item mb0 flex1 ant-form-item-has-success" style="row-gap: 0px;">
+              <div class="ant-col ant-form-item-control">
+                <div class="ant-form-item-control-input">
+                  <div class="ant-form-item-control-input-content">
+                    <input type="text" class="ant-input form-control" placeholder="Email của bạn" value="">
+                  </div>
+                </div>
+                <div class="ant-form-item-explain ant-form-item-explain-success">
+                  <div role="alert">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="ant-btn ant-btn-primary" style="border: 1px solid #f38e11;color: #f38e11;">
+                <span>Đăng ký</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <div class="" style="margin: 0 auto;padding-inline: 100px;margin-top: 20px;background-color: #f38e11;display: flex;height: 50px;align-items: center;justify-content: space-between;">
+          <p class="footer__copyright" style="float: left;width: 50%;margin: 0; color: black">Web bookinghotel © 2021 Bookinghotel.vn</p>
+          <div class="footer__social" style="float: right;">
+            <a href="https://www.facebook.com/nguyendoun1001" target="_blank" rel="noopener noreferrer">
+              <svg width="18" height="18" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                <path d="m437 0h-362c-41.351562 0-75 33.648438-75 75v362c0 41.351562 33.648438 75 75 75h151v-181h-60v-90h60v-61c0-49.628906 40.371094-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.351562 0 75-33.648438 75-75v-362c0-41.351562-33.648438-75-75-75zm0 0"></path>
+              </svg>
+              <span style="color: black">Facebook</span>
+            </a>
+            <a href="https://www.instagram.com/nguyendoun1001/" target="_blank" rel="noopener noreferrer">
+              <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="m12.004 5.838c-3.403 0-6.158 2.758-6.158 6.158 0 3.403 2.758 6.158 6.158 6.158 3.403 0 6.158-2.758 6.158-6.158 0-3.403-2.758-6.158-6.158-6.158zm0 10.155c-2.209 0-3.997-1.789-3.997-3.997s1.789-3.997 3.997-3.997 3.997 1.789 3.997 3.997c.001 2.208-1.788 3.997-3.997 3.997z"></path>
+                <path d="m16.948.076c-2.208-.103-7.677-.098-9.887 0-1.942.091-3.655.56-5.036 1.941-2.308 2.308-2.013 5.418-2.013 9.979 0 4.668-.26 7.706 2.013 9.979 2.317 2.316 5.472 2.013 9.979 2.013 4.624 0 6.22.003 7.855-.63 2.223-.863 3.901-2.85 4.065-6.419.104-2.209.098-7.677 0-9.887-.198-4.213-2.459-6.768-6.976-6.976zm3.495 20.372c-1.513 1.513-3.612 1.378-8.468 1.378-5 0-7.005.074-8.468-1.393-1.685-1.677-1.38-4.37-1.38-8.453 0-5.525-.567-9.504 4.978-9.788 1.274-.045 1.649-.06 4.856-.06l.045.03c5.329 0 9.51-.558 9.761 4.986.057 1.265.07 1.645.07 4.847-.001 4.942.093 6.959-1.394 8.453z"></path>
+                <circle cx="18.406" cy="5.595" r="1.439"></circle>
+              </svg>
+              <span style="color: black">Instagram</span>
+            </a>
+          </div>
+        </div>
+      </div>
+  </footer>
        
     </div>
-@stop
+    <!-- Modal cmt -->
+    <div class="modal fade" id="cmt" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color:#fa9442">Đánh giá hotel</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Gửi bình luận thành công !!!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- //register --}}
+        <div class="modal fade" id="register" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff7b0a;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Đăng ký</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form dialog-book-quick">
+                      <form action="{{ route('home.register')}}" method="post">
+                        @csrf
+                        <div class="form-group">
+                          <p class="quote" style=" border: solid 1px #e4e2e2;padding: 10px;font-size: .8em;background-color: #edf9d2;font-style: italic;line-height: 18px;">
+                          Đăng ký tài khoản để được nhiều ưu đãi hơn khi đặt phòng<br>
+                          Hãy đăng ký ở dưới !!!.<br>
+                          </p  
+                        </div>
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Tên<i style="color:red">*</i></label>
+                          <input type="text"  name="name" class="form-control" id="txtEmail_divBookQuick" value="{{ old('name', '') }}" required>
+                          @if($errors->has('name'))
+                            <p style="color:red">{{$errors->first('name')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Email<i style="color:red">*</i></label>
+                            <input type="email"  name="email" class="form-control" id="txtEmail_divBookQuick" value="{{ old('email', '') }}" required>
+                              @if($errors->has('email'))
+                                <p style="color:red">{{$errors->first('email')}}</p>
+                              @endif
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Mật khẩu<i style="color:red">*</i></label>
+                            <input type="password" name="password" class="form-control" id="txtMobile_divBookQuick" required>
+                            @if($errors->has('password'))
+                              <p style="color:red">{{$errors->first('password')}}</p>
+                            @endif
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Điện thoại<i style="color:red">*</i></label>
+                            <input type="text"  name="phone" class="form-control" id="txtEmail_divBookQuick" value="{{ old('phone', '') }}" required>
+                            @if($errors->has('phone'))
+                              <p style="color:red">{{$errors->first('phone')}}</p>
+                            @endif
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Địa chỉ<i style="color:red">*</i></label>
+                            <input type="text" name="address" class="form-control" id="txtMobile_divBookQuick" value="{{ old('address', '') }}" required>
+                            @if($errors->has('address'))
+                              <p style="color:red">{{$errors->first('address')}}</p>
+                            @endif
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <input type="submit" class="btn btn-primary" style="background-color: #ff7b0a;padding: left 40px;" value="Đăng ký" ></input>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <p>Bạn đã có tài khoản hãy đăng nhập tại đây<span>→</span> <a class="w3_play_icon1" href="#" data-toggle="modal" data-target="#login">Đăng nhập</a></p>
+                    <div class="clear"></div>
+                </div>
+              </div>
+          </div>
+          
+        </div>
+    <!-- //modal login -->
+    <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff7b0a;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Đăng nhập</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form dialog-book-quick">
+                      <form action="{{ route('home.login')}}" method="post">
+                        @csrf
+                        @if(session()->has('error'))
+                          <p style="color:red">{{session()->get('error')}}</p>
+                        @endif
+                       
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Email</label>
+                          <input type="email"  name="email" class="form-control" id="txtEmail_divBookQuick" value="{{ old('email', '') }}" required>
+                          @if($errors->has('email'))
+                            <p style="color:red">{{$errors->first('email')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-group">
+                          <label style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;">Password</label>
+                          <input type="password" name="password" class="form-control" id="txtMobile_divBookQuick" required>
+                          @if($errors->has('password'))
+                            <p style="color:red">{{$errors->first('password')}}</p>
+                          @endif
+                        </div>
+                        <div class="form-group">
+                          <input type="checkbox" id="brand1" value="">
+                          <label for="brand1"><span></span>Remember me</label>
+                          <a href="#">Forgot password?</a><br>              
+                        </div>
+                        <div class="form-group">
+                          <input type="submit" class="btn btn-primary" style="background-color: #ff7b0a;padding: left 40px;" value="Đăng nhập" ></input>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <p>Nếu chưa có tài khoản hãy đăng ký tại đây<span>→</span> <a class="w3_play_icon1" href="#" data-toggle="modal" data-target="#register">Đăng ký</a></p>
+                    <div class="clear"></div>
+                </div>
+              </div>
+          </div>
+        </div>
 
+@stop
 
 @section('scripts')
     
@@ -1165,6 +1699,26 @@
         thumbItem: 5
     });
 </script>
+    <!-- login -->
+    <script>
+        @if( $errors->has('email')|| $errors->has('password') || $errors->has('phone'))
+            $('#register').modal('show');
+        @endif
+    </script> 
+    <!-- register -->
+    <script >
+        @if(session()->has('error'))
+            $('#login').modal('show');
+        @endif
+    </script>          
+           
+    <!-- //Comment -->
+    <script >
+    @if(session()->has('message'))
+        $('#cmt').modal('show');
+    @endif
+    </script>          
+           
 @stop
 
     

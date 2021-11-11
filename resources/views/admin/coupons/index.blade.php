@@ -13,7 +13,9 @@
     <div class="card-header">
         {{ trans('cruds.coupon.title_singular') }} {{ trans('global.list') }}
     </div>
-
+    @if(session()->has('success'))
+        <div class="alert alert-success">{{session()->get('success')}}</div> 
+    @endif
     <div class="card-body">
         <table class=" table table-bordered table-striped table-hover  datatable datatable-Coupon" width="1189">
            

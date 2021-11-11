@@ -41,11 +41,11 @@ class CouponsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCouponRequest $request)
     {
         $coupon = Coupon::create($request->all());
 
-        return redirect()->route('admin.coupons.index');
+        return redirect()->route('admin.coupons.index')->with(['success'=>'create counpon success']);
     }
 
     /**
@@ -83,7 +83,7 @@ class CouponsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Coupon $coupon)
+    public function update(UpdateCouponRequest $request, Coupon $coupon)
     {
         $coupon->update($request->all());
 
@@ -102,7 +102,7 @@ class CouponsController extends Controller
 
         $coupon->delete();
 
-        return back();
+        return back()->with(['success'=>'delete coupon success']);
     }
     
     // public function massDestroy(MassDestroyBookingRequest $request)

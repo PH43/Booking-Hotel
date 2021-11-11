@@ -22,7 +22,7 @@ class CreateRoomsTable extends Migration
             $table->integer('qty');
             $table->integer('discount')->nullable();
             $table->integer('area');
-            $table->string('view');
+            $table->string('view')->nullable();
             $table->unsignedBigInteger('hotel_id');
             $table->unsignedBigInteger('roomtype_id');
             $table->string('service');
